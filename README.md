@@ -127,7 +127,7 @@ my-project/
 
 ## 📜 协议
 
-MIT License，详情请查看 [LICENSE](LICENSE) 文件。
+MIT License，详情请查看 [LICENSE](LICENSE.txt) 文件。
 
 ---
 
