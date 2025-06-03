@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "id": "home",
+      "title": "开始",
+      "file": "home.html"
+    }
+  ]
+}

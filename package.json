@@ -1,0 +1,32 @@
+{
+  "name": "my-pfds",
+  "version": "1.0.6",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "pfds": "pfds.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "clean-css": "^5.3.3",
+    "commander": "^14.0.0",
+    "ejs": "^3.1.10",
+    "execa": "^9.6.0",
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "node-fetch": "^3.3.2",
+    "node-html-parser": "^7.0.1",
+    "path": "^0.12.7",
+    "socket.io": "^4.8.1",
+    "uglify-js": "^3.19.3"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.3.0"
+  }
+}

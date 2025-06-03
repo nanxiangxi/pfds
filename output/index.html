@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pfds文档系统--文档</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">Pfds文档系统</div>
+  </div>
+  <div class="header-right">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="输入关键词进行搜索..." />
+      <button onclick="openSearchModal()">搜索</button>
+    </div>
+    <div class="nav-links">
+      <a href="#">官网</a>
+      <a href="#">QQ群</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="nav">
+    <ul>
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">开始</a></li>
+</ul>
+  </div>
+
+  <div class="content-area">
+    <div class="content-main">
+      <div id="home" class="page-content active">
+<h1>简介</h1>
+<div class="card">
+    <p>你正在阅读的是pfds文档系统！感谢您的使用，让我们一起共同进步吧...</p>
+</div>
+
+<hr class="side-nav-divider">
+<h2><span class="green-pound">#</span> 当你看到这个页面说明您已经部署成功了！</h2>
+<hr class="side-nav-divider">
+</div>
+
+
+    </div>
+    <div class="content-nav">
+      <ul id="contentNavList"></ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="searchModal">
+  <div class="modal">
+    <span class="close-btn" onclick="closeSearchModal()">&times;</span>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- 引入 Highlight.js -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+<script type="module" src="assets/js/modules.js"></script>
+
+
+<!-- DEV_ONLY_START -->
+<!-- 热重载客户端 -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  socket.on('reload', function () {
+    console.log('🔁 检测到文件更新，页面即将刷新...');
+    location.reload();
+  });
+</script>
+<!-- DEV_ONLY_END -->
+</body>
+</html>
