@@ -41,7 +41,7 @@ PFDS 是一个基于纯前端技术构建的文档系统，无需后端服务即
 
 ## 📦 快速开始
 
-### 1. 安装方式
+### 1. 安装方式  [windows环境下PowerShell，而非cmd]
 ```bash
 # 通过 npx 直接使用
 npx pfds-init@latest
@@ -50,7 +50,7 @@ npx pfds-init@latest
 ```bash
 pfds dev
 ```
-🚀 访问 [http://localhost:3000](http://localhost:3000) 查看实时预览
+🚀 访问 [http://localhost:309](http://localhost:309) 查看实时预览
 
 ### 3. 构建生产环境
 ```bash
