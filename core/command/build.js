@@ -86,8 +86,9 @@ function generateNav(routes) {
 }
 
 // 处理视图文件
+// 处理视图文件并隔离 CSS
 async function processViews(routes) {
-    console.log('🖼️ 正在处理视图文件...');
+    console.log('🖼️ 正在处理视图文件并隔离 CSS...');
     let viewsHTML = '';
 
     for (let route of routes) {
@@ -96,10 +97,37 @@ async function processViews(routes) {
             throw new Error(`❌ 视图文件不存在: ${viewPath}`);
         }
 
-        const content = await readFile(viewPath, 'utf-8');
-        const className = routes[0].id === route.id ? 'page-content active' : 'page-content';
+        let content = await readFile(viewPath, 'utf-8');
+
+        // 为该视图内容添加唯一的 class 用于作用域限定
+        const viewScopeClass = `view-scope-${route.id}`;
+
+        // 查找 <style>...</style> 并进行作用域限定
+        const styleRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
+
+        content = content.replace(styleRegex, (match, styleContent) => {
+            // 对每条 CSS 规则加上前缀
+            const scopedCSS = styleContent
+                .split('}')
+                .filter(rule => rule.trim())
+                .map(rule => {
+                    const [selectors, declarations] = rule.split('{').map(part => part.trim());
+                    const scopedSelectors = selectors
+                        .split(',')
+                        .map(sel => `.${viewScopeClass} ${sel.trim()}`)
+                        .join(', ');
+                    return `${scopedSelectors} {${declarations}}`;
+                })
+                .join('\n');
+
+            return `<style>\n${scopedCSS}\n</style>`;
+        });
+
+        // 包裹视图内容，增加作用域类名
+        const className = routes[0].id === route.id ? `page-content active ${viewScopeClass}` : `page-content ${viewScopeClass}`;
         viewsHTML += `<div id="${route.id}" class="${className}">\n${content.trim()}\n</div>\n\n`;
-        console.log(`✅ 已处理视图文件: ${route.file}`);
+
+        console.log(`✅ 已处理并隔离视图文件: ${route.file}`);
     }
 
     return viewsHTML;
