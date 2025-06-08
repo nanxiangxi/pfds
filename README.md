@@ -1,6 +1,6 @@
 # 📚 PFDS - 纯前端文档系统（Pure Frontend Document System）
 
-[![npm version](https://img.shields.io/npm/v/pfds-init)](https://www.npmjs.com/package/pfds-init)
+[![npm version](https://img.shields.io/npm/v/pfds-init)](https://www.npmjs.com/package/my-pfds)
 [![License](https://img.shields.io/npm/l/pfds-init)](https://github.com/nanxiangxi/pfds/blob/main/LICENSE)
 
 > 快速完成文档编写，支持热更新，全局搜索，一键部署等功能。
