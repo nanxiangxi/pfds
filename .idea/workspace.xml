@@ -5,25 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容">
-      <change afterPath="$PROJECT_DIR$/core/command/log.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/themes/bright-1.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/themes/bright-2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/themes/dark-2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev/head.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/command/build.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/build.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/command/dev.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/dev.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/modules/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/modules/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/themes/dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/core/themes/dark-1.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev/assets/css/dark.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev/pfds.json" beforeDir="false" afterPath="$PROJECT_DIR$/dev/pfds.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev/router.json" beforeDir="false" afterPath="$PROJECT_DIR$/dev/router.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev/template/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/template/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev/views/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/views/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/output/assets/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/assets/js/modules.js" beforeDir="false" afterPath="$PROJECT_DIR$/output/assets/js/modules.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +84,7 @@
       <workItem from="1748977442029" duration="521000" />
       <workItem from="1749026263986" duration="10000" />
       <workItem from="1749397009299" duration="1857000" />
-      <workItem from="1749434903962" duration="18324000" />
+      <workItem from="1749434903962" duration="18740000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />

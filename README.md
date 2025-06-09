@@ -69,6 +69,7 @@ my-project/
 ├── dev/                 # 开发目录
 │   ├──pfds.json         # 入口配置文件
 │   ├── router.json      # 路由配置文件
+│   ├── head.json        # 头部配置文件
 │   ├── config.js        # 系统配置
 │   ├── template/        # 模板目录
 │   │   └── main.html    # 主模板
