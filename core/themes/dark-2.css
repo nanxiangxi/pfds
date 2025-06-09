@@ -1,18 +1,17 @@
-
-/* 主题样式 (dark-1) */
 /*---------------------------------      根变量 & 全局样式     ---------------------------------*/
 
 :root {
-    --primary-color: #4fc08d;
-    --secondary-color: #667eea;
-    --accent-color: #ffca00;
-    --bg-color: #181818;
-    --card-bg: #2a2a2a;
-    --text-color: #e0e0e0;
+    --primary-color: #6a11cb; /* 紫色 */
+    --secondary-color: #00bfa5; /* 青色 */
+    --accent-color: #ff6d00; /* 橙色 */
+    --bg-color: #0d0d0d; /* 深黑背景 */
+    --card-bg: #1c1c1c; /* 卡片背景 */
+    --text-color: #e0e0e0; /* 文字颜色 */
     --border-radius: 8px;
     --transition-speed: 0.3s;
 }
 
+/* 保留原有全局样式，仅修改颜色变量 */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -23,7 +22,7 @@ html,
 body {
     height: 100%;
     width: 100%;
-    overflow: hidden; /* 禁用全局滚动 */
+    overflow: hidden;
 }
 
 body {
@@ -42,8 +41,8 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 2rem;
-    background: linear-gradient(120deg, #1f1f1f, #2c2c2c);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(120deg, #121212, #1f1f1f);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .header-left {
@@ -97,7 +96,7 @@ body {
 .search-container input:focus {
     outline: none;
     background-color: #383838;
-    box-shadow: 0 0 0 3px rgba(79, 192, 141, 0.3);
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.3);
 }
 
 .search-container button {
@@ -117,7 +116,7 @@ body {
 }
 
 .search-container button:hover {
-    background: #3e9b70;
+    background: #510099;
     transform: translateX(-2px);
 }
 
@@ -137,26 +136,24 @@ body {
 .nav-links a:hover {
     color: var(--primary-color);
 }
+
 /*---------------------------------      页面头部 - 手机端     ---------------------------------*/
 
 @media (max-width: 768px) {
-
-    /* 隐藏不需要的元素 */
+    /* 保留原有移动端样式，仅调整颜色 */
     .search-container,
     .nav-links {
-        display: none; /* 完全隐藏搜索框和导航链接 */
+        display: none;
     }
 
-    /* 头部整体布局调整 */
     .header {
         flex-direction: column;
         align-items: stretch;
         padding: 0.5rem 1rem;
     }
 
-    /* 左侧 logo 居左显示 */
     .header-left {
-        justify-content: flex-start; /* 修改这里使内容居左 */
+        justify-content: flex-start;
         margin-bottom: 0.3rem;
     }
 
@@ -165,7 +162,6 @@ body {
         text-align: center;
     }
 
-    /* 汉堡菜单按钮 */
     .hamburger {
         display: flex;
         flex-direction: column;
@@ -188,7 +184,6 @@ body {
         transition: all 0.3s ease-in-out;
     }
 
-    /* 当菜单激活时，汉堡变叉效果 */
     .hamburger.active span:nth-child(1) {
         transform: translateY(6px) rotate(45deg);
     }
@@ -199,7 +194,6 @@ body {
         transform: translateY(-6px) rotate(-45deg);
     }
 
-    /* 显示/隐藏 header-right 内容 */
     .header-right {
         display: none;
         flex-direction: column;
@@ -236,19 +230,14 @@ body {
     overflow: hidden;
 }
 
-/* 左侧导航栏 */
 .nav {
     width: 250px;
-    background: #1f1f1f;
+    background: #121212;
     padding: 1rem;
-    border-right: 1px solid #333;
+    border-right: 1px solid #222;
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-}
-
-.nav::-webkit-scrollbar {
-    display: none;
 }
 
 .nav ul {
@@ -272,11 +261,10 @@ body {
 
 .nav a:hover,
 .nav a.active {
-    background-color: #333;
+    background-color: #222;
     color: var(--primary-color);
 }
 
-/* 主内容区域 */
 .content-area {
     flex: 1;
     display: flex;
@@ -292,23 +280,14 @@ body {
     -ms-overflow-style: none;
 }
 
-.content-main::-webkit-scrollbar {
-    display: none;
-}
-
-/* 右侧内容导航栏 */
 .content-nav {
     width: 250px;
-    background: #1f1f1f;
+    background: #121212;
     padding: 1rem;
-    border-left: 1px solid #333;
+    border-left: 1px solid #222;
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-}
-
-.content-nav::-webkit-scrollbar {
-    display: none;
 }
 
 .content-nav ul {
@@ -332,13 +311,14 @@ body {
 
 .content-nav a:hover,
 .content-nav a.active {
-    background-color: #333;
+    background-color: #222;
     color: var(--primary-color);
 }
+
 /*---------------------------------      主体布局-手机端     ---------------------------------*/
 
 @media (max-width: 768px) {
-    /* 隐藏侧边导航默认状态 */
+    /* 保留原有移动端样式，仅调整颜色 */
     .nav {
         position: fixed;
         top: 0;
@@ -348,12 +328,10 @@ body {
         transition: left 0.3s ease-in-out;
     }
 
-    /* 弹出时显示侧边栏 */
     .nav.show {
         left: 0;
     }
 
-    /* 背景遮罩层 */
     .overlay {
         display: none;
         position: fixed;
@@ -366,22 +344,19 @@ body {
         backdrop-filter: blur(2px);
     }
 
-    /* 主体容器添加左移效果 */
     .container.show-nav .content-area {
         transform: translateX(250px);
         transition: transform 0.3s ease-in-out;
     }
 
-    /* 隐藏右侧内容导航栏 */
     .content-nav {
         display: none;
     }
 
-    /* 修改主内容区域为全宽 */
     .content-area {
         flex-direction: column;
-        width: 100vw; /* 占满整个视口宽度 */
-        transform: translateX(0); /* 默认不偏移 */
+        width: 100vw;
+        transform: translateX(0);
         transition: transform 0.3s ease-in-out;
     }
 
@@ -390,11 +365,11 @@ body {
         padding: 1rem;
     }
 
-    /* 当 nav 展开时，主内容向右平移 */
     .container.show-nav .content-area {
         transform: translateX(250px);
     }
 }
+
 /*---------------------------------      页面内容动画     ---------------------------------*/
 
 .page-content {
@@ -420,16 +395,17 @@ body {
         transform: translateX(0);
     }
 }
+
 /*---------------------------------      代码块样式-PC端     ---------------------------------*/
 
 pre {
-    background-color: #0d1117; /* GitHub Dark 主题背景颜色 */
+    background-color: #0d0d0d; /* 更深的代码背景 */
     padding: 1rem 1.5rem;
     border-radius: var(--border-radius);
     overflow-x: auto;
     margin: 2rem 0;
     position: relative;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     line-height: 1.6;
 }
 
@@ -447,7 +423,7 @@ code {
     top: 0.5rem;
     right: 0.8rem;
     font-size: 0.75rem;
-    background: #333;
+    background: #222;
     color: #aaa;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
@@ -477,12 +453,12 @@ code.hljs{
 }
 
 /* GitHub Dark Theme Styles */
-.hljs{color:#c9d1d9;background:#0d1117}
-.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#ff7b72}
-.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#d2a8ff}
-.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-variable{color:#79c0ff}
-.hljs-meta .hljs-string,.hljs-regexp,.hljs-string{color:#a5d6ff}
-.hljs-built_in,.hljs-symbol{color:#ffa657}
+.hljs{color:#c9d1d9;background:#0d0d0d}
+.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#ff6d00}
+.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#a855f7}
+.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-variable{color:#38bdf8}
+.hljs-meta .hljs-string,.hljs-regexp,.hljs-string{color:#89ddff}
+.hljs-built_in,.hljs-symbol{color:#f59e0b}
 .hljs-code,.hljs-comment,.hljs-formula{color:#8b949e}
 .hljs-name,.hljs-quote,.hljs-selector-pseudo,.hljs-selector-tag{color:#7ee787}
 .hljs-subst{color:#c9d1d9}
@@ -520,23 +496,23 @@ code.hljs{
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #2a2a2a;
+    background-color: #1c1c1c;
     border-radius: var(--border-radius);
     overflow: hidden;
     margin: 2rem 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 th,
 td {
     padding: 0.75rem 1rem;
     text-align: left;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #222;
     color: #ddd;
 }
 
 th {
-    background-color: #333;
+    background-color: #222;
     color: #fff;
     font-weight: bold;
     text-transform: uppercase;
@@ -555,30 +531,31 @@ tr:nth-child(even) {
 
 @media (max-width: 768px) {
     table {
-        display: block; /* 改变显示方式，使其适应移动设备 */
-        overflow-x: auto; /* 添加横向滚动条，以处理内容过长的情况 */
-        -webkit-overflow-scrolling: touch; /* 提升iOS上的滚动体验 */
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     th,
     td {
-        padding: 0.5rem 0.75rem; /* 减少内边距，使表格更紧凑 */
-        font-size: 0.9rem; /* 稍微减小字体大小，确保内容在小屏幕上易于阅读 */
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
     }
 
     th {
-        background-color: #444; /* 加深表头颜色，增强对比度 */
-        font-size: 0.95rem; /* 稍微减小字体大小，但保持表头清晰 */
+        background-color: #333;
+        font-size: 0.95rem;
     }
 
     tr:hover {
-        background-color: rgba(255, 255, 255, 0.08); /* 增强悬停效果的对比度 */
+        background-color: rgba(255, 255, 255, 0.08);
     }
 
     tr:nth-child(even) {
-        background-color: rgba(255, 255, 255, 0.05); /* 微调偶数行背景色 */
+        background-color: rgba(255, 255, 255, 0.05);
     }
 }
+
 /*---------------------------------      模拟框     ---------------------------------*/
 
 .modal-overlay {
@@ -592,19 +569,19 @@ tr:nth-child(even) {
     justify-content: center;
     align-items: center;
     z-index: 999;
-    backdrop-filter: blur(4px); /* 背景模糊 */
+    backdrop-filter: blur(4px);
     transition: var(--transition-speed);
 }
 
 .modal {
-    background-color: #1a1a1a; /* 更深的背景色 */
+    background-color: #121212;
     padding: 2rem;
     border-radius: var(--border-radius);
     width: 90%;
     max-width: 650px;
     max-height: 80vh;
     overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* 添加阴影 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     animation: fadeInZoom 0.4s ease-out;
     color: #fff;
     font-family: 'Segoe UI', sans-serif;
@@ -638,8 +615,8 @@ tr:nth-child(even) {
 }
 
 .search-card:hover {
-    background-color: #333;
-    border-left-color: var(--primary-color); /* 主色调边框提示 */
+    background-color: #222;
+    border-left-color: var(--primary-color);
     transform: translateX(-4px);
 }
 
@@ -650,7 +627,7 @@ tr:nth-child(even) {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(120deg, transparent, rgba(79,192,141,0.1), transparent);
+    background: linear-gradient(120deg, transparent, rgba(106, 17, 203, 0.1), transparent);
     transform: rotate(25deg);
     transition: transform 0.5s ease;
     z-index: 0;
@@ -709,7 +686,6 @@ tr:nth-child(even) {
     margin: 40px 0;
     border: none;
     height: 1px;
-    /* 使用从透明到浅色再到透明的渐变，浅色部分可根据需要调整 */
     background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
@@ -717,5 +693,3 @@ tr:nth-child(even) {
 .green-pound {
     color: #2E8B57;
 }
-
-

@@ -1,8 +1,229 @@
-<h1>简介</h1>
+<h1>存档操作接口</h1>
+
 <div class="card">
-    <p>你正在阅读的是pfds文档系统！感谢您的使用，让我们一起共同进步吧...</p>
+    <p><strong>存档操作接口</strong> 提供对 Minecraft 服务器的存档信息获取、启动和删除等操作，通过 HTTP POST 请求完成，并支持传统 form 表单提交。</p>
 </div>
 
 <hr class="side-nav-divider">
-<h2><span class="green-pound">#</span> 当你看到这个页面说明您已经部署成功了！</h2>
+
+<div class="markdown-output"></div>
+<h2><span class="green-pound">#</span> 接口概览</h2>
+<table class="api-table">
+    <thead>
+    <tr>
+        <th>字段</th>
+        <th>说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>接口地址</td>
+        <td><code>/archive</code></td>
+    </tr>
+    <tr>
+        <td>请求方式</td>
+        <td><code>POST</code></td>
+    </tr>
+    <tr>
+        <td>身份验证</td>
+        <td>是</td>
+    </tr>
+    <tr>
+        <td>作用说明</td>
+        <td>用于客户端执行存档信息获取、启动或删除等操作。</td>
+    </tr>
+    </tbody>
+</table>
+
 <hr class="side-nav-divider">
+
+<h2><span class="green-pound">#</span> 支持的操作（action）</h2>
+<table class="api-table">
+    <thead>
+    <tr>
+        <th>操作类型 (action)</th>
+        <th>说明</th>
+        <th>是否需要 data 参数</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><code>get</code></td>
+        <td>获取存档列表信息</td>
+        <td>否</td>
+    </tr>
+    <tr>
+        <td><code>start</code></td>
+        <td>启动指定存档的服务器</td>
+        <td>是</td>
+    </tr>
+    <tr>
+        <td><code>del</code></td>
+        <td>删除指定存档及其相关资源</td>
+        <td>是</td>
+    </tr>
+    </tbody>
+</table>
+
+<hr class="side-nav-divider">
+
+<h2><span class="green-pound">#</span> 请求参数</h2>
+<p>所有参数以表单形式提交：</p>
+<table class="api-table">
+    <thead>
+    <tr>
+        <th>参数名</th>
+        <th>类型</th>
+        <th>必填</th>
+        <th>说明</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><code>action</code></td>
+        <td>字符串</td>
+        <td>是</td>
+        <td>指定要执行的操作类型（get / start / del）</td>
+    </tr>
+    <tr>
+        <td><code>data</code></td>
+        <td>字符串</td>
+        <td>否</td>
+        <td>当 action 为 start 或 del 时，必须提供该参数作为存档名称</td>
+    </tr>
+    </tbody>
+</table>
+
+<hr class="side-nav-divider">
+
+<h2><span class="green-pound">#</span> 返回格式</h2>
+<p>返回 JSON 格式数据，结构如下：</p>
+<pre><code class="json">
+{
+  "status": "success", // 或 error
+  "message": "操作结果描述",
+  "data": { /* 可选附加数据 */ }
+}
+</code></pre>
+
+<hr class="side-nav-divider">
+
+<h2><span class="green-pound">#</span> 成功响应示例</h2>
+
+<h3>GET 操作成功</h3>
+<pre><code class="json">
+{
+  "status": "success",
+  "message": "获取存档列表信息成功",
+  "data": {
+    "result": "server1,server2"
+  }
+}
+</code></pre>
+
+<h3>START 操作成功</h3>
+<pre><code class="json">
+{
+  "status": "success",
+  "message": "启动操作成功",
+  "data": {
+    "data": "server1"
+  }
+}
+</code></pre>
+
+<h3>DEL 操作成功</h3>
+<pre><code class="json">
+{
+  "status": "success",
+  "message": "删除成功",
+  "data": "server1"
+}
+</code></pre>
+
+<h3>错误响应示例</h3>
+<pre><code class="json">
+{
+  "status": "error",
+  "message": "缺少必要的参数 'action'"
+}
+</code></pre>
+
+<pre><code class="json">
+{
+  "status": "error",
+  "message": "删除操作失败: remove server1: no such file or directory"
+}
+</code></pre>
+
+<hr class="side-nav-divider">
+
+<h2><span class="green-pound">#</span> 使用方法（含 Token 认证）</h2>
+<p>以下是一个完整的 JavaScript 示例，演示如何通过 Fetch API 登录 → 获取 Token → 执行存档操作：</p>
+<pre><code class="javascript">
+const loginUrl = "http://127.0.0.1:309/login";
+const archiveUrl = "http://127.0.0.1:309/archive";
+
+// Step 1: 登录并获取 Token
+async function loginAndGetToken(password) {
+  const formData = new URLSearchParams();
+  formData.append("password", password);
+
+  const res = await fetch(loginUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: formData.toString()
+  });
+
+  const data = await res.json();
+
+  if (!res.ok || !data.data?.token) {
+    throw new Error("❌ 登录失败：" + (data.message || "未知错误"));
+  }
+
+  console.log("✅ 登录成功，Token 已获取");
+  return data.data.token;
+}
+
+// Step 2: 发送存档操作请求
+async function sendArchiveCommand(token, action, data = "") {
+  const formData = new URLSearchParams();
+  formData.append("action", action);
+  if (data) formData.append("data", data);
+
+  const res = await fetch(archiveUrl, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: formData.toString()
+  });
+
+  return await res.json();
+}
+
+// 示例调用
+(async () => {
+  try {
+    const token = await loginAndGetToken("your_password");
+
+    // 获取存档列表
+    const getRes = await sendArchiveCommand(token, "get");
+    console.log("获取存档列表信息:", getRes);
+
+    // 启动服务器
+    const startRes = await sendArchiveCommand(token, "start", "server1");
+    console.log("启动响应:", startRes);
+
+    // 删除服务器
+    const delRes = await sendArchiveCommand(token, "del", "server2");
+    console.log("删除响应:", delRes);
+
+  } catch (err) {
+    console.error(err);
+  }
+})();
+</code><span class="language-label">javascript</span></pre>

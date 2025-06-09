@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容">
+      <change afterPath="$PROJECT_DIR$/core/command/log.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/themes/bright-1.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/themes/bright-2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/themes/dark-2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dev/head.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/build.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/build.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/dev.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/dev.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/modules/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/modules/search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/themes/dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/core/themes/dark-1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/assets/css/dark.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/pfds.json" beforeDir="false" afterPath="$PROJECT_DIR$/dev/pfds.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/router.json" beforeDir="false" afterPath="$PROJECT_DIR$/dev/router.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/template/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/template/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/views/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/views/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/output/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/js/modules.js" beforeDir="false" afterPath="$PROJECT_DIR$/output/assets/js/modules.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +36,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="tsconfig.json" />
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -40,20 +61,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/pfds&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\PhpStorm 2024.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "F:/pfds",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "D:\\PhpStorm 2024.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -79,6 +101,8 @@
       <workItem from="1748973956923" duration="2633000" />
       <workItem from="1748977442029" duration="521000" />
       <workItem from="1749026263986" duration="10000" />
+      <workItem from="1749397009299" duration="1857000" />
+      <workItem from="1749434903962" duration="18324000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />

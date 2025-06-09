@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>{{siteTitle}}--文档</title>
+  <title>{{siteTitle}}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
@@ -11,14 +11,49 @@
   <div class="header-left">
     <div class="logo">{{siteTitle}}</div>
   </div>
+
+  <!-- 手机端汉堡菜单 -->
+  <button class="hamburger" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <script>
+    // 移动端侧边栏控制
+    document.addEventListener('DOMContentLoaded', function () {
+      const hamburger = document.querySelector('.hamburger');
+      const nav = document.querySelector('.nav');
+      const overlay = document.getElementById('mobileOverlay');
+      const container = document.querySelector('.container');
+
+      if (!hamburger || !nav || !overlay || !container) return;
+
+      hamburger.addEventListener('click', function () {
+        this.classList.toggle('active');
+        nav.classList.toggle('show');
+        container.classList.toggle('show-nav');
+        overlay.style.display = nav.classList.contains('show') ? 'block' : 'none';
+      });
+
+      overlay.addEventListener('click', function () {
+        hamburger.classList.remove('active');
+        nav.classList.remove('show');
+        container.classList.remove('show-nav');
+        this.style.display = 'none';
+      });
+    });
+  </script>
+  <!-- 手机端遮罩层 -->
+  <div class="overlay" id="mobileOverlay"></div>
+
+
   <div class="header-right">
-    <div class="search-container">
+    <div class="search-container" id="mobileSearchContainer">
       <input type="text" id="searchInput" placeholder="输入关键词进行搜索..." />
       <button onclick="openSearchModal()">搜索</button>
     </div>
-    <div class="nav-links">
-      <a href="#">官网</a>
-      <a href="#">QQ群</a>
+    <div class="nav-links" id="mobileNavLinks">
+      <!-- HEAD_LINKS_PLACEHOLDER -->
     </div>
   </div>
 </div>
@@ -40,13 +75,11 @@
 
 <div class="modal-overlay" id="searchModal">
   <div class="modal">
-    <span class="close-btn" onclick="closeSearchModal()">&times;</span>
     <div id="modalContent"></div>
   </div>
 </div>
 
 <!-- 引入 Highlight.js -->
-<link href="dark.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
 
 <script type="module" src="assets/js/modules.js"></script>

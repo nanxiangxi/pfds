@@ -1,14 +1,10 @@
-
-/* 主题样式 (dark-1) */
-/*---------------------------------      根变量 & 全局样式     ---------------------------------*/
-
 :root {
-    --primary-color: #4fc08d;
+    --primary-color: #4a90e2;
     --secondary-color: #667eea;
-    --accent-color: #ffca00;
-    --bg-color: #181818;
-    --card-bg: #2a2a2a;
-    --text-color: #e0e0e0;
+    --accent-color: #f5a623;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #333333;
     --border-radius: 8px;
     --transition-speed: 0.3s;
 }
@@ -23,7 +19,7 @@ html,
 body {
     height: 100%;
     width: 100%;
-    overflow: hidden; /* 禁用全局滚动 */
+    overflow: hidden;
 }
 
 body {
@@ -35,15 +31,15 @@ body {
     flex-direction: column;
 }
 
-/*---------------------------------      页面头部 - PC端     ---------------------------------*/
-
+/*--------------------------------- 页面头部 - PC端 ---------------------------------*/
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 2rem;
-    background: linear-gradient(120deg, #1f1f1f, #2c2c2c);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(120deg, #ffffff, #f5f5f5);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #eee;
 }
 
 .header-left {
@@ -86,18 +82,19 @@ body {
 .search-container input {
     width: 100%;
     padding: 0.5rem 1rem;
-    border: none;
+    border: 1px solid #ddd;
     border-radius: var(--border-radius);
-    background-color: #2e2e2e;
-    color: #fff;
+    background-color: #f5f5f5;
+    color: #333;
     font-size: 0.9rem;
     transition: var(--transition-speed);
 }
 
 .search-container input:focus {
     outline: none;
-    background-color: #383838;
-    box-shadow: 0 0 0 3px rgba(79, 192, 141, 0.3);
+    background-color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
 }
 
 .search-container button {
@@ -117,7 +114,7 @@ body {
 }
 
 .search-container button:hover {
-    background: #3e9b70;
+    background: #357abd;
     transform: translateX(-2px);
 }
 
@@ -127,7 +124,7 @@ body {
 }
 
 .nav-links a {
-    color: #aaa;
+    color: #555;
     text-decoration: none;
     font-weight: 500;
     position: relative;
@@ -137,26 +134,22 @@ body {
 .nav-links a:hover {
     color: var(--primary-color);
 }
-/*---------------------------------      页面头部 - 手机端     ---------------------------------*/
 
+/*--------------------------------- 页面头部 - 手机端 ---------------------------------*/
 @media (max-width: 768px) {
-
-    /* 隐藏不需要的元素 */
     .search-container,
     .nav-links {
-        display: none; /* 完全隐藏搜索框和导航链接 */
+        display: none;
     }
 
-    /* 头部整体布局调整 */
     .header {
         flex-direction: column;
         align-items: stretch;
         padding: 0.5rem 1rem;
     }
 
-    /* 左侧 logo 居左显示 */
     .header-left {
-        justify-content: flex-start; /* 修改这里使内容居左 */
+        justify-content: flex-start;
         margin-bottom: 0.3rem;
     }
 
@@ -165,7 +158,6 @@ body {
         text-align: center;
     }
 
-    /* 汉堡菜单按钮 */
     .hamburger {
         display: flex;
         flex-direction: column;
@@ -184,11 +176,10 @@ body {
     .hamburger span {
         width: 100%;
         height: 2px;
-        background-color: white;
+        background-color: #333;
         transition: all 0.3s ease-in-out;
     }
 
-    /* 当菜单激活时，汉堡变叉效果 */
     .hamburger.active span:nth-child(1) {
         transform: translateY(6px) rotate(45deg);
     }
@@ -199,7 +190,6 @@ body {
         transform: translateY(-6px) rotate(-45deg);
     }
 
-    /* 显示/隐藏 header-right 内容 */
     .header-right {
         display: none;
         flex-direction: column;
@@ -207,9 +197,9 @@ body {
         gap: 1rem;
         margin-top: 0.5rem;
         padding: 0.8rem 1rem;
-        background-color: #292929;
+        background-color: #f8f8f8;
         border-radius: var(--border-radius);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         opacity: 0;
         transform: translateY(-10px);
         transition: all 0.3s ease;
@@ -222,26 +212,24 @@ body {
     }
 }
 
-/* 确保汉堡菜单在大屏幕上完全不显示 */
 @media (min-width: 769px) {
     .hamburger {
-        display: none !important; /* 强制不在大屏幕上显示 */
+        display: none !important;
     }
 }
-/*---------------------------------      主体布局-PC端     ---------------------------------*/
 
+/*--------------------------------- 主体布局-PC端 ---------------------------------*/
 .container {
     display: flex;
     flex: 1;
     overflow: hidden;
 }
 
-/* 左侧导航栏 */
 .nav {
     width: 250px;
-    background: #1f1f1f;
+    background: #ffffff;
     padding: 1rem;
-    border-right: 1px solid #333;
+    border-right: 1px solid #eee;
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -263,25 +251,26 @@ body {
 .nav a {
     display: block;
     padding: 0.75rem 1rem;
-    color: #ccc;
+    color: #555;
     border-radius: var(--border-radius);
     transition: var(--transition-speed);
     text-decoration: none;
     font-size: 0.9rem;
+    border: 1px solid transparent;
 }
 
 .nav a:hover,
 .nav a.active {
-    background-color: #333;
+    background-color: #f0f0f0;
     color: var(--primary-color);
+    border-color: #eee;
 }
 
-/* 主内容区域 */
 .content-area {
     flex: 1;
     display: flex;
     overflow: hidden;
-    background: #1e1e1e;
+    background: #f5f5f5;
 }
 
 .content-main {
@@ -296,12 +285,11 @@ body {
     display: none;
 }
 
-/* 右侧内容导航栏 */
 .content-nav {
     width: 250px;
-    background: #1f1f1f;
+    background: #ffffff;
     padding: 1rem;
-    border-left: 1px solid #333;
+    border-left: 1px solid #eee;
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -323,22 +311,23 @@ body {
 .content-nav a {
     display: block;
     padding: 0.75rem 1rem;
-    color: #ccc;
+    color: #555;
     border-radius: var(--border-radius);
     transition: var(--transition-speed);
     text-decoration: none;
     font-size: 0.9rem;
+    border: 1px solid transparent;
 }
 
 .content-nav a:hover,
 .content-nav a.active {
-    background-color: #333;
+    background-color: #f0f0f0;
     color: var(--primary-color);
+    border-color: #eee;
 }
-/*---------------------------------      主体布局-手机端     ---------------------------------*/
 
+/*--------------------------------- 主体布局-手机端 ---------------------------------*/
 @media (max-width: 768px) {
-    /* 隐藏侧边导航默认状态 */
     .nav {
         position: fixed;
         top: 0;
@@ -346,14 +335,13 @@ body {
         height: 100%;
         z-index: 1000;
         transition: left 0.3s ease-in-out;
+        border-right: 1px solid #ddd;
     }
 
-    /* 弹出时显示侧边栏 */
     .nav.show {
         left: 0;
     }
 
-    /* 背景遮罩层 */
     .overlay {
         display: none;
         position: fixed;
@@ -361,27 +349,23 @@ body {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.3);
         z-index: 999;
-        backdrop-filter: blur(2px);
     }
 
-    /* 主体容器添加左移效果 */
     .container.show-nav .content-area {
         transform: translateX(250px);
         transition: transform 0.3s ease-in-out;
     }
 
-    /* 隐藏右侧内容导航栏 */
     .content-nav {
         display: none;
     }
 
-    /* 修改主内容区域为全宽 */
     .content-area {
         flex-direction: column;
-        width: 100vw; /* 占满整个视口宽度 */
-        transform: translateX(0); /* 默认不偏移 */
+        width: 100vw;
+        transform: translateX(0);
         transition: transform 0.3s ease-in-out;
     }
 
@@ -390,13 +374,12 @@ body {
         padding: 1rem;
     }
 
-    /* 当 nav 展开时，主内容向右平移 */
     .container.show-nav .content-area {
         transform: translateX(250px);
     }
 }
-/*---------------------------------      页面内容动画     ---------------------------------*/
 
+/*--------------------------------- 页面内容动画 ---------------------------------*/
 .page-content {
     display: none;
     opacity: 0;
@@ -420,23 +403,24 @@ body {
         transform: translateX(0);
     }
 }
-/*---------------------------------      代码块样式-PC端     ---------------------------------*/
 
+/*--------------------------------- 代码块样式-PC端 ---------------------------------*/
 pre {
-    background-color: #0d1117; /* GitHub Dark 主题背景颜色 */
+    background-color: #f8f8f8;
     padding: 1rem 1.5rem;
     border-radius: var(--border-radius);
     overflow-x: auto;
     margin: 2rem 0;
     position: relative;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     line-height: 1.6;
+    border: 1px solid #eee;
 }
 
 code {
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 0.95rem;
-    color: inherit;
+    color: #333;
     background: transparent;
     padding: 0.2em 0.4em;
     border-radius: 4px;
@@ -447,8 +431,8 @@ code {
     top: 0.5rem;
     right: 0.8rem;
     font-size: 0.75rem;
-    background: #333;
-    color: #aaa;
+    background: #eee;
+    color: #666;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     text-transform: uppercase;
@@ -456,12 +440,10 @@ code {
     pointer-events: none;
 }
 
-/* 隐藏滚动条 - WebKit 浏览器 */
 pre::-webkit-scrollbar {
     display: none;
 }
 
-/* Firefox 和 IE/Edge 滚动条隐藏 */
 pre {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -476,25 +458,23 @@ code.hljs{
     padding:3px 5px;
 }
 
-/* GitHub Dark Theme Styles */
-.hljs{color:#c9d1d9;background:#0d1117}
-.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#ff7b72}
-.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#d2a8ff}
-.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-variable{color:#79c0ff}
-.hljs-meta .hljs-string,.hljs-regexp,.hljs-string{color:#a5d6ff}
-.hljs-built_in,.hljs-symbol{color:#ffa657}
-.hljs-code,.hljs-comment,.hljs-formula{color:#8b949e}
-.hljs-name,.hljs-quote,.hljs-selector-pseudo,.hljs-selector-tag{color:#7ee787}
-.hljs-subst{color:#c9d1d9}
-.hljs-section{color:#1f6feb;font-weight:700}
-.hljs-bullet{color:#f2cc60}
-.hljs-emphasis{color:#c9d1d9;font-style:italic}
-.hljs-strong{color:#c9d1d9;font-weight:700}
-.hljs-addition{color:#aff5b4;background-color:#033a16}
-.hljs-deletion{color:#ffdcd7;background-color:#67060c}
+.hljs{color:#333;background:#f8f8f8}
+.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#d73a49}
+.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#6f42c1}
+.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-variable{color:#005cc5}
+.hljs-meta .hljs-string,.hljs-regexp,.hljs-string{color:#032f62}
+.hljs-built_in,.hljs-symbol{color:#e36209}
+.hljs-code,.hljs-comment,.hljs-formula{color:#6a737d}
+.hljs-name,.hljs-quote,.hljs-selector-pseudo,.hljs-selector-tag{color:#22863a}
+.hljs-subst{color:#333}
+.hljs-section{color:#005500;font-weight:700}
+.hljs-bullet{color:#7366cc}
+.hljs-emphasis{color:#333;font-style:italic}
+.hljs-strong{color:#333;font-weight:700}
+.hljs-addition{color:#2c3e50;background-color:#e6ffed}
+.hljs-deletion{color:#cb2431;background-color:#ffeef0}
 
-/*---------------------------------      代码块样式-手机端     ---------------------------------*/
-
+/*--------------------------------- 代码块样式-手机端 ---------------------------------*/
 @media (max-width: 768px) {
     pre {
         padding: 1rem;
@@ -515,116 +495,113 @@ code.hljs{
     }
 }
 
-/*---------------------------------      表格样式-PC端     ---------------------------------*/
-
+/*--------------------------------- 表格样式-PC端 ---------------------------------*/
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #2a2a2a;
+    background-color: #ffffff;
     border-radius: var(--border-radius);
     overflow: hidden;
     margin: 2rem 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
 }
 
 th,
 td {
     padding: 0.75rem 1rem;
     text-align: left;
-    border-bottom: 1px solid #333;
-    color: #ddd;
+    border-bottom: 1px solid #eee;
+    color: #333;
 }
 
 th {
-    background-color: #333;
-    color: #fff;
+    background-color: #f5f5f5;
+    color: #555;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.03em;
 }
 
 tr:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(0, 0, 0, 0.02);
 }
 
 tr:nth-child(even) {
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: rgba(0, 0, 0, 0.01);
 }
 
-/*---------------------------------      表格样式-手机端     ---------------------------------*/
-
+/*--------------------------------- 表格样式-手机端 ---------------------------------*/
 @media (max-width: 768px) {
     table {
-        display: block; /* 改变显示方式，使其适应移动设备 */
-        overflow-x: auto; /* 添加横向滚动条，以处理内容过长的情况 */
-        -webkit-overflow-scrolling: touch; /* 提升iOS上的滚动体验 */
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     th,
     td {
-        padding: 0.5rem 0.75rem; /* 减少内边距，使表格更紧凑 */
-        font-size: 0.9rem; /* 稍微减小字体大小，确保内容在小屏幕上易于阅读 */
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
     }
 
     th {
-        background-color: #444; /* 加深表头颜色，增强对比度 */
-        font-size: 0.95rem; /* 稍微减小字体大小，但保持表头清晰 */
+        background-color: #f0f0f0;
+        font-size: 0.95rem;
     }
 
     tr:hover {
-        background-color: rgba(255, 255, 255, 0.08); /* 增强悬停效果的对比度 */
+        background-color: rgba(0, 0, 0, 0.05);
     }
 
     tr:nth-child(even) {
-        background-color: rgba(255, 255, 255, 0.05); /* 微调偶数行背景色 */
+        background-color: rgba(0, 0, 0, 0.03);
     }
 }
-/*---------------------------------      模拟框     ---------------------------------*/
 
+/*--------------------------------- 模拟框 ---------------------------------*/
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 999;
-    backdrop-filter: blur(4px); /* 背景模糊 */
+    backdrop-filter: blur(4px);
     transition: var(--transition-speed);
 }
 
 .modal {
-    background-color: #1a1a1a; /* 更深的背景色 */
+    background-color: #ffffff;
     padding: 2rem;
     border-radius: var(--border-radius);
     width: 90%;
     max-width: 650px;
     max-height: 80vh;
     overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* 添加阴影 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     animation: fadeInZoom 0.4s ease-out;
-    color: #fff;
+    color: #333;
     font-family: 'Segoe UI', sans-serif;
     z-index: 1000;
     position: relative;
+    border: 1px solid #eee;
 }
 
-/* 隐藏滚动条 - WebKit 浏览器 */
 .modal::-webkit-scrollbar {
     display: none;
 }
 
-/* Firefox 和 IE/Edge 滚动条隐藏 */
 .modal {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
-/*---------------------------------      搜索卡片     ---------------------------------*/
-
+/*--------------------------------- 搜索卡片 ---------------------------------*/
 .search-card {
     background-color: var(--card-bg);
     padding: 1rem 1.25rem;
@@ -635,11 +612,13 @@ tr:nth-child(even) {
     position: relative;
     overflow: hidden;
     border-left: 4px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    border: 1px solid #eee;
 }
 
 .search-card:hover {
-    background-color: #333;
-    border-left-color: var(--primary-color); /* 主色调边框提示 */
+    background-color: #f8f8f8;
+    border-left-color: var(--primary-color);
     transform: translateX(-4px);
 }
 
@@ -650,7 +629,7 @@ tr:nth-child(even) {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(120deg, transparent, rgba(79,192,141,0.1), transparent);
+    background: linear-gradient(120deg, transparent, rgba(74, 144, 226, 0.05), transparent);
     transform: rotate(25deg);
     transition: transform 0.5s ease;
     z-index: 0;
@@ -663,7 +642,7 @@ tr:nth-child(even) {
 .search-card h4 {
     margin: 0;
     font-size: 1.1rem;
-    color: white;
+    color: #222;
     position: relative;
     z-index: 1;
 }
@@ -671,7 +650,7 @@ tr:nth-child(even) {
 .search-card p {
     margin: 0.25rem 0 0;
     font-size: 0.85rem;
-    color: #bbb;
+    color: #666;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -679,8 +658,7 @@ tr:nth-child(even) {
     z-index: 1;
 }
 
-/*---------------------------------      动画定义     ---------------------------------*/
-
+/*--------------------------------- 动画定义 ---------------------------------*/
 @keyframes fadeInZoom {
     from {
         opacity: 0;
@@ -702,6 +680,8 @@ tr:nth-child(even) {
 .content-main h1 {
     margin-bottom: 20px;
     color: var(--primary-color);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
 }
 
 /*---------------------------------------- 分隔线样式----------------------------------- */
@@ -709,13 +689,10 @@ tr:nth-child(even) {
     margin: 40px 0;
     border: none;
     height: 1px;
-    /* 使用从透明到浅色再到透明的渐变，浅色部分可根据需要调整 */
-    background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
 }
 
 /* --------------------------------------- 绿色井号样式-------------------------------- */
 .green-pound {
     color: #2E8B57;
 }
-
-

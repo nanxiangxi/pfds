@@ -1,3 +1,5 @@
+// dev.js
+
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
@@ -5,6 +7,10 @@ const chokidar = require('chokidar');
 const { app, server } = require('./socket.io-server'); // ✅ 使用相对路径
 const { build } = require('./build');
 const net = require('net'); // 引入 net 模块用于检测端口占用
+
+// ✅ 引入日志模块
+const logger = require('./log');
+logger.configure({ color: true, level: 'info' });
 
 // 配置路径
 const CONFIG = {
@@ -44,7 +50,8 @@ async function getAvailablePort(startPort) {
 }
 
 async function startDevServer() {
-    console.log('🔧 正在启动开发服务器...');
+    // ✅ 不再打印 "启动开发服务器" 标题
+    // logger.title('启动开发服务器...');
 
     // 第一次构建
     await build(); // 保留 DEV_ONLY 内容，不合并资源
@@ -60,18 +67,17 @@ async function startDevServer() {
     // 动态获取可用端口
     const START_PORT = 309;
     const PORT = await getAvailablePort(START_PORT);
-    httpServer.listen(PORT, () => {
-        console.log(`🚀 开发服务器已启动: http://localhost:${PORT}`);
-    });
+
+    httpServer.listen(PORT, () => {});
 
     // WebSocket 实时通知客户端刷新
     io.on('connection', (socket) => {
-        console.log('🔌 客户端已连接');
+        logger.info('🔌 客户端已连接');
     });
 
     function notifyClients() {
         io.emit('reload');
-        console.log('🔁 检测到文件变化，正在重新构建...');
+        logger.warn('🔁 检测到文件变化，正在重新构建...');
     }
 
     // 使用 chokidar 监听文件变化
@@ -82,21 +88,27 @@ async function startDevServer() {
     });
 
     watcher.on('change', async (filePath) => {
-        console.log(`📁 文件修改: ${filePath}`);
+        logger.debug(`📁 文件修改: ${filePath}`);
         await build();
         notifyClients();
     });
 
     watcher.on('add', async (filePath) => {
-        console.log(`📁 文件新增: ${filePath}`);
+        logger.debug(`📁 文件新增: ${filePath}`);
         await build();
         notifyClients();
     });
 
     watcher.on('unlink', async (filePath) => {
-        console.log(`📁 文件删除: ${filePath}`);
+        logger.debug(`📁 文件删除: ${filePath}`);
         await build();
         notifyClients();
+    });
+
+    // ✅ 将服务信息添加到构建摘要中
+    logger.summary({
+        '热重载': '已启用',
+        '开发服务器': `http://localhost:${PORT}`
     });
 }
 

@@ -2,7 +2,7 @@
   "routes": [
     {
       "id": "home",
-      "title": "开始",
+      "title": "快速开始",
       "file": "home.html"
     }
   ]

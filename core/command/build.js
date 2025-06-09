@@ -1,3 +1,11 @@
+// 引入日志模块
+const logger = require('./log');
+logger.configure({ color: true, level: 'info' });
+
+// 初始化日志
+logger.title('启动开发模式...');
+
+// 原有依赖导入保持不变
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
@@ -19,25 +27,25 @@ let fetch;
         const module = await import('node-fetch');
         fetch = module.default;
     } catch (err) {
-        console.error('❌ 无法加载 node-fetch，请确保已安装:', err.message);
+        logger.error('无法加载 node-fetch，请确保已安装:', err.message);
         process.exit(1);
     }
 })();
 
 // 配置路径
 const CONFIG = {
-    DEV_DIR: path.resolve(process.cwd(), 'dev'), // 使用 process.cwd() 获取当前工作目录
+    DEV_DIR: path.resolve(process.cwd(), 'dev'),
     OUTPUT_DIR: path.resolve(process.cwd(), 'output'),
     TEMPLATE_DIR: path.resolve(process.cwd(), 'dev/template'),
     ASSETS_DIR: path.resolve(process.cwd(), 'dev/assets'),
     MODULES_DIR: path.resolve(process.cwd(), 'core/modules'),
-    THEME_DIR: path.resolve(process.cwd(), 'core/themes') // 主题 CSS 路径
+    THEME_DIR: path.resolve(process.cwd(), 'core/themes')
 };
-
 
 // 初始化构建环境
 async function initBuildEnvironment() {
-    console.log('🔧 正在初始化构建环境...');
+    logger.stepStart('构建环境初始化');
+
     const dirs = [
         CONFIG.OUTPUT_DIR,
         path.join(CONFIG.OUTPUT_DIR, 'assets'),
@@ -48,65 +56,84 @@ async function initBuildEnvironment() {
     for (let dir of dirs) {
         if (!existsSync(dir)) {
             await mkdir(dir, { recursive: true });
-            console.log(`📁 已创建目录: ${dir}`);
+            logger.subStep(`创建目录: ${dir}`, 'success');
+        } else {
+            logger.subStep(`目录已存在: ${dir}`, 'success');
         }
     }
+
+    logger.stepEnd('构建环境初始化');
 }
 
 // 读取配置文件
 async function readConfig() {
-    console.log('⚙️ 正在读取全局配置文件...');
+    logger.stepStart('配置加载');
+
+    // 读取头部配置
+    const headPath = path.join(CONFIG.DEV_DIR, 'head.json');
+    let headConfig = [];
+
+    if (existsSync(headPath)) {
+        try {
+            const data = await readFile(headPath, 'utf-8');
+            headConfig = JSON.parse(data).head || [];
+            logger.subStep('头部配置', 'success');
+        } catch (error) {
+            logger.subStep('头部配置解析失败', 'error');
+        }
+    } else {
+        logger.subStep('头部配置文件未找到', 'warn');
+    }
+
+    // 读取全局配置
     const configPath = path.join(CONFIG.DEV_DIR, 'pfds.json');
     const data = await readFile(configPath, 'utf-8');
     const config = JSON.parse(data);
-    console.log('📄 全局配置:', config);
-    return config;
-}
+    logger.subStep('全局配置', 'success');
 
-// 读取路由配置
-async function readRoutes() {
-    console.log('🧭 正在读取路由配置文件...');
+    // 读取路由配置
     const routePath = path.join(CONFIG.DEV_DIR, 'router.json');
-    const data = await readFile(routePath, 'utf-8');
-    const routes = JSON.parse(data).routes;
-    console.log('📄 路由配置:', routes);
-    return routes;
+    const routeData = await readFile(routePath, 'utf-8');
+    const routes = JSON.parse(routeData).routes;
+    logger.subStep('路由解析', 'success');
+
+    logger.stepEnd('配置加载');
+    return { config, routes, headConfig };
 }
 
-// 生成侧栏导航 HTML
+// 生成侧边栏导航
 function generateNav(routes) {
-    console.log('🧱 正在生成侧边栏导航...');
-    let navHTML = `<ul>\n`;
+    logger.stepStart('导航生成');
+
+    let navHTML = '<ul>\n';
     routes.forEach((route, index) => {
         const activeClass = index === 0 ? 'active' : '';
         navHTML += `    <li><a href="#" onclick="showPage('${route.id}')" id="nav-${route.id}" class="${activeClass}">${route.title}</a></li>\n`;
     });
     navHTML += '</ul>';
+
+    logger.subStep('导航结构构建完成', 'success');
+    logger.stepEnd('导航生成');
     return navHTML;
 }
 
 // 处理视图文件
-// 处理视图文件并隔离 CSS
 async function processViews(routes) {
-    console.log('🖼️ 正在处理视图文件并隔离 CSS...');
+    logger.stepStart('视图处理');
     let viewsHTML = '';
 
     for (let route of routes) {
         const viewPath = path.join(CONFIG.DEV_DIR, 'views', route.file);
         if (!existsSync(viewPath)) {
-            throw new Error(`❌ 视图文件不存在: ${viewPath}`);
+            throw new Error(`视图文件不存在: ${viewPath}`);
         }
 
         let content = await readFile(viewPath, 'utf-8');
-
-        // 为该视图内容添加唯一的 class 用于作用域限定
         const viewScopeClass = `view-scope-${route.id}`;
 
-        // 查找 <style>...</style> 并进行作用域限定
+        // CSS作用域限定
         const styleRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
-
         content = content.replace(styleRegex, (match, styleContent) => {
-            // 对每条 CSS 规则加上前缀
             const scopedCSS = styleContent
                 .split('}')
                 .filter(rule => rule.trim())
@@ -123,22 +150,26 @@ async function processViews(routes) {
             return `<style>\n${scopedCSS}\n</style>`;
         });
 
-        // 包裹视图内容，增加作用域类名
-        const className = routes[0].id === route.id ? `page-content active ${viewScopeClass}` : `page-content ${viewScopeClass}`;
-        viewsHTML += `<div id="${route.id}" class="${className}">\n${content.trim()}\n</div>\n\n`;
+        // 包裹视图内容
+        const className = routes[0].id === route.id
+            ? `page-content active ${viewScopeClass}`
+            : `page-content ${viewScopeClass}`;
 
-        console.log(`✅ 已处理并隔离视图文件: ${route.file}`);
+        viewsHTML += `<div id="${route.id}" class="${className}">\n${content.trim()}\n</div>\n\n`;
+        logger.subStep(`${route.file} → CSS 隔离完成`, 'success');
     }
 
+    logger.stepEnd('视图处理');
     return viewsHTML;
 }
 
-// 处理主模板中的 CSS 引用（支持本地 + 远程）
+// 处理CSS文件
 async function processCSS(templateContent, config) {
-    console.log('🎨 正在处理 CSS 文件...');
+    logger.stepStart('样式合并');
+
     let cssContent = '';
 
-    // 提取 <link rel="stylesheet" href="custom.css"> 标签
+    // 提取<link>标签
     const linkRegex = /<link[^>]+href=(?:"|')([^"']+\.(?:css))(?:'|")/gi;
     let match;
 
@@ -146,62 +177,65 @@ async function processCSS(templateContent, config) {
         const href = match[1];
 
         if (href.startsWith('http')) {
-            // ✅ 处理远程 CSS
-            console.log(`🌐 正在下载远程 CSS: ${href}`);
+            logger.subStep(`远程 CSS: ${href}`);
             try {
                 const response = await fetch(href);
                 if (!response.ok) throw new Error(`HTTP 错误: ${response.status}`);
 
                 const remoteCSS = await response.text();
                 cssContent += `\n/* Remote CSS: ${href} */\n${remoteCSS}`;
-                console.log(`✅ 成功下载并合并远程 CSS: ${href}`);
+                logger.subStep(`远程 CSS: ${href}`, 'success');
             } catch (err) {
-                throw new Error(`❌ 下载远程 CSS 失败: ${href}\n错误: ${err.message}`);
+                logger.subStep(`远程 CSS: ${href}`, 'error');
+                throw new Error(`下载远程 CSS 失败: ${href}\n错误: ${err.message}`);
             }
         } else {
-            // ✅ 处理本地 CSS
             const cssPath = path.join(CONFIG.ASSETS_DIR, 'css', href);
 
             if (existsSync(cssPath)) {
                 const data = await readFile(cssPath, 'utf-8');
                 cssContent += `\n/* Local CSS: ${href} */\n${data}`;
-                console.log(`✅ 加载本地 CSS 文件: ${href}`);
+                logger.subStep(`本地 CSS: ${href}`, 'success');
             } else {
-                throw new Error(`❌ 构建失败：所需 CSS 文件不存在: ${cssPath}`);
+                logger.subStep(`CSS 文件不存在: ${href}`, 'error');
+                throw new Error(`所需 CSS 文件不存在: ${cssPath}`);
             }
         }
     }
 
-    // 提取内联 <style>...</style>
+    // 提取内联样式
     const styleRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
     let styleMatch;
 
     while ((styleMatch = styleRegex.exec(templateContent)) !== null) {
         cssContent += `\n/* 内联样式 */\n${styleMatch[1]}`;
-        console.log('✅ 提取到内联 CSS');
+        logger.subStep('内联样式', 'success');
     }
 
-    // 添加主题 CSS
+    // 添加主题CSS
     const themeCssPath = path.join(CONFIG.THEME_DIR, `${config.theme}.css`);
     if (existsSync(themeCssPath)) {
         const themeData = await readFile(themeCssPath, 'utf-8');
         cssContent += `\n/* 主题样式 (${config.theme}) */\n${themeData}`;
-        console.log(`✅ 加载主题 CSS: ${config.theme}.css`);
+        logger.subStep(`应用主题: ${config.theme}`, 'success');
     } else {
-        throw new Error(`❌ 主题 CSS 文件未找到: ${themeCssPath}`);
+        logger.subStep(`主题样式: ${config.theme}.css`, 'error');
+        throw new Error(`主题 CSS 文件未找到: ${themeCssPath}`);
     }
 
-    // 输出合并后的 main.css
+    // 输出合并后的CSS
     const outputCssPath = path.join(CONFIG.OUTPUT_DIR, 'assets', 'css', 'main.css');
     await writeFile(outputCssPath, cssContent);
-    console.log(`✅ 合并 CSS 完成，写入: ${outputCssPath}`);
+    logger.subStep('样式表输出完成', 'success');
+
+    logger.stepEnd('样式合并');
 
     return cssContent;
 }
 
-// 合并所有模块 JS 并添加初始化调用
+// 合并JS模块
 async function mergeModules() {
-    console.log('📦 正在合并 JS 模块...');
+    logger.stepStart('JS 模块打包');
 
     const files = await readdir(CONFIG.MODULES_DIR);
     const jsFiles = files.filter(file => file.endsWith('.js'));
@@ -210,15 +244,12 @@ async function mergeModules() {
     for (let file of jsFiles) {
         const filePath = path.join(CONFIG.MODULES_DIR, file);
         const content = await readFile(filePath, 'utf-8');
-
-        // 移除 export 关键字以避免语法错误（适用于浏览器直接执行）
         const strippedContent = content.replace(/export\s+function/g, 'function');
-
         modulesJS += `\n// === ${file} ===\n${strippedContent}\n`;
-        console.log(`✅ 已合并模块: ${file}`);
+        logger.subStep(`加载模块: ${file}`, 'success');
     }
 
-    // 添加初始化调用（直接追加到文件末尾）
+    // 添加初始化调用
     const initCalls = `
 // 初始化模块
 initHighlight();
@@ -227,75 +258,117 @@ initNavigation();
 initScroll();
 initSearch();
 `;
-
     modulesJS += initCalls;
+    logger.subStep('模块初始化注入', 'success');
 
     const outputJsPath = path.join(CONFIG.OUTPUT_DIR, 'assets', 'js', 'modules.js');
     await writeFile(outputJsPath, modulesJS);
-    console.log(`✅ JS 模块已合并至: ${outputJsPath}`);
+    logger.subStep('模块打包完成', 'success');
+
+    logger.stepEnd('JS 模块打包');
 }
 
-// 替换模板变量并生成最终 HTML
+// 生成头部链接
+function generateHeadLinks(headItems) {
+    logger.stepStart('头部链接生成');
+    let linksHTML = '';
+
+    if (headItems.length > 0) {
+        headItems.forEach(item => {
+            linksHTML += `      <a href="${item.url}">${item.title}</a>\n`;
+        });
+    }
+
+    logger.subStep(`生成 ${headItems.length} 个链接`, 'success');
+    logger.stepEnd('头部链接生成');
+    return linksHTML;
+}
+
+// 生成最终HTML
 async function generateFinalHTML(templateContent, config, navHTML, viewsHTML, isDev = true) {
-    console.log('🌐 正在生成最终 HTML...');
+    logger.stepStart('最终HTML 构建');
 
-    // 替换 {{siteTitle}}
+    // 替换模板变量
     let html = templateContent.replace(/{{siteTitle}}/g, config.siteTitle);
+    logger.subStep('替换模板变量', 'success');
 
-    // 🔧 仅在 build 模式下移除 DEV_ONLY 块
+    // 移除DEV_ONLY块
     if (!isDev) {
         const devOnlyRegex = /<!-- DEV_ONLY_START -->[\s\S]*?<!-- DEV_ONLY_END -->/gi;
         html = html.replace(devOnlyRegex, '');
     }
 
-
-    // ✅ 完整移除所有 <link> 标签中包含 .css 的引用
+    // 移除CSS引用
     html = html.replace(/<link\b[^>]*href\s*=\s*(["'])(?!https?:\/\/)[^"']*\.css\1[^>]*>(?:<\/link>)?/gi, '');
-
-    // ✅ 移除所有 <style>...</style> 内联样式块
     html = html.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
 
-    // 插入新 CSS
+    // 插入新CSS
     html = html.replace('</head>', '    <link rel="stylesheet" href="assets/css/main.css">\n</head>');
+    logger.subStep('注入样式表链接', 'success');
 
-    // 插入侧边栏
+    // 插入头部链接
+    const headLinks = generateHeadLinks(config.head);
+    html = html.replace('<!-- HEAD_LINKS_PLACEHOLDER -->', headLinks);
+    logger.subStep('生成 头部导航', 'success');
+
+    // 插入导航
     html = html.replace('<!-- NAV_PLACEHOLDER -->', navHTML);
+    logger.subStep('生成侧栏导航', 'success');
 
-    // 插入页面内容
+    // 插入内容
     html = html.replace('<!-- CONTENT_PLACEHOLDER -->', viewsHTML);
+    logger.subStep('生成首页 index.html', 'success');
 
+    // 写入文件
     const outputPath = path.join(CONFIG.OUTPUT_DIR, 'index.html');
     await writeFile(outputPath, html);
-    console.log(`✅ 最终 HTML 已生成: ${outputPath}`);
+    logger.subStep('HTML文档持久化', 'success');
+
+    logger.stepEnd('最终HTML 构建');
+
+    return html;
 }
 
-// 主函数 - 支持传入 isDev 参数
+// 主函数
 async function build(isDev = true) {
     try {
         await initBuildEnvironment();
 
-        const config = await readConfig();
-        const routes = await readRoutes();
-        const navHTML = generateNav(routes);
-        const viewsHTML = await processViews(routes);
+        // 读取配置
+        const { config, routes, headConfig } = await readConfig();
+        config.head = headConfig;
 
+        // 读取模板
         const templatePath = path.join(CONFIG.TEMPLATE_DIR, config.template);
         const templateContent = await readFile(templatePath, 'utf-8');
 
-        await processCSS(templateContent, config);
-        await mergeModules();
-        await generateFinalHTML(templateContent, config, navHTML, viewsHTML,isDev);
+        // 生成导航
+        const navHTML = generateNav(routes);
 
-        if (!isDev) {
-            console.log('✅ 构建成功完成！');
-            console.log(`🚀 文件已生成在: ${CONFIG.OUTPUT_DIR}`);
+        // 处理视图
+        const viewsHTML = await processViews(routes);
+
+        // 处理CSS
+        await processCSS(templateContent, config);
+
+        // 合并模块
+        await mergeModules();
+
+        // 生成HTML
+        await generateFinalHTML(templateContent, config, navHTML, viewsHTML, isDev);
+
+        // 显示服务信息
+        if (isDev) {
+
         } else {
-            console.log('✅ 开发模式 HTML 已生成');
+            logger.success('✅ 构建成功完成！');
+            logger.info(`🚀 文件已生成在: ${CONFIG.OUTPUT_DIR}`);
         }
     } catch (error) {
-        console.error(`❌ 构建失败: ${error.message}`);
+        logger.error(`构建失败: ${error.message}`);
         process.exit(1);
     }
 }
-// 导出 build 函数，供外部调用
+
+// 导出构建函数
 exports.build = build;

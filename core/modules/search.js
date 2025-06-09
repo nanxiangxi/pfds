@@ -1,4 +1,4 @@
-let originalContent = {};
+let originalContent = [];
 
 export function initSearch() {
     collectContentData();
@@ -13,29 +13,32 @@ export function initSearch() {
         }
 
         const results = [];
-        const seenSections = new Set();
+        const seenElements = new Set(); // 用 element 作为 key 来去重
 
-        Object.keys(originalContent).forEach(id => {
-            originalContent[id].sections.forEach(section => {
-                const titleMatch = section.title.toLowerCase().includes(query);
-                const contentMatch = section.content.toLowerCase().includes(query);
+        originalContent.forEach(item => {
+            if (item.text.toLowerCase().includes(query)) {
+                if (!seenElements.has(item.element)) {
+                    seenElements.add(item.element);
 
-                if ((titleMatch || contentMatch) && !seenSections.has(section.id)) {
-                    seenSections.add(section.id);
+                    const closestHeading = findClosestHeading(item.element);
+                    const summary = highlightText(truncateText(item.text, 60), query);
+
                     results.push({
-                        id: section.id,
-                        pageId: section.pageId,
-                        title: highlightText(section.title, query),
-                        summary: highlightText(truncateText(section.content, 50), query)
+                        title: closestHeading?.innerText || '未知标题',
+                        summary,
+                        element: item.element,
+                        pageId: item.pageId
                     });
                 }
-            });
+            }
         });
 
+        window.resultsCache = results; // 缓存供点击跳转使用
         modalContent.innerHTML = '';
+
         if (results.length > 0) {
-            const cardsHTML = results.map(result => `
-                <div class="search-card" onclick="handleSearchResult('${result.pageId}', '${result.id}')">
+            const cardsHTML = results.map((result, index) => `
+                <div class="search-card" onclick="handleSearchResult('${result.pageId}', ${index})">
                     <h4>${result.title}</h4>
                     <p>${result.summary}</p>
                 </div>
@@ -48,44 +51,51 @@ export function initSearch() {
         document.getElementById('searchModal').style.display = 'flex';
     };
 
-    window.handleSearchResult = (pageId, sectionId) => {
+    window.handleSearchResult = (pageId, resultIndex) => {
         closeSearchModal();
         showPage(pageId);
 
         setTimeout(() => {
-            scrollToSection(sectionId);
+            const result = resultsCache[resultIndex];
+            scrollToElement(result.element);
+            highlightElement(result.element);
         }, 300);
     };
 }
 
 function collectContentData() {
-    document.querySelectorAll('.page-content').forEach(page => {
-        const sections = page.querySelectorAll('h2');
-        const sectionData = [];
+    originalContent = [];
+    const processedElements = new Set(); // 用于防止重复采集
+    const contentTags = ['P', 'LI', 'PRE', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'BLOCKQUOTE']; // 可搜索内容标签
 
-        sections.forEach(section => {
-            const contentElements = [];
-            let nextElement = section.nextElementSibling;
+    document.body.querySelectorAll(contentTags.join(',')).forEach(el => {
+        const text = el.innerText.trim();
+        if (text && text.length > 0 && !processedElements.has(el)) {
+            processedElements.add(el); // 标记为已处理
 
-            while (nextElement && nextElement.tagName !== 'H2') {
-                if (nextElement.tagName.match(/P|PRE|OL|UL/)) {
-                    contentElements.push(nextElement.innerText.trim());
-                }
-                nextElement = nextElement.nextElementSibling;
-            }
-
-            sectionData.push({
-                id: section.id || section.innerText.replace(/\s+/g, '-'),
-                title: section.innerText,
-                content: contentElements.join('\n'),
-                pageId: page.id
+            const pageId = findPageId(el);
+            originalContent.push({
+                text,
+                element: el,
+                pageId
             });
-        });
-
-        originalContent[page.id] = {
-            sections: sectionData
-        };
+        }
     });
+}
+
+function findPageId(element) {
+    let el = element;
+    while (el && !el.classList?.contains('page-content')) {
+        el = el.parentElement;
+    }
+    return el?.id || 'unknown';
+}
+
+function findClosestHeading(el) {
+    while (el && !['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
+        el = el.previousElementSibling || el.parentElement;
+    }
+    return el && ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName) ? el : null;
 }
 
 function highlightText(text, query) {
@@ -94,4 +104,33 @@ function highlightText(text, query) {
 
 function truncateText(text, maxLength) {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+}
+
+function scrollToElement(el) {
+    const blockEl = getBlockElement(el);
+    if (blockEl) {
+        blockEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+function getBlockElement(el) {
+    while (el && !window.getComputedStyle(el).display.startsWith('block')) {
+        el = el.parentElement;
+    }
+    return el;
+}
+
+function highlightElement(el) {
+    const blockEl = getBlockElement(el);
+    if (blockEl) {
+        blockEl.style.transition = 'background-color 0.5s';
+        blockEl.style.backgroundColor = 'rgb(181,244,244)';
+        setTimeout(() => {
+            blockEl.style.backgroundColor = '';
+        }, 2000);
+    }
+}
+
+function closeSearchModal() {
+    document.getElementById('searchModal').style.display = 'none';
 }

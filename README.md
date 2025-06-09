@@ -1,6 +1,6 @@
 # 📚 PFDS - 纯前端文档系统（Pure Frontend Document System）
 
-[![npm version](https://img.shields.io/npm/v/pfds-init)](https://www.npmjs.com/package/my-pfds)
+[![npm version](https://img.shields.io/npm/v/my-pfds)](https://www.npmjs.com/package/my-pfds)
 [![License](https://img.shields.io/npm/l/pfds-init)](https://github.com/nanxiangxi/pfds/blob/main/LICENSE)
 
 > 快速完成文档编写，支持热更新，全局搜索，一键部署等功能。
@@ -11,13 +11,13 @@ PFDS 是一个基于纯前端技术构建的文档系统，无需后端服务即
 
 ## 📦 版本更新日志
 
-### **当前版本：v1.0.7**（发布日期：2025年6月4日）
+### **当前版本：v1.0.8**（发布日期：2025年6月9日）
 
 #### ✨ 新增功能
-- 视图文件的CSS与全局CSS样式隔离
+- 3种主题选择，新增浅色主题2种,  新增深色主题1种
 
 #### 🔧 优化改进
-- 优化安装过程，更简单易用
+- 优化日志格式
 
 #### 🐛 Bug 修复
 - 无任何修改内容
@@ -119,12 +119,6 @@ my-project/
 
 欢迎提交 Issues 和 Pull Requests！
 
-
----
-
-## 📜 协议
-
-MIT License，详情请查看 [LICENSE](LICENSE.txt) 文件。
 
 ---
 
