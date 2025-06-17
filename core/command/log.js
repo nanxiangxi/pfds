@@ -146,6 +146,10 @@ class Logger {
         this.log('info', 'ℹ️ ', colors.cyan, message, ...args);
     }
 
+    // 成功日志
+    success(message, ...args) {
+        this.log('info', '✅', colors.green, message, ...args);
+    }
     // 调试日志
     debug(message, ...args) {
         this.log('debug', '🔍', colors.dim + colors.white, message, ...args);

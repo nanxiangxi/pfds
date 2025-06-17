@@ -715,5 +715,92 @@ tr:nth-child(even) {
 .green-pound {
     color: #2E8B57;
 }
+/*----------------------------------------注意框样式----------------------------------------*/
+.Attention-box {
+    max-width: 80%; /* 设置最大宽度 */
+    margin: 20px auto; /* 居中显示 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+/* 添加垂直条带装饰 */
+.strip {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+/* 定义不同状态的颜色风格 */
+.red {
+    background-color: #3a1d1d; /* 深红色背景 */
+}
+.red .strip {
+    background-color: #8b3500; /* 红卡的条纹颜色 */
+}
 
+.green {
+    background-color: #1d3a1d; /* 深绿色背景 */
+}
+.green .strip {
+    background-color: #6f993d; /* 绿卡的条纹颜色 */
+}
+
+.blue {
+    background-color: #1d263a; /* 深蓝色背景 */
+}
+.blue .strip {
+    background-color: #3d6f99; /* 蓝卡的条纹颜色 */
+}
+
+.orange {
+    background-color: #3a2b1d; /* 深橙色背景 */
+}
+.orange .strip {
+    background-color: #b06600; /* 橙卡的条纹颜色 */
+}
+
+/*----------------------------------------markdown表格样式样式-PC端----------------------------------------*/
+.markdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #1e1e1e; /* 深色背景 */
+    color: #e6e6e6; /* 浅色文字 */
+    font-size: 14px;
+    border: 1px solid #333;
+    display: table; /* 确保表格行为保持一致 */
+}
+
+.markdown-table th,
+.markdown-table td {
+    padding: 12px 16px;
+    border: 1px solid #333;
+    text-align: left;
+    display: table-cell; /* 确保单元格行为保持一致 */
+    flex-grow: 1; /* 单元格会根据内容自动扩展 */
+}
+
+.markdown-table th {
+    background-color: #2d2d2d; /* 略亮一点的表头背景 */
+    color: #ffffff;
+    font-weight: bold;
+    border-bottom: 1px solid #444;
+}
+
+.markdown-table tr {
+    transition: background-color 0.2s ease;
+    display: table-row; /* 确保行行为保持一致 */
+}
+
+.markdown-table tr:hover {
+    background-color: #2a2a2a; /* 鼠标悬停时稍微变亮 */
+}
+
+.markdown-table tr:nth-child(even) {
+    background-color: #242424;
+}
 

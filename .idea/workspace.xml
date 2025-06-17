@@ -4,7 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容" />
+    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容">
+      <change afterPath="$PROJECT_DIR$/core/command/build/01-初始化环境.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/02-加载配置.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/03-生成导航.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/04-处理视图.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/05-处理样式.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/06-打包模块.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/07-生成HTML.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/context.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/01-标题.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/02-分割线.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/03-注意框.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/04-表格.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/build.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/build.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/log.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/log.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/themes/dark-1.css" beforeDir="false" afterPath="$PROJECT_DIR$/core/themes/dark-1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/views/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/views/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/js/modules.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pfds.js" beforeDir="false" afterPath="$PROJECT_DIR$/pfds.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,9 +41,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="JavaScript File" />
         <option value="TypeScript File" />
         <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -32,6 +57,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="PerforceDirect.Settings">
+    <option name="CHARSET" value="无" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="D:\BtSoft\php\80\php.exe" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -43,9 +71,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "F:/pfds",
+    "last_opened_file_path": "F:/pfds-docs",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -82,7 +111,9 @@
       <workItem from="1748977442029" duration="521000" />
       <workItem from="1749026263986" duration="10000" />
       <workItem from="1749397009299" duration="1857000" />
-      <workItem from="1749434903962" duration="20879000" />
+      <workItem from="1749434903962" duration="23528000" />
+      <workItem from="1750170804772" duration="877000" />
+      <workItem from="1750181123810" duration="14337000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />
