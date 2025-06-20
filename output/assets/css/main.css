@@ -705,22 +705,36 @@ tr:nth-child(even) {
 }
 
 /*---------------------------------------- 分隔线样式----------------------------------- */
+/* 原有的单横线分割器 */
 .side-nav-divider {
     margin: 40px 0;
     border: none;
     height: 1px;
-    /* 使用从透明到浅色再到透明的渐变，浅色部分可根据需要调整 */
+    /* 使用从透明到浅色再到透明的渐变 */
     background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
+/* 新增的双横线分割器 */
+.side-nav-divider-double {
+    margin: 40px 0;
+    border: none;
+    height: 8px; /* 总高度为8px，包括两条线和它们之间的间距 */
+    background-image:
+            linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent),
+            linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background-size: 100% 1px; /* 每条线的高度为1px */
+    background-position: 0 1px, 0 7px; /* 第一条线从顶部开始2px，第二条线从顶部开始6px，保证两者之间有4px的间距 */
+    background-repeat: no-repeat;
+}
 /* --------------------------------------- 绿色井号样式-------------------------------- */
 .green-pound {
     color: #2E8B57;
 }
 /*----------------------------------------注意框样式----------------------------------------*/
+/* 定义基本的Attention-box样式 */
 .Attention-box {
-    max-width: 80%; /* 设置最大宽度 */
-    margin: 20px auto; /* 居中显示 */
+    max-width: 80%;
+    margin: 20px auto;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -728,6 +742,23 @@ tr:nth-child(even) {
     align-items: center;
     position: relative;
 }
+
+/* 对齐方式样式 */
+.align-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.align-left {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+.align-right {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
 /* 添加垂直条带装饰 */
 .strip {
     width: 5px;
@@ -736,32 +767,33 @@ tr:nth-child(even) {
     left: 0;
     top: 0;
 }
-/* 定义不同状态的颜色风格 */
-.red {
-    background-color: #3a1d1d; /* 深红色背景 */
+
+/* 特定于Attention-box的颜色风格 */
+.Attention-box.red {
+    background-color: #3a1d1d;
 }
-.red .strip {
-    background-color: #8b3500; /* 红卡的条纹颜色 */
+.Attention-box.red .strip {
+    background-color: #8b3500;
 }
 
-.green {
-    background-color: #1d3a1d; /* 深绿色背景 */
+.Attention-box.green {
+    background-color: #1d3a1d;
 }
-.green .strip {
-    background-color: #6f993d; /* 绿卡的条纹颜色 */
+.Attention-box.green .strip {
+    background-color: #6f993d;
 }
 
-.blue {
+.Attention-box.blue {
     background-color: #1d263a; /* 深蓝色背景 */
 }
-.blue .strip {
+.Attention-box.blue .strip {
     background-color: #3d6f99; /* 蓝卡的条纹颜色 */
 }
 
-.orange {
+.Attention-box.orange {
     background-color: #3a2b1d; /* 深橙色背景 */
 }
-.orange .strip {
+.Attention-box.orange .strip {
     background-color: #b06600; /* 橙卡的条纹颜色 */
 }
 
@@ -806,3 +838,45 @@ tr:nth-child(even) {
     background-color: #242424;
 }
 
+/*----------------------------------------内联代码样式---------------------------------------*/
+.markdown-inline-code {
+    font-family: monospace;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: rgba(66, 66, 66, 0.47);
+    color: #bab9b9;
+}
+
+.markdown-inline-code.red {
+    background-color: #ffdddd;
+    color: #c00;
+}
+
+.markdown-inline-code.green {
+    background-color: #ddffdd;
+    color: #060;
+}
+
+.markdown-inline-code.highlight {
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+}
+
+/*----------------------------------------markdown无序列表样式---------------------------------------*/
+.markdown-ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.markdown-li {
+    margin-bottom: 4px;
+}
+/*----------------------------------------markdown有序列表样式---------------------------------------*/
+.markdown-ol {
+    padding-left: 20px;
+}
+
+.markdown-ol li {
+    margin-bottom: 4px;
+}

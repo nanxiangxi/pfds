@@ -70,19 +70,28 @@
   <div class="content-area">
     <div class="content-main">
       <div id="home" class="page-content active view-scope-home">
-<h1>部署成功  <!--标题的写法--></h1><hr class="side-nav-divider">
-<!--分割线的写法-->
+这是一级标题：
+<h1><span class="page-link" onclick="showPage('about')">部署成功</span></h1>
+这是一个二级标题：
+<h2><span class="green-pound">#</span> 二级标题</h2><hr class="side-nav-divider">
 
-
-<div class="Attention-box red">
+<div class="Attention-box red align-center">
     
-    红色注意框内容
-</div><hr class="side-nav-divider">
+    居中的红色注意框内容
+</div>
 
-<div class="Attention-box green">
+<div class="Attention-box green align-right">
     <div class="strip"></div>
-    带竖线的绿色注意框内容
+    靠左的绿色注意框内容@
+</div>
+
+
+<div class="Attention-box blue align-left">
+    
+    靠右的蓝色注意框内容
 </div><hr class="side-nav-divider">
+这是一个表格：
+
 <table class="markdown-table">
   <thead>
   <tr>
@@ -101,16 +110,35 @@
     </tr>
   </tbody>
 </table>
-
-
 <hr class="side-nav-divider">
+这是一个代码块：
+<h2><span class="green-pound">#</span> 第三个标题</h2>
+<pre><code class="sql">function hello() {
+console.log("Hello, world!");
+}</code><span class="language-label">sql</span></pre><hr class="side-nav-divider">
+这是一个红色代码：<code class="markdown-inline-code red">console.log("Hello")</code>，还有绿色代码：<code class="markdown-inline-code green">doSomething()</code>。
+默认代码：<code class="markdown-inline-code">let a = 1;</code>。
+高亮代码：<code class="markdown-inline-code highlight">function hello() { alert('Hi'); }</code><hr class="side-nav-divider">
+这是一个无序列表：
 
-1. 第一步
-2. 第二步
-   1. 子步骤1
-   2. 子步骤2
-3. 第三步<hr class="side-nav-divider">
-这是新版本新增的一些MarkDown语法支持
+<ul class="markdown-ul"><li class="markdown-li">一级</li></ul>
+<ul class="markdown-ul"><ul class="markdown-ul"><li class="markdown-li">二级</li></ul></ul>
+<ul class="markdown-ul"><ul class="markdown-ul"><ul class="markdown-ul"><li class="markdown-li">三级</li></ul></ul></ul>
+<ul class="markdown-ul"><ul class="markdown-ul"><ul class="markdown-ul"><ul class="markdown-ul"><li class="markdown-li">四级</li></ul></ul></ul></ul>
+<ul class="markdown-ul"><ul class="markdown-ul"><li class="markdown-li">另一个二级</li></ul></ul>
+<ul class="markdown-ul"><li class="markdown-li">又一个一级</li></ul>
+<ul class="markdown-ul"><ul class="markdown-ul"><li class="markdown-li">二级</li></ul></ul>
+<ul class="markdown-ul"><ul class="markdown-ul"><ul class="markdown-ul"><li class="markdown-li">三级</li></ul></ul></ul>
+<ul class="markdown-ul"><ul class="markdown-ul"><li class="markdown-li">另一个二级</li></ul></ul><hr class="side-nav-divider">
+这是一个有序列表：
+
+<ol class="markdown-ol"><li class="markdown-li">学习 HTML1</li></ol>
+<ol class="markdown-ol"><ol class="markdown-ol"><li class="markdown-li">学习 HTML1.1</li></ol></ol>
+<ol class="markdown-ol"><ol class="markdown-ol"><li class="markdown-li">学习 HTML1.2</li></ol></ol>
+<ol class="markdown-ol"><ol class="markdown-ol"><ol class="markdown-ol"><li class="markdown-li">学习 HTML1.2.3</li></ol></ol></ol>
+<ol class="markdown-ol"><li class="markdown-li">学习 CSS</li></ol>
+<ol class="markdown-ol"><li class="markdown-li">学习 JavaScript</li></ol><hr class="side-nav-divider">
+这是新版本新增的一些参考MarkDown编写的快捷语法支持
 </div>
 
 
@@ -144,5 +172,20 @@
   });
 </script>
 <!-- DEV_ONLY_END -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.page-anchor').forEach(link => {
+      link.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('data-target-id');
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          // 平滑滚动到目标位置
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>

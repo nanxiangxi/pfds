@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "axios": "^1.10.0",
     "chokidar": "^4.0.3",
     "clean-css": "^5.3.3",
     "commander": "^14.0.0",

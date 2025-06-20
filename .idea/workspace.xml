@@ -5,28 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容">
-      <change afterPath="$PROJECT_DIR$/core/command/build/01-初始化环境.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/02-加载配置.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/03-生成导航.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/04-处理视图.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/05-处理样式.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/06-打包模块.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/07-生成HTML.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/context.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/01-标题.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/02-分割线.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/03-注意框.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/04-表格.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/01-表格.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/05-代码块.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/06-内联代码块.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/07-无序列表.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/08-有序列表.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/build/markdown/99-页面更新.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/command/theme.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/command/build.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/build.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/command/log.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/log.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/build/markdown/01-标题.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/build/markdown/03-标题.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/build/markdown/02-分割线.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/build/markdown/02-分割线.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/build/markdown/03-注意框.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/build/markdown/04-注意框.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/build/markdown/04-表格.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/build/markdown/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/build/markdown/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/command/install.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/themes/bright-1.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/themes/bright-2.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/themes/dark-1.css" beforeDir="false" afterPath="$PROJECT_DIR$/core/themes/dark-1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/themes/dark-2.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/template/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/template/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dev/views/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/views/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/assets/css/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/assets/js/modules.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/output/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pfds.js" beforeDir="false" afterPath="$PROJECT_DIR$/pfds.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,22 +73,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "F:/pfds-docs",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\PhpStorm 2024.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/pfds-docs&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\PhpStorm 2024.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\pfds\new" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -113,7 +122,9 @@
       <workItem from="1749397009299" duration="1857000" />
       <workItem from="1749434903962" duration="23528000" />
       <workItem from="1750170804772" duration="877000" />
-      <workItem from="1750181123810" duration="14337000" />
+      <workItem from="1750181123810" duration="14866000" />
+      <workItem from="1750217838199" duration="2325000" />
+      <workItem from="1750399621259" duration="21123000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />

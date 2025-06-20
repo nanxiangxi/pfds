@@ -96,5 +96,20 @@
   });
 </script>
 <!-- DEV_ONLY_END -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.page-anchor').forEach(link => {
+      link.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('data-target-id');
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          // 平滑滚动到目标位置
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>

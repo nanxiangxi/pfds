@@ -3,12 +3,12 @@
 const { Command } = require('commander');
 const program = new Command();
 const path = require('node:path');
-const { exec } = require('child_process'); // 改用异步 exec
+const { exec } = require('child_process');
 
 // 导入命令
 const { build } = require(path.resolve(process.cwd(), 'core/command/build'));
 const { startDevServer } = require(path.resolve(process.cwd(), 'core/command/dev'));
-const { installDependencies } = require(path.resolve(process.cwd(), 'core/command/install'));
+const { installTheme } = require(path.resolve(process.cwd(), 'core/command/theme'));
 
 // 👇 使用异步版本 runWithNpmLink
 function runWithNpmLink(commandFn) {
@@ -34,6 +34,16 @@ function runWithNpmLink(commandFn) {
     });
 }
 
+// 👇 注册 theme 命令
+program
+    .command('theme <themeName>')
+    .alias('t')
+    .description('下载并安装主题到 core/themes/<themeName>')
+    .action(async (themeName) => {
+        await installTheme(themeName);
+    });
+
+// 构建和开发命令保持不变
 program
     .command('build')
     .description('运行构建任务')
@@ -45,15 +55,7 @@ program
     .command('dev')
     .description('启动开发模式并监听文件变化')
     .action(() => {
-        runWithNpmLink(startDevServer); // 注意：这里也可以直接传函数引用
-    });
-
-program
-    .command('install')
-    .alias('i')
-    .description('安装项目依赖')
-    .action(() => {
-        runWithNpmLink(installDependencies);
+        runWithNpmLink(startDevServer);
     });
 
 program.parse(process.argv);
