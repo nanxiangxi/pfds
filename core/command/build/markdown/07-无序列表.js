@@ -1,63 +1,103 @@
-// unorderedList.js - 支持单行多级列表的解析器
+// unorderedList.js - 插件式无序列表解析器（支持单行/多行 + 嵌套）
 module.exports = function parseUnorderedList(content) {
-    // 匹配 * 或 ** 或 *** 等开头的列表项
-    const regex = /(\*+)(\s+)([^*\n\r]+)/g;
+    const result = [];
 
-    let result = '';
-    const stack = []; // 存储 ul 的层级
+    // 拆分段落块（根据空行或非列表行分割）
+    const blocks = splitIntoBlocks(content);
 
-    let lastIndex = 0;
-    let match;
-
-    // 处理闭合剩余的 ul
-    function closeAllUls() {
-        while (stack.length > 0) {
-            result += '</ul>';
-            stack.pop();
+    for (const block of blocks) {
+        if (isUnorderedListBlock(block)) {
+            // 是无序列表块，进行解析
+            result.push(generateNestedList(parseLinesFromBlock(block)));
+        } else {
+            // 非列表块保留原样
+            result.push(block);
         }
     }
 
-    // 主循环处理每一项
-    while ((match = regex.exec(content)) !== null) {
-        const [full, stars, space, text] = match;
-        const level = stars.length;
-
-        // 如果不是从第一个字符开始，前面的部分保留为普通文本
-        if (match.index > lastIndex) {
-            closeAllUls();
-            result += content.slice(lastIndex, match.index);
-        }
-
-        // 构造 li
-        const li = `<li class="markdown-li">${text.trim()}</li>`;
-
-        // 关闭比当前 level 深的 ul
-        while (stack.length >= level) {
-            result += '</ul>';
-            stack.pop();
-        }
-
-        // 打开新的 ul（如果需要）
-        if (stack.length < level) {
-            for (let i = stack.length + 1; i <= level; i++) {
-                result += '<ul class="markdown-ul">';
-                stack.push(i);
-            }
-        }
-
-        // 添加 li
-        result += li;
-
-        lastIndex = regex.lastIndex;
-    }
-
-    // 处理末尾剩余内容
-    if (lastIndex < content.length) {
-        closeAllUls();
-        result += content.slice(lastIndex);
-    } else {
-        closeAllUls();
-    }
-
-    return result;
+    return result.join('\n');
 };
+
+// 将文本拆分为独立的段落块（遇到空行或非列表行时分割）
+function splitIntoBlocks(content) {
+    const lines = content.split('\n');
+    const blocks = [];
+    let currentBlock = [];
+
+    for (const line of lines) {
+        const isListLine = /^(\*+)(\s+)/.test(line.trim());
+
+        if (isListLine) {
+            currentBlock.push(line);
+        } else {
+            if (currentBlock.length > 0) {
+                // 把当前缓存的列表行合并成一个块
+                blocks.push(currentBlock.join('\n'));
+                currentBlock = [];
+            }
+            blocks.push(line); // 非列表行单独作为一个块
+        }
+    }
+
+    if (currentBlock.length > 0) {
+        blocks.push(currentBlock.join('\n'));
+    }
+
+    return blocks;
+}
+
+// 判断一个块是否是无序列表块
+function isUnorderedListBlock(block) {
+    return block.startsWith('*');
+}
+
+// 解析块中的列表项（支持单行多个列表项）
+function parseLinesFromBlock(block) {
+    const matches = block.match(/(\*+\s+[^*\n\r]+)/g) || [];
+    return matches.map(match => match.trim());
+}
+
+// 构建树状结构并生成嵌套 HTML
+function generateNestedList(lines) {
+    const root = { children: [] };
+    const stack = [root];
+
+    for (const line of lines) {
+        const match = line.match(/^(\*+)(\s+)(.+)$/);
+        if (!match) continue;
+
+        const stars = match[1];
+        const level = stars.length;
+        const text = match[3].trim();
+
+        // 确保层级正确：如果当前栈太深，就弹出
+        while (stack.length > level) {
+            stack.pop();
+        }
+
+        const parent = stack[stack.length - 1];
+
+        const newItem = {
+            text,
+            children: []
+        };
+
+        parent.children.push(newItem);
+        stack.push(newItem);
+    }
+
+    function buildHtml(items) {
+        if (!items || items.length === 0) return '';
+
+        let html = '<ul class="markdown-ul">';
+        for (const item of items) {
+            html += `<li class="markdown-li">${item.text}`;
+            html += buildHtml(item.children);
+            html += '</li>';
+        }
+        html += '</ul>';
+        return html;
+    }
+
+    return buildHtml(root.children);
+}

@@ -1,60 +1,74 @@
-// orderedList.js - 支持多级嵌套的有序列表解析器
+// orderedList.js - 插件式有序列表解析器（保留非列表内容）+ 嵌套支持
 module.exports = function parseOrderedList(content) {
-    // 匹配数字编号格式：如 1., 1.1., 1.2.3 等 + 后面的文字
-    const regex = /(\d+(?:\.\d+)*)([.)])\s+([^\n\r]+)/g;
+    const lines = content.split('\n');
+    let result = [];
+    let listGroup = [];
 
-    let result = '';
-    const stack = []; // 存储 ol 的层级
-    let lastIndex = 0;
-    let match;
+    // 分组连续的有序列表行
+    for (const line of lines) {
+        const match = line.match(/^(\d+(?:\.\d+)*)[.)]\s+([^\n\r]+)/);
 
-    // 关闭栈中所有剩余的 ol 标签
-    function closeAllOls() {
-        while (stack.length > 0) {
-            result += '</ol>';
-            stack.pop();
+        if (match) {
+            listGroup.push(line);
+        } else {
+            if (listGroup.length > 0) {
+                // 处理一组有序列表
+                result.push(generateNestedList(listGroup));
+                listGroup = [];
+            }
+            result.push(line); // 非列表行保留
         }
     }
 
-    while ((match = regex.exec(content)) !== null) {
-        const [full, numberPart, delimiter, text] = match;
-        const level = numberPart.split('.').length; // 层级深度（比如 1.2.3 是三级）
+    // 处理末尾剩余的列表行
+    if (listGroup.length > 0) {
+        result.push(generateNestedList(listGroup));
+    }
 
-        // 如果当前匹配前有内容，先处理掉前面的内容和关闭旧 ol
-        if (match.index > lastIndex) {
-            closeAllOls();
-            result += content.slice(lastIndex, match.index);
-        }
+    return result.join('\n');
+};
 
-        const li = `<li class="markdown-li">${text.trim()}</li>`;
+// 构建树状结构并生成嵌套 HTML
+function generateNestedList(lines) {
+    const tree = {};
 
-        // 关闭比当前 level 深的 ol
-        while (stack.length >= level) {
-            result += '</ol>';
-            stack.pop();
-        }
+    for (const line of lines) {
+        const match = line.match(/^(\d+(?:\.\d+)*)[.)]\s+([^\n\r]+)/);
+        if (!match) continue;
 
-        // 打开新的 ol（如果需要）
-        if (stack.length < level) {
-            for (let i = stack.length + 1; i <= level; i++) {
-                result += '<ol class="markdown-ol">';
-                stack.push(i);
+        const [, numberPart, text] = match;
+        const path = numberPart.split('.').map(Number);
+        let node = tree;
+
+        for (let i = 0; i < path.length; i++) {
+            const key = path[i];
+            if (!node.children) node.children = {};
+            if (!node.children[key]) node.children[key] = { value: null };
+            node = node.children[key];
+
+            if (i === path.length - 1) {
+                node.value = text.trim();
             }
         }
-
-        // 添加 li
-        result += li;
-
-        lastIndex = regex.lastIndex;
     }
 
-    // 处理末尾剩余内容
-    if (lastIndex < content.length) {
-        closeAllOls();
-        result += content.slice(lastIndex);
-    } else {
-        closeAllOls();
+    function buildHtml(node) {
+        if (!node.children) return '';
+
+        const items = Object.entries(node.children).sort(([a], [b]) => a - b);
+        let html = '<ol class="markdown-ol">';
+
+        for (const [key, child] of items) {
+            html += `<li class="markdown-li">${child.value || ''}`;
+            if (child.children) {
+                html += buildHtml(child);
+            }
+            html += '</li>';
+        }
+
+        html += '</ol>';
+        return html;
     }
 
-    return result;
-};
+    return buildHtml(tree);
+}
