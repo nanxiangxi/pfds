@@ -19,8 +19,20 @@ function generateHeadLinks() {
 module.exports = async () => {
     shared.logger.stepStart('最终HTML构建');
 
+    // 获取当前时间，格式化为 YYYY-MM-DD HH:mm:ss
+    const buildTime = new Date().toLocaleString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    }).replace(/\//g, '-'); // 替换斜杠为短横线
+
     let html = shared.templateContent
         .replace(/{{siteTitle}}/g, shared.config.siteTitle)
+        .replace(/{{buildTime}}/g, buildTime)  // 新增的替换项
         .replace(/<!-- NAV_PLACEHOLDER -->/g, shared.navHTML)
         .replace(/<!-- CONTENT_PLACEHOLDER -->/g, shared.viewsHTML);
 

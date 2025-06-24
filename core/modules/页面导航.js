@@ -1,5 +1,7 @@
 export function initNavigation() {
     window.showPage = function(id) {
+     //   console.log("调用 showPage:", id);
+
         document.querySelectorAll('.page-content').forEach(page => {
             page.classList.remove('active');
         });
@@ -10,11 +12,24 @@ export function initNavigation() {
             updateContentNav(id);
         }
 
-        document.querySelectorAll('.nav a').forEach(navLink => {
+        // 👇 打印将要清理的导航项
+        const navLinks = document.querySelectorAll('.pfds-nav a');
+        //console.log("找到的侧边栏导航项数量:", navLinks.length);
+        navLinks.forEach(navLink => {
+            //console.log("移除 active from", navLink.id || navLink.innerText);
             navLink.classList.remove('active');
         });
-        document.getElementById(`nav-${id}`)?.classList.add('active');
+
+        const currentNavLink = document.getElementById(`nav-${id}`);
+        if (currentNavLink) {
+            currentNavLink.classList.add('active');
+            //console.log("设置 active to", currentNavLink.id || currentNavLink.innerText);
+        }
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        const event = new CustomEvent('showPage', { detail: { pageId: id } });
+        window.dispatchEvent(event);
     }
 
     function updateContentNav(pageId) {
@@ -24,7 +39,7 @@ export function initNavigation() {
 
         contentNavList.innerHTML = '';
         sections.forEach(section => {
-            const sectionId = section.id || section.innerText.replace(/\s+/g, '-');
+            const sectionId = section.id || section.innerText.replace(/\s+/g, '-').toLowerCase();
             section.id = sectionId;
 
             const listItem = document.createElement('li');

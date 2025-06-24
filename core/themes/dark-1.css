@@ -228,14 +228,14 @@ body {
 }
 /*---------------------------------      主体布局-PC端     ---------------------------------*/
 
-.container {
+.pfds-container {
     display: flex;
     flex: 1;
     overflow: hidden;
 }
 
 /* 左侧导航栏 */
-.nav {
+.pfds-nav {
     width: 250px;
     background: #1f1f1f;
     padding: 1rem;
@@ -245,20 +245,20 @@ body {
     -ms-overflow-style: none;
 }
 
-.nav::-webkit-scrollbar {
+.pfds-nav::-webkit-scrollbar {
     display: none;
 }
 
-.nav ul {
+.pfds-nav ul {
     list-style: none;
     padding: 0;
 }
 
-.nav li {
+.pfds-nav li {
     margin: 0.5rem 0;
 }
 
-.nav a {
+.pfds-nav a {
     display: block;
     padding: 0.75rem 1rem;
     color: #ccc;
@@ -268,21 +268,33 @@ body {
     font-size: 0.9rem;
 }
 
-.nav a:hover,
-.nav a.active {
+.pfds-nav a:hover,
+.pfds-nav a.active {
     background-color: #333;
     color: var(--primary-color);
 }
 
+.pfds-compile-time {
+    position: absolute;
+    bottom: 1rem;        /* 距离底部 1rem */
+    right: 1rem;         /* 改成右边距，显示在右下角 */
+    color: #888;
+    font-size: 0.8rem;
+    background-color: #2a2a2a;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius);
+    white-space: nowrap; /* 防止文字换行 */
+}
+
 /* 主内容区域 */
-.content-area {
+.pfds-content-area {
     flex: 1;
     display: flex;
     overflow: hidden;
     background: #1e1e1e;
 }
 
-.content-main {
+.pfds-content-main {
     flex: 1;
     padding: 1.5rem;
     overflow-y: auto;
@@ -290,12 +302,12 @@ body {
     -ms-overflow-style: none;
 }
 
-.content-main::-webkit-scrollbar {
+.pfds-content-main::-webkit-scrollbar {
     display: none;
 }
 
 /* 右侧内容导航栏 */
-.content-nav {
+.pfds-content-nav {
     width: 250px;
     background: #1f1f1f;
     padding: 1rem;
@@ -305,20 +317,20 @@ body {
     -ms-overflow-style: none;
 }
 
-.content-nav::-webkit-scrollbar {
+.pfds-content-nav::-webkit-scrollbar {
     display: none;
 }
 
-.content-nav ul {
+.pfds-content-nav ul {
     list-style: none;
     padding: 0;
 }
 
-.content-nav li {
+.pfds-content-nav li {
     margin: 0.5rem 0;
 }
 
-.content-nav a {
+.pfds-content-nav a {
     display: block;
     padding: 0.75rem 1rem;
     color: #ccc;
@@ -328,16 +340,17 @@ body {
     font-size: 0.9rem;
 }
 
-.content-nav a:hover,
-.content-nav a.active {
+.pfds-content-nav a:hover,
+.pfds-content-nav a.active {
     background-color: #333;
     color: var(--primary-color);
 }
+
 /*---------------------------------      主体布局-手机端     ---------------------------------*/
 
 @media (max-width: 768px) {
     /* 隐藏侧边导航默认状态 */
-    .nav {
+    .pfds-nav {
         position: fixed;
         top: 0;
         left: -250px;
@@ -347,12 +360,12 @@ body {
     }
 
     /* 弹出时显示侧边栏 */
-    .nav.show {
+    .pfds-nav.show {
         left: 0;
     }
 
     /* 背景遮罩层 */
-    .overlay {
+    .pfds-overlay {
         display: none;
         position: fixed;
         top: 0;
@@ -365,31 +378,31 @@ body {
     }
 
     /* 主体容器添加左移效果 */
-    .container.show-nav .content-area {
+    .pfds-container.show-nav .pfds-content-area {
         transform: translateX(250px);
         transition: transform 0.3s ease-in-out;
     }
 
     /* 隐藏右侧内容导航栏 */
-    .content-nav {
+    .pfds-content-nav {
         display: none;
     }
 
     /* 修改主内容区域为全宽 */
-    .content-area {
+    .pfds-content-area {
         flex-direction: column;
         width: 100vw; /* 占满整个视口宽度 */
         transform: translateX(0); /* 默认不偏移 */
         transition: transform 0.3s ease-in-out;
     }
 
-    .content-main {
+    .pfds-content-main {
         width: 100%;
         padding: 1rem;
     }
 
     /* 当 nav 展开时，主内容向右平移 */
-    .container.show-nav .content-area {
+    .pfds-container.show-nav .pfds-content-area {
         transform: translateX(250px);
     }
 }
@@ -579,7 +592,7 @@ tr:nth-child(even) {
 }
 /*---------------------------------      模拟框     ---------------------------------*/
 
-.modal-overlay {
+.pfds-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -594,7 +607,7 @@ tr:nth-child(even) {
     transition: var(--transition-speed);
 }
 
-.modal {
+.pfds-modal {
     background-color: #1a1a1a; /* 更深的背景色 */
     padding: 2rem;
     border-radius: var(--border-radius);
@@ -611,16 +624,15 @@ tr:nth-child(even) {
 }
 
 /* 隐藏滚动条 - WebKit 浏览器 */
-.modal::-webkit-scrollbar {
+.pfds-modal::-webkit-scrollbar {
     display: none;
 }
 
 /* Firefox 和 IE/Edge 滚动条隐藏 */
-.modal {
+.pfds-modal {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-
 /*---------------------------------      搜索卡片     ---------------------------------*/
 
 .search-card {
@@ -731,7 +743,6 @@ tr:nth-child(even) {
 /*----------------------------------------注意框样式----------------------------------------*/
 /* 定义基本的Attention-box样式 */
 .Attention-box {
-    max-width: 80%;
     margin: 20px auto;
     padding: 20px;
     border-radius: 10px;
@@ -764,6 +775,13 @@ tr:nth-child(even) {
     position: absolute;
     left: 0;
     top: 0;
+}
+/* 特定于Attention-box的颜色风格 */
+.Attention-box.o {
+    background-color: rgba(44, 44, 44, 0.9);
+}
+.Attention-box.o .strip {
+    background-color:#3d6f99;
 }
 
 /* 特定于Attention-box的颜色风格 */
@@ -877,4 +895,11 @@ tr:nth-child(even) {
 
 .markdown-ol li {
     margin-bottom: 4px;
+}
+/*----------------------------------------markdown富文本样式---------------------------------------*/
+.markdown-word {
+    white-space: pre-wrap;       /* 保留空白字符，自动换行 */
+    word-wrap: break-word;       /* 长单词或 URL 自动换行 */
+    font-family: inherit;        /* 继承父级字体 */
+    overflow-x: auto;            /* 如果有长行可横向滚动 */
 }

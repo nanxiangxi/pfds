@@ -1,9 +1,15 @@
 const path = require('path');
 const { CONFIG, shared, utils } = require('./context');
-const applyMarkdownPlugins = require('./markdown'); // 引入自动加载模块
+const applyMarkdownPlugins = require('./markdown');
+const applyScopedCSS = require('./views/css');
+const applyScopedJS = require('./views/script'); // 引入 JS 隔离模块
+
 module.exports = async () => {
     shared.logger.stepStart('视图处理');
     let viewsHTML = '';
+
+    // 初始化共享的公共 JS 缓存
+    shared.publicJS = '';
 
     for (const route of shared.routes) {
         const viewPath = path.join(CONFIG.DEV_DIR, 'views', route.file);
@@ -17,26 +23,16 @@ module.exports = async () => {
         content = applyMarkdownPlugins(content);
         /*----------------------------------------markdown结束----------------------------------------*/
 
+        /*----------------------------------------CSS作用域开始----------------------------------------*/
         const viewScopeClass = `view-scope-${route.id}`;
+        const initCssAutoLoad = shared.config.initCssAutoLoad === true;
+        content = await applyScopedCSS(content, viewScopeClass, route.id, initCssAutoLoad);
+        /*----------------------------------------CSS作用域结束----------------------------------------*/
 
-        // CSS 作用域处理
-        const styleRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
-        content = content.replace(styleRegex, (match, styleContent) => {
-            const scopedCSS = styleContent
-                .split('}')
-                .filter(rule => rule.trim())
-                .map(rule => {
-                    const [selectors, declarations] = rule.split('{').map(part => part.trim());
-                    const scopedSelectors = selectors
-                        .split(',')
-                        .map(sel => `.${viewScopeClass} ${sel.trim()}`)
-                        .join(', ');
-                    return `${scopedSelectors} {${declarations}}`;
-                })
-                .join('\n');
-
-            return `<style>\n${scopedCSS}\n</style>`;
-        });
+        /*----------------------------------------JS作用域开始----------------------------------------*/
+        const initJsAutoLoad = shared.config.initJsAutoLoad === true;
+        content = await applyScopedJS(content, route.id, initJsAutoLoad);
+        /*----------------------------------------JS作用域结束----------------------------------------*/
 
         // 包裹视图内容
         const className = shared.routes[0].id === route.id
@@ -44,7 +40,27 @@ module.exports = async () => {
             : `page-content ${viewScopeClass}`;
 
         viewsHTML += `<div id="${route.id}" class="${className}">\n${content.trim()}\n</div>\n\n`;
-        shared.logger.subStep(`${route.file} → CSS 隔离完成`, 'success');
+
+        shared.logger.subStep(`${route.file} → JS 隔离 & 处理完成`, 'success');
+    }
+
+    // 所有视图处理完成后再统一写入 public-script.js（无论是否为空）
+    const assetsJSDir = path.join(CONFIG.OUTPUT_DIR, 'assets', 'js');
+    const publicFilePath = path.join(assetsJSDir, 'public-script.js');
+
+    // 确保目录存在
+    if (!(await utils.existsSync(assetsJSDir))) {
+        await utils.mkdir(assetsJSDir, { recursive: true });
+    }
+
+    // ✅ 无论 shared.publicJS 是否为空，都写入文件
+    await utils.writeFile(publicFilePath, shared.publicJS || '');
+
+    // 可选：根据是否有内容输出不同日志等级
+    if (shared.publicJS && shared.publicJS.trim()) {
+        shared.logger.subStep(`公共 JS 已写入: public-script.js`, 'success');
+    } else {
+        shared.logger.subStep(`公共 JS 文件已创建（空文件）: public-script.js`, 'info');
     }
 
     shared.viewsHTML = viewsHTML;

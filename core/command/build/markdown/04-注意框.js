@@ -1,11 +1,10 @@
 module.exports = function (content) {
-    // 修正后的正则表达式
-    const alertBoxRegex = /:::\s*(>?)\s*\[(\w+)([\/\\|])?\]\s*([\s\S]*?):::/gim;
+    // 改进后的正则表达式，能正确捕获对齐符号和宽度
+    const alertBoxRegex = /:::\s*(>?)\s*\[(\w+)([\/\\|])?\s*([0-9]+)?\s*]\s*([\s\S]*?):::/gim;
 
-    return content.replace(alertBoxRegex, (match, hasStrip, color, alignmentSymbol, innerContent) => {
-        // 提取颜色和对齐方式
-        let alignmentClass = 'align-center'; // 默认居中
-
+    return content.replace(alertBoxRegex, (match, hasStrip, color, alignmentSymbol, number, innerContent) => {
+        // 默认对齐方式
+        let alignmentClass = 'align-center';
         if (alignmentSymbol === '/') {
             alignmentClass = 'align-left';
         } else if (alignmentSymbol === '\\') {
@@ -13,15 +12,22 @@ module.exports = function (content) {
         } else if (alignmentSymbol === '|') {
             alignmentClass = 'align-center';
         }
-        const boxClass = `Attention-box ${color.trim().toLowerCase()} ${alignmentClass}`;
-        // 判断是否有竖线装饰
+
+        // 宽度处理
+        const widthPercent = number ? `${number}%` : '80%';
+
+        // 竖线装饰
         const stripHTML = hasStrip ? '<div class="strip"></div>' : '';
-        // 清理内容中的多余空格
+
+        // 清理内容
         const cleanContent = innerContent.trim();
 
-        // 生成最终HTML结构
+        // 构建类名和样式
+        const boxClass = `Attention-box ${color.trim().toLowerCase()} ${alignmentClass}`;
+
+        // 返回 HTML
         return `
-<div class="${boxClass}">
+<div class="${boxClass}" style="width: ${widthPercent};">
     ${stripHTML}
     ${cleanContent}
 </div>`;

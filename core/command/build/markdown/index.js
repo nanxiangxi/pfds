@@ -21,7 +21,7 @@ const applyMarkdownPlugins = (content) => {
         return numA - numB;
     });
 
-    shared.logger.subStep(`开始应用 Markdown 插件，共加载 ${pluginFiles.length} 个插件`);
+   // shared.logger.subStep(`开始应用 Markdown 插件，共加载 ${pluginFiles.length} 个插件`);
 
     // 依次调用插件
     for (const file of pluginFiles) {
@@ -39,7 +39,7 @@ const applyMarkdownPlugins = (content) => {
             try {
                 //shared.logger.debug(`正在应用插件: ${file}`);
                 content = plugin(content); // 上一个插件的输出作为下一个插件的输入
-                shared.logger.subStep(`插件 ${file} 应用成功`);
+                //shared.logger.subStep(`插件 ${file} 应用成功`);
             } catch (err) {
                 shared.logger.error(`插件 ${file} 执行出错:`, err.message);
                 shared.logger.debug(`错误堆栈:`, err.stack);

@@ -16,15 +16,24 @@ module.exports = async () => {
         shared.logger.subStep(`加载模块: ${file}`, 'success');
     }
 
-    // 添加初始化调用
-    modulesJS += `
-// 初始化模块
-initHighlight();
-initModal();
-initNavigation();
-initScroll();
-initSearch();
-`;
+    // 添加初始化调用（条件判断）
+    const initFunctions = [
+        'initHighlight',
+        'initModal',
+        'initNavigation',
+        'initScroll',
+        'initSearch'
+    ];
+
+    if (shared.config.initCssAutoLoad) {
+        initFunctions.push('initCssAutoLoad');
+    }
+
+    if (shared.config.initJsAutoLoad) {
+        initFunctions.push('initJsAutoLoad');
+    }
+
+    modulesJS += `\n// 初始化模块\n${initFunctions.map(fn => `${fn}();`).join('\n')}\n`;
 
     const outputJsPath = path.join(CONFIG.OUTPUT_DIR, 'assets', 'js', 'modules.js');
     await utils.writeFile(outputJsPath, modulesJS);

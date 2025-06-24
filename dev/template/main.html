@@ -58,23 +58,24 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="nav">
+<div class="pfds-container">
+  <div class="pfds-nav" data-no-search>
     <!-- NAV_PLACEHOLDER -->
   </div>
 
-  <div class="content-area">
-    <div class="content-main">
+  <div class="pfds-content-area">
+    <div class="pfds-content-main">
       <!-- CONTENT_PLACEHOLDER -->
     </div>
-    <div class="content-nav">
+    <div class="pfds-content-nav">
       <ul id="contentNavList"></ul>
+      <div class="pfds-compile-time">编译时间：{{buildTime}}</div>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="searchModal">
-  <div class="modal">
+<div class="pfds-modal-overlay" id="searchModal">
+  <div class="pfds-modal">
     <div id="modalContent"></div>
   </div>
 </div>
@@ -84,7 +85,7 @@
 
 <script type="module" src="assets/js/modules.js"></script>
 
-
+<script src="assets/js/public-script.js"></script>
 <!-- DEV_ONLY_START -->
 <!-- 热重载客户端 -->
 <script src="/socket.io/socket.io.js"></script>

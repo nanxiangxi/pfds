@@ -1,7 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 const logger = require('./log');
-const { CONFIG, shared } = require('./build/context');
+
+// ✅ 正确引入 context 中的 CONFIG 和 utils
+const { CONFIG, shared, utils } = require('./build/context'); // 注意这里
 
 async function loadBuildModules() {
     const buildDir = path.join(__dirname, 'build');
@@ -27,6 +29,9 @@ async function build(isDev = true) {
         shared.isDev = isDev;
         logger.configure({ color: true, level: 'info' });
         logger.title(`启动${isDev ? '开发' : '生产'}模式...`);
+
+        // ✅ 清空 output 目录
+        await utils.cleanOutput(); // ✅ 使用正确导入的 utils
 
         // 加载并执行构建模块
         const modules = await loadBuildModules();
