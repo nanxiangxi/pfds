@@ -136,5 +136,10 @@ my-project/
 - 邮件联系：2286718577@qq.com
 
 ---
+## 项目赞助
+[![Temp Mail](https://tempmail100.com/assets/image/logo2.webp)](https://tempmail100.com)
+
+
+---
 
 ❤️ 感谢使用 PFDS！希望它能助您高效管理文档！🎉
