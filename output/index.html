@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pfds --文档</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">Pfds --文档</div>
+  </div>
+
+  <!-- 手机端汉堡菜单 -->
+  <button class="hamburger" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <script>
+    // 移动端侧边栏控制
+    document.addEventListener('DOMContentLoaded', function () {
+      const hamburger = document.querySelector('.hamburger');
+      const nav = document.querySelector('.nav');
+      const overlay = document.getElementById('mobileOverlay');
+      const container = document.querySelector('.container');
+
+      if (!hamburger || !nav || !overlay || !container) return;
+
+      hamburger.addEventListener('click', function () {
+        this.classList.toggle('active');
+        nav.classList.toggle('show');
+        container.classList.toggle('show-nav');
+        overlay.style.display = nav.classList.contains('show') ? 'block' : 'none';
+      });
+
+      overlay.addEventListener('click', function () {
+        hamburger.classList.remove('active');
+        nav.classList.remove('show');
+        container.classList.remove('show-nav');
+        this.style.display = 'none';
+      });
+    });
+  </script>
+  <!-- 手机端遮罩层 -->
+  <div class="overlay" id="mobileOverlay"></div>
+
+
+  <div class="header-right">
+    <div class="search-container" id="mobileSearchContainer">
+      <input type="text" id="searchInput" placeholder="输入关键词进行搜索..." />
+      <button onclick="openSearchModal()">搜索</button>
+    </div>
+    <div class="nav-links" id="mobileNavLinks">
+            <a href="https://pfds.shlm.top">官网</a>
+
+    </div>
+  </div>
+</div>
+
+<div class="pfds-container">
+  <div class="pfds-nav" data-no-search>
+    <ul>
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">快速开始</a></li>
+</ul>
+  </div>
+
+  <div class="pfds-content-area">
+    <div class="pfds-content-main">
+      <div id="home" class="page-content active view-scope-home">
+这是一级标题：
+<h1><span class="page-link" onclick="showPage('about')">部署成功</span></h1>
+这是一个二级标题：
+<h2><span class="green-pound">#</span> 二级标题</h2><hr class="side-nav-divider">
+
+<div class="Attention-box o align-center" style="width: 100%;">
+    <div class="strip"></div>
+    居中的红色注意框内容
+</div>
+
+<div class="Attention-box green align-right" style="width: 80%;">
+    <div class="strip"></div>
+    靠左的绿色注意框内容@
+</div>
+
+
+<div class="Attention-box blue align-left" style="width: 80%;">
+    
+    靠右的蓝色注意框内容
+</div><hr class="side-nav-divider">
+这是一个表格：
+
+<table class="markdown-table">
+  <thead>
+  <tr>
+    <th>姓名</th>
+    <th>年龄</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>张三</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>李四</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table>
+<hr class="side-nav-divider">
+这是一个代码块：
+<h2><span class="green-pound">#</span> 第三个标题</h2>
+<pre><code class="sql">function hello() {
+console.log("Hello, world!");
+}</code><span class="language-label">sql</span></pre><hr class="side-nav-divider">
+这是一个红色代码：<code class="markdown-inline-code red">console.log("Hello")</code>，还有绿色代码：<code class="markdown-inline-code green">doSomething()</code>。
+默认代码：<code class="markdown-inline-code">let a = 1;</code>。
+高亮代码：<code class="markdown-inline-code highlight">function hello() { alert('Hi'); }</code><hr class="side-nav-divider">
+这是一个无序列表：
+
+<ul class="markdown-ul"><li class="markdown-li">一级<ul class="markdown-ul"><li class="markdown-li">二级<ul class="markdown-ul"><li class="markdown-li">三级<ul class="markdown-ul"><li class="markdown-li">四级</li></ul></li></ul></li><li class="markdown-li">另一个二级</li></ul></li><li class="markdown-li">又一个一级<ul class="markdown-ul"><li class="markdown-li">二级<ul class="markdown-ul"><li class="markdown-li">三级</li></ul></li><li class="markdown-li">另一个二级</li></ul></li></ul>
+这是一个有序列表：
+<ol class="markdown-ol"><li class="markdown-li">学习 HTML1<ol class="markdown-ol"><li class="markdown-li">学习 HTML1.1</li><li class="markdown-li">学习 HTML1.2<ol class="markdown-ol"><li class="markdown-li">学习 HTML1.2.1</li></ol></li></ol></li><li class="markdown-li">学习 CSS</li><li class="markdown-li">学习 JavaScript</li></ol>
+
+
+这是新版本新增的一些参考MarkDown编写的快捷语法支持<hr class="side-nav-divider">
+<div data-no-search>
+    不会被搜索的内容---写法1
+</div><hr class="side-nav-divider">
+<div class="no-search">
+    不会被搜索的内容---写法2
+</div><hr class="side-nav-divider">
+<div data-no-search>不会被搜索的内容---写法3</div><hr class="side-nav-divider">
+<script src="assets/js/script-home.js" type="text/javascript" defer></script>
+</div>
+
+
+    </div>
+    <div class="pfds-content-nav">
+      <ul id="contentNavList"></ul>
+      <div class="pfds-compile-time">编译时间：2025-06-25 16:49:03</div>
+    </div>
+  </div>
+</div>
+
+<div class="pfds-modal-overlay" id="searchModal">
+  <div class="pfds-modal">
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- 引入 Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+<script type="module" src="assets/js/modules.js"></script>
+
+<script src="assets/js/public-script.js"></script>
+<!-- DEV_ONLY_START -->
+<!-- 热重载客户端 -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  socket.on('reload', function () {
+    console.log('🔁 检测到文件更新，页面即将刷新...');
+    location.reload();
+  });
+</script>
+<!-- DEV_ONLY_END -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.page-anchor').forEach(link => {
+      link.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('data-target-id');
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          // 平滑滚动到目标位置
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -19,14 +19,16 @@
     <span></span>
   </button>
   <script>
-    // 移动端侧边栏控制
     document.addEventListener('DOMContentLoaded', function () {
       const hamburger = document.querySelector('.hamburger');
-      const nav = document.querySelector('.nav');
+      const nav = document.querySelector('.pfds-nav'); // 修改为 .pfds-nav
       const overlay = document.getElementById('mobileOverlay');
-      const container = document.querySelector('.container');
+      const container = document.querySelector('.pfds-container');
 
-      if (!hamburger || !nav || !overlay || !container) return;
+      if (!hamburger || !nav || !overlay || !container) {
+        console.error("缺少必要元素");
+        return;
+      }
 
       hamburger.addEventListener('click', function () {
         this.classList.toggle('active');
