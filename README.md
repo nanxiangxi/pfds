@@ -137,7 +137,7 @@ my-project/
 
 ---
 ## 项目赞助
-[![Temp Mail](https://tempmail100.com/assets/image/logo.webp)](https://tempmail100.com)
+[Temp Mail](https://tempmail100.com)
 
 
 ---
