@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/command/update.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/command/update.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pfds.js" beforeDir="false" afterPath="$PROJECT_DIR$/pfds.js" afterDir="false" />
-    </list>
+    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,7 +112,7 @@
       <workItem from="1750841139134" duration="163000" />
       <workItem from="1750874013292" duration="1488000" />
       <workItem from="1750924050217" duration="61000" />
-      <workItem from="1752858368777" duration="8652000" />
+      <workItem from="1752858368777" duration="8953000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />
