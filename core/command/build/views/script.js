@@ -8,7 +8,7 @@ const { CONFIG, shared, utils } = require('../context');
  * 处理 <script> 标签并根据是否为 public 决定输出位置
  * @param {string} content - 原始 HTML 内容
  * @param {string} pageId - 页面 ID
- * @param {boolean} initJsAutoLoad - 是否启用自动 JS 提取
+ * @param {boolean} initJsAutoLoad - 是否启用自动 JS 提取（当前已不再使用该参数控制 script 标签插入）
  * @returns {Promise<string>} 处理后的 HTML 内容
  */
 module.exports = async function applyScopedJS(content, pageId, initJsAutoLoad) {
@@ -46,12 +46,6 @@ module.exports = async function applyScopedJS(content, pageId, initJsAutoLoad) {
     // ✅ 无论 privateJS 是否为空，都写入文件
     await utils.writeFile(privateFilePath, privateJS);
 
-    // 如果 initJsAutoLoad === false，则插入 <script> 标签
-    if (!initJsAutoLoad) {
-        const scriptTag = `<script src="assets/js/${privateFilename}" type="text/javascript" defer></script>`;
-        return htmlContent + '\n' + scriptTag;
-    }
-
-    // 返回处理后的 HTML
+    // ✅ 不再插入任何 <script> 标签，直接返回处理后的 HTML（没有脚本）
     return htmlContent;
 };

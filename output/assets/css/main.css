@@ -705,13 +705,13 @@ tr:nth-child(even) {
 }
 
 /*----------------------------------------- 文档内容区域--------------------------------- */
-.content-main {
+.pfds-content-main {
     padding: 20px;
     font-family: Arial, sans-serif;
 }
 
 /* -----------------------------------------标题样式------------------------------------- */
-.content-main h1 {
+.pfds-content-main h1 {
     margin-bottom: 20px;
     color: var(--primary-color);
 }
@@ -723,7 +723,7 @@ tr:nth-child(even) {
     border: none;
     height: 1px;
     /* 使用从透明到浅色再到透明的渐变 */
-    background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background-image: linear-gradient(to right, transparent, rgb(0, 0, 0), transparent);
 }
 
 /* 新增的双横线分割器 */

@@ -57,5 +57,10 @@ program
     .action(() => {
         runWithNpmLink(startDevServer);
     });
-
+program
+    .command('update')
+    .description('检查并更新 my-pfds 到最新版本')
+    .action(() => {
+        runWithNpmLink(updatePfds);
+    });
 program.parse(process.argv);

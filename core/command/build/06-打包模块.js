@@ -22,15 +22,13 @@ module.exports = async () => {
         'initModal',
         'initNavigation',
         'initScroll',
-        'initSearch'
+        'initSearch',
+        'initJsAutoLoad',
+        'initJsIsolation'  //js隔离
     ];
 
     if (shared.config.initCssAutoLoad) {
         initFunctions.push('initCssAutoLoad');
-    }
-
-    if (shared.config.initJsAutoLoad) {
-        initFunctions.push('initJsAutoLoad');
     }
 
     modulesJS += `\n// 初始化模块\n${initFunctions.map(fn => `${fn}();`).join('\n')}\n`;

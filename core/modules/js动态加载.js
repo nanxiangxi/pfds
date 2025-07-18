@@ -14,13 +14,14 @@ export function initJsAutoLoad() {
         // 创建 script 标签
         const script = document.createElement('script');
         script.src = jsPath;
-        script.type = 'text/javascript';
-        script.defer = true; // 可选：延迟执行
+
+        // 添加自定义属性 mod="pageId"
+        script.setAttribute('mod', pageId); // 使用非 data-* 属性
 
         // 保存引用以便后续移除
         currentScript = script;
 
-        // 插入到 <body> 的底部（推荐方式）
+        // 插入到 <body> 的底部
         document.body.appendChild(script);
     }
 
