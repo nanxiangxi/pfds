@@ -3,7 +3,6 @@ const fsSync = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 const { promisify } = require('util');
-const extract = require('extract-zip');
 const semver = require('semver');
 
 const execAsync = promisify(exec);
@@ -23,8 +22,23 @@ async function getRemoteVersion(packageName) {
 
 // 下载 npm 包
 async function downloadPackage(packageName, version) {
-    const tarballName = `${packageName}-${version}.tgz`;
-    await execAsync(`npm pack ${packageName}@${version}`);
+    const expectedTarballName = `${packageName}-${version}.tgz`;
+
+    console.log(`⬇️ 正在下载包: ${packageName}@${version}`);
+    const { stdout, stderr } = await execAsync(`npm pack ${packageName}@${version}`);
+
+    if (stderr) {
+        console.warn(`⚠️ npm pack 输出警告: ${stderr}`);
+    }
+
+    // npm pack 输出的最后一行为文件名
+    const tarballName = stdout.trim().split('\n').pop();
+
+    if (!tarballName || !fsSync.existsSync(tarballName)) {
+        throw new Error(`❌ 下载失败: 未找到生成的 tarball 文件（期望: ${expectedTarballName}）`);
+    }
+
+    console.log(`📦 已下载: ${tarballName}`);
     return tarballName;
 }
 
@@ -41,30 +55,12 @@ async function extractTarball(tarballPath, outputDir) {
 async function cleanup(files) {
     for (const file of files) {
         try {
-            await fs.rm(file, { recursive: true, force: true });
+            if (fsSync.existsSync(file)) {
+                await fs.rm(file, { recursive: true, force: true });
+                console.log(`🗑️ 已清理临时文件: ${file}`);
+            }
         } catch (e) {
             console.warn(`⚠️ 删除文件失败: ${file}`);
-        }
-    }
-}
-
-// 增量合并 dev 目录
-async function mergeDevDir(srcDir, destDir) {
-    const files = await fs.readdir(srcDir);
-    for (const file of files) {
-        const srcFile = path.join(srcDir, file);
-        const destFile = path.join(destDir, file);
-        const stat = await fs.stat(srcFile);
-
-        if (stat.isDirectory()) {
-            if (!await fs.stat(destFile).catch(() => null)) {
-                await fs.mkdir(destFile, { recursive: true });
-            }
-            await mergeDevDir(srcFile, destFile);
-        } else {
-            // 只有源文件存在才覆盖
-            await fs.copyFile(srcFile, destFile);
-            console.log(`🔄 已更新 dev 文件: ${destFile}`);
         }
     }
 }
@@ -88,33 +84,44 @@ async function updatePfds() {
 
             console.log('⬇️ 正在下载最新版本...');
             const tarballName = await downloadPackage(packageName, remoteVersion);
+            console.log(`📄 下载完成: ${tarballName}`);
             cleanupFiles.push(tarballName);
+
+            if (!fsSync.existsSync(tarballName)) {
+                throw new Error(`❌ 文件不存在: ${tarballName}`);
+            }
 
             console.log('📂 正在解压文件...');
             const extractedPath = await extractTarball(tarballName, process.cwd());
             cleanupFiles.push(path.dirname(extractedPath));
 
-            console.log('🔁 正在更新文件...');
+            console.log('🔁 正在更新文件（跳过 dev 目录）...');
 
-            // 获取解压后的所有文件
             const files = await fs.readdir(extractedPath);
 
             for (const file of files) {
                 const srcPath = path.join(extractedPath, file);
                 const destPath = path.join(process.cwd(), file);
 
-                // 如果是 dev 目录，增量更新
-                if (file === 'dev' && fsSync.existsSync(srcPath)) {
-                    console.log('📂 正在增量更新 dev 目录...');
-                    await mergeDevDir(srcPath, destPath);
-                } else {
-                    // 其他文件直接覆盖
-                    if (fsSync.existsSync(destPath)) {
-                        await fs.rm(destPath, { recursive: true, force: true });
-                    }
-                    await fs.cp(srcPath, destPath, { recursive: true });
-                    console.log(`✅ 已更新: ${file}`);
+                // ✅ 跳过 dev 目录
+                if (file === 'dev') {
+                    console.log(`📂 已跳过 dev 目录更新（保留本地内容）`);
+                    continue;
                 }
+
+                // 删除并复制其他文件
+                if (fsSync.existsSync(destPath)) {
+                    await fs.rm(destPath, { recursive: true, force: true });
+                }
+                await fs.cp(srcPath, destPath, { recursive: true });
+                console.log(`✅ 已更新: ${file}`);
+            }
+
+            // ✅ 如果本地没有 dev 目录，创建一个空目录（首次安装）
+            const devPath = path.join(process.cwd(), 'dev');
+            if (!fsSync.existsSync(devPath)) {
+                await fs.mkdir(devPath);
+                console.log('📂 已创建空 dev 目录');
             }
 
             console.log(`✅ 更新完成！当前版本: ${remoteVersion}`);
@@ -143,3 +150,45 @@ function askUser(question) {
         });
     });
 }
+
+// 用于被 CLI 调用
+async function runWithNpmLink(commandFn) {
+    return new Promise((resolve, reject) => {
+        console.log('🔗 正在运行 npm link --force...');
+        const child = exec('npm link --force', (error, stdout, stderr) => {
+            if (error) {
+                console.error(`❌ npm link 失败: ${error.message}`);
+                return reject(error);
+            }
+            if (stderr && !stderr.includes('using --force')) {
+                console.warn(`⚠️ npm link 警告: ${stderr}`);
+            }
+            resolve();
+        });
+
+        child.stdout.pipe(process.stdout);
+        child.stderr.pipe(process.stderr);
+    }).then(() => {
+        return commandFn();
+    }).catch(err => {
+        console.error(`❌ 命令执行失败: ${err.message}`);
+        process.exit(1);
+    });
+}
+
+// CLI 注册部分（简化版，实际应放在主入口文件中）
+if (require.main === module) {
+    (async () => {
+        try {
+            await runWithNpmLink(updatePfds);
+        } catch (e) {
+            console.error(`❌ 命令执行失败: ${e.message}`);
+            process.exit(1);
+        }
+    })();
+}
+
+module.exports = {
+    updatePfds,
+    runWithNpmLink
+};

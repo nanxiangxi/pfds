@@ -9,6 +9,7 @@ const { exec } = require('child_process');
 const { build } = require(path.resolve(process.cwd(), 'core/command/build'));
 const { startDevServer } = require(path.resolve(process.cwd(), 'core/command/dev'));
 const { installTheme } = require(path.resolve(process.cwd(), 'core/command/theme'));
+const { updatePfds } = require(path.resolve(process.cwd(), 'core/command/update'));
 
 // 👇 使用异步版本 runWithNpmLink
 function runWithNpmLink(commandFn) {
@@ -19,7 +20,7 @@ function runWithNpmLink(commandFn) {
                 console.error(`❌ npm link 失败: ${error.message}`);
                 return reject(error);
             }
-            if (stderr) {
+            if (stderr && !stderr.includes('using --force')) {
                 console.warn(`⚠️ npm link 警告: ${stderr}`);
             }
             resolve();
@@ -28,7 +29,11 @@ function runWithNpmLink(commandFn) {
         // 实时输出日志
         child.stdout.pipe(process.stdout);
         child.stderr.pipe(process.stderr);
-    }).then(commandFn).catch(err => {
+    }).then(() => {
+        if (commandFn) {
+            return commandFn();
+        }
+    }).catch(err => {
         console.error(`❌ 命令执行失败: ${err.message}`);
         process.exit(1);
     });
@@ -43,24 +48,50 @@ program
         await installTheme(themeName);
     });
 
-// 构建和开发命令保持不变
+// 构建和开发命令（保持异步兼容）
 program
     .command('build')
     .description('运行构建任务')
     .action(() => {
-        runWithNpmLink(() => build(false));
+        return runWithNpmLink(() => build(false));
     });
 
 program
     .command('dev')
     .description('启动开发模式并监听文件变化')
     .action(() => {
-        runWithNpmLink(startDevServer);
+        return runWithNpmLink(startDevServer);
     });
+
+// 👇 注册 update 命令（✅ 修改重点：使用 async 包装）
 program
     .command('update')
     .description('检查并更新 my-pfds 到最新版本')
-    .action(() => {
-        runWithNpmLink(updatePfds);
+    .action(async () => {
+        try {
+            await new Promise((resolve, reject) => {
+                console.log('🔗 正在运行 npm link --force...');
+                const child = exec('npm link --force', (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`❌ npm link 失败: ${error.message}`);
+                        return reject(error);
+                    }
+                    if (stderr && !stderr.includes('using --force')) {
+                        console.warn(`⚠️ npm link 警告: ${stderr}`);
+                    }
+                    resolve();
+                });
+
+                child.stdout.pipe(process.stdout);
+                child.stderr.pipe(process.stderr);
+            });
+
+            await updatePfds();  // ✅ 真正等待 updatePfds 完成
+        } catch (e) {
+            console.error(`❌ 更新失败: ${e.message}`);
+            process.exit(1);
+        }
     });
+
+// ✅ 启动 CLI 解析
 program.parse(process.argv);
