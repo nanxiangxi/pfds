@@ -66,7 +66,7 @@ program
 // 👇 注册 update 命令（✅ 修改重点：使用 async 包装）
 program
     .command('update')
-    .description('检查并更新 my-pfds 到最新版本')
+    .description('检查并更新 pfds 到最新版本')
     .action(async () => {
         try {
             await new Promise((resolve, reject) => {

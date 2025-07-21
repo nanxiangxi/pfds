@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容" />
+    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/modules/js动态加载.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/modules/js动态加载.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/router.json" beforeDir="false" afterPath="$PROJECT_DIR$/dev/router.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/views/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/dev/views/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/js/modules.js" beforeDir="false" afterPath="$PROJECT_DIR$/output/assets/js/modules.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pfds.js" beforeDir="false" afterPath="$PROJECT_DIR$/pfds.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,9 +44,6 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PerforceDirect.Settings">
-    <option name="CHARSET" value="无" />
-  </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="D:\BtSoft\php\80\php.exe" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -45,22 +53,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "F:/pfds/core/themes",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\PhpStorm 2024.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/pfds/core/themes&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\PhpStorm 2024.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\pfds\core\themes" />
@@ -112,7 +120,9 @@
       <workItem from="1750841139134" duration="163000" />
       <workItem from="1750874013292" duration="1488000" />
       <workItem from="1750924050217" duration="61000" />
-      <workItem from="1752858368777" duration="8953000" />
+      <workItem from="1752858368777" duration="9103000" />
+      <workItem from="1752909042671" duration="192000" />
+      <workItem from="1753097748350" duration="1629000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />
