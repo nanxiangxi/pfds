@@ -1,8 +1,22 @@
 {
   "head": [
     {
-      "title": "官网",
-      "url": "https://pfds.shlm.top"
+      "title": "快捷操作",
+      "children": [
+        {
+          "title": "返回上级",
+          "url": "../"
+        },
+        {
+          "title": "组件文档",
+          "url": "../"
+        }
+      ]
+    },
+    {
+      "title": "GitHub",
+      "icon": "icon-github",
+      "url": "https://github.com/nanxiangxi/pfds"
     }
   ]
 }

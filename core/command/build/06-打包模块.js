@@ -24,7 +24,11 @@ module.exports = async () => {
         'initScroll',
         'initSearch',
         'initJsAutoLoad',
-        'initJsIsolation'  //js隔离
+        'initJsIsolation',
+        'initHamburgerMenu',
+        'initPageAnchors',
+        'initCopyCode'
+
     ];
 
     if (shared.config.initCssAutoLoad) {

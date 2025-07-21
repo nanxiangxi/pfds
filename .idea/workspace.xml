@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容" />
+    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/modules/搜索模态框.js" beforeDir="false" afterPath="$PROJECT_DIR$/core/modules/搜索模态框.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +50,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/pfds/core/themes&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/pfds/dev/views&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -60,10 +63,12 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\pfds\dev\views" />
       <recent name="F:\pfds\core\themes" />
       <recent name="F:\pfds\core\command\build\markdown" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\pfds" />
       <recent name="F:\pfds\new" />
     </key>
   </component>
@@ -112,6 +117,10 @@
       <workItem from="1752858368777" duration="9103000" />
       <workItem from="1752909042671" duration="192000" />
       <workItem from="1753097748350" duration="1923000" />
+      <workItem from="1753099717390" duration="35000" />
+      <workItem from="1753099968055" duration="128000" />
+      <workItem from="1753106747563" duration="836000" />
+      <workItem from="1753110342632" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />

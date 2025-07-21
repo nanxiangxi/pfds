@@ -1,21 +1,6 @@
 const path = require('path');
 const { CONFIG, shared, utils } = require('./context');
 
-function generateHeadLinks() {
-    shared.logger.stepStart('头部链接生成');
-    let linksHTML = '';
-
-    if (shared.config.head?.length > 0) {
-        shared.config.head.forEach(item => {
-            linksHTML += `      <a href="${item.url}">${item.title}</a>\n`;
-        });
-    }
-
-    shared.logger.subStep(`生成 ${shared.config.head?.length || 0} 个链接`, 'success');
-    shared.logger.stepEnd('头部链接生成');
-    return linksHTML;
-}
-
 module.exports = async () => {
     shared.logger.stepStart('最终HTML构建');
 
@@ -32,7 +17,7 @@ module.exports = async () => {
 
     let html = shared.templateContent
         .replace(/{{siteTitle}}/g, shared.config.siteTitle)
-        .replace(/{{buildTime}}/g, buildTime)  // 新增的替换项
+        .replace(/{{buildTime}}/g, buildTime)
         .replace(/<!-- NAV_PLACEHOLDER -->/g, shared.navHTML)
         .replace(/<!-- CONTENT_PLACEHOLDER -->/g, shared.viewsHTML);
 
@@ -47,8 +32,8 @@ module.exports = async () => {
         '    <link rel="stylesheet" href="assets/css/main.css">\n</head>'
     );
 
-    // 注入头部导航
-    html = html.replace('<!-- HEAD_LINKS_PLACEHOLDER -->', generateHeadLinks());
+    // ✅ 正确做法：直接使用 shared.headLinksHTML
+    html = html.replace('<!-- HEAD_LINKS_PLACEHOLDER -->', shared.headLinksHTML);
 
     // 写入文件
     const outputPath = path.join(CONFIG.OUTPUT_DIR, 'index.html');

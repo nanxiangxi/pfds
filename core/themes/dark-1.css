@@ -32,7 +32,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 /*---------------------------------      页面头部 - PC端     ---------------------------------*/
 
 .header {
@@ -47,12 +46,22 @@ body {
 .header-left {
     display: flex;
     align-items: center;
+    gap: 2rem;
 }
 
 .header-right {
     display: flex;
     align-items: center;
     gap: 2rem;
+}
+
+/* 添加此部分以创建分隔线 */
+.header-right > *:not(:last-child)::after {
+    content: "";
+    width: 1px; /* 调整宽度以改变竖线的粗细 */
+    height: 1.3rem; /* 根据需要调整高度 */
+    background-color: rgba(48, 48, 71, 0.87); /* 设置你想要的颜色 */
+    margin-left: 1rem; /* 确保与gap一致或根据需要调整 */
 }
 
 .logo {
@@ -62,6 +71,7 @@ body {
     letter-spacing: 1px;
     position: relative;
     z-index: 1;
+    cursor: pointer;
 }
 
 .logo::after {
@@ -76,7 +86,7 @@ body {
 
 .search-container {
     flex: 1;
-    width: 400px;
+    width: 300px;
     margin: 0 2rem;
     position: relative;
 }
@@ -119,21 +129,99 @@ body {
     transform: translateX(-2px);
 }
 
+/*--------------------------------- 头部导航链接 + 图标 + 子菜单 ---------------------------------*/
+
+/* 导航链接容器 */
 .nav-links {
     display: flex;
     gap: 1.5rem;
+    position: relative;
+    font-family: sans-serif;
 }
 
+/* 顶部导航栏一级菜单 */
+.nav-links > ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.5rem;
+}
+
+/* 链接样式（包含图标） */
 .nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     color: #aaa;
     text-decoration: none;
     font-weight: 500;
     position: relative;
-    transition: var(--transition-speed);
 }
 
-.nav-links a:hover {
-    color: var(--primary-color);
+/* 固定图标大小 */
+.nav-links a i {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--primary-color, #00bcd4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*----------------------------- 二级菜单样式 -----------------------------*/
+.submenu {
+    position: absolute;
+    top: 105%;          /* 稍微下移，避免贴得太近 */
+    right: 0;           /* 初始位置为左侧对齐 */
+    min-width: 90px;
+    background: #2c2c2c;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    z-index: 1000;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    display: none;
+}
+
+/* 显示子菜单 */
+.nav-item:hover .submenu {
+    display: block;
+}
+
+/* 一级菜单项需要相对定位 */
+.nav-item {
+    position: relative;
+}
+
+/* 二级菜单项样式 */
+.submenu li {
+    padding: 0;
+}
+
+/* 二级菜单链接样式 */
+.submenu li a {
+    display: block;
+    padding: 0.4rem 0.8rem; /* 更小内边距 */
+    color: #ccc;
+    font-size: 0.85rem; /* 更小字体 */
+    text-decoration: none;
+    border-radius: 6px;
+    text-align: center; /* 文字居中 */
+}
+
+/* 二级菜单链接静态样式（无悬停变化） */
+.submenu li a,
+.submenu li a:hover,
+.submenu li a:active,
+.submenu li a:focus {
+    background-color: transparent;
+    color: #ccc;
+    outline: none;
 }
 /*---------------------------------      页面头部 - 手机端     ---------------------------------*/
 
@@ -233,12 +321,11 @@ body {
     flex: 1;
     overflow: hidden;
 }
-
 /* 左侧导航栏 */
 .pfds-nav {
-    width: 250px;
-    background: #1f1f1f;
-    padding: 1rem;
+    width: 220px;
+    background: #1e1e1e;
+    padding: 0.75rem 0.5rem;
     border-right: 1px solid #333;
     overflow-y: auto;
     scrollbar-width: none;
@@ -252,28 +339,112 @@ body {
 .pfds-nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
 }
 
 .pfds-nav li {
-    margin: 0.5rem 0;
+    margin: 0;
 }
 
+/* 所有链接通用样式（保留） */
 .pfds-nav a {
     display: block;
-    padding: 0.75rem 1rem;
+    padding: 0.4rem 1.5rem;
     color: #ccc;
-    border-radius: var(--border-radius);
-    transition: var(--transition-speed);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-weight: normal;
+    transition: background 0.2s ease, border-left 0.2s ease;
+    border-left: 3px solid transparent;
 }
 
-.pfds-nav a:hover,
-.pfds-nav a.active {
-    background-color: #333;
+/* 分组子项样式（保持缩进） */
+.pfds-nav .nav-group-content li a {
+    padding-left: 2rem;
+    font-weight: normal;
+    color: #ccc;
+    border-left: 3px solid transparent;
+}
+
+.pfds-nav .nav-group-content li a:hover,
+.pfds-nav .nav-group-content li a.active {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--primary-color);
+    border-left: 3px solid var(--primary-color);
+}
+
+/* 分组标题样式（保持不变） */
+.pfds-nav .nav-group-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.pfds-nav .nav-group-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.pfds-nav .nav-group-toggle.active {
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+}
+
+/* 新增：非分组项样式（与分组标题一致） */
+.pfds-nav .nav-item > a {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    color: #aaa;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.pfds-nav .nav-item > a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.pfds-nav .nav-item > a.active {
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+}
+
+/* 箭头图标样式 */
+.pfds-nav .toggle-icon {
+    font-size: 0.9rem;
+    color: #888;
+    transition: transform 0.3s ease;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    user-select: none;
+    vertical-align: middle;
+}
+
+.pfds-nav .toggle-icon.active {
+    transform: rotate(90deg);
     color: var(--primary-color);
 }
 
+/* 子菜单内容容器 */
+.pfds-nav .nav-group-content {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.pfds-nav .nav-group-content.active {
+    max-height: 300px;
+}
 .pfds-compile-time {
     position: absolute;
     bottom: 1rem;        /* 距离底部 1rem */
@@ -309,6 +480,7 @@ body {
 /* 右侧内容导航栏 */
 .pfds-content-nav {
     width: 250px;
+    height: 95%;
     background: #1f1f1f;
     padding: 1rem;
     border-left: 1px solid #333;
@@ -432,18 +604,18 @@ body {
     }
 }
 /*---------------------------------      代码块样式-PC端     ---------------------------------*/
-
 pre {
-    background-color: #0d1117; /* GitHub Dark 主题背景颜色 */
-    padding: 1rem 1.5rem;
+    background-color: #151515; /* GitHub Dark 主题背景颜色 */
+    border: 1px solid rgba(53, 53, 53, 0.83); /* 添加线框 */
     border-radius: var(--border-radius);
     overflow-x: auto;
-    margin: 2rem 0;
+    margin: 2rem auto; /* 使用 'auto' 让元素水平居中 */
     position: relative;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     line-height: 1.6;
 }
 
+/* 其他样式保持不变 */
 code {
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 0.95rem;
@@ -452,18 +624,38 @@ code {
     padding: 0.2em 0.4em;
     border-radius: 4px;
 }
-
-.language-label {
+.copy-code-button {
+    /* 现有的样式 */
     position: absolute;
     top: 0.5rem;
     right: 0.8rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #aaa;
+    z-index: 99;
+    transition: color 0.2s ease;
+    display: flex; /* 使用flexbox布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    width: 24px; /* 根据实际需求设置宽度 */
+    height: 24px; /* 根据实际需求设置高度 */
+}
+.copy-code-button:hover {
+    color: #fff;
+}
+.language-label {
+    position: absolute;
+    top: 0.5rem;
+    right: 3rem;
     font-size: 0.75rem;
     background: #333;
     color: #aaa;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     text-transform: uppercase;
-    z-index: 1;
+    z-index: 99;
     pointer-events: none;
 }
 
@@ -488,7 +680,7 @@ code.hljs{
 }
 
 /* GitHub Dark Theme Styles */
-.hljs{color:#c9d1d9;background:#0d1117}
+.hljs{color:#c9d1d9;}
 .hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_{color:#ff7b72}
 .hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_{color:#d2a8ff}
 .hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-variable{color:#79c0ff}
@@ -503,7 +695,6 @@ code.hljs{
 .hljs-strong{color:#c9d1d9;font-weight:700}
 .hljs-addition{color:#aff5b4;background-color:#033a16}
 .hljs-deletion{color:#ffdcd7;background-color:#67060c}
-
 /*---------------------------------      代码块样式-手机端     ---------------------------------*/
 
 @media (max-width: 768px) {
@@ -902,4 +1093,56 @@ tr:nth-child(even) {
     word-wrap: break-word;       /* 长单词或 URL 自动换行 */
     font-family: inherit;        /* 继承父级字体 */
     overflow-x: auto;            /* 如果有长行可横向滚动 */
+}
+/*----------------------------------------主题切换题样式---------------------------------------*/
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 16px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #000000;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
 }

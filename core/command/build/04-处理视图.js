@@ -2,7 +2,7 @@ const path = require('path');
 const { CONFIG, shared, utils } = require('./context');
 const applyMarkdownPlugins = require('./markdown');
 const applyScopedCSS = require('./views/css');
-const applyScopedJS = require('./views/script'); // 引入 JS 隔离模块
+const applyScopedJS = require('./views/script'); // 引入 JS 隔離模块
 
 module.exports = async () => {
     shared.logger.stepStart('视图处理');
@@ -11,37 +11,51 @@ module.exports = async () => {
     // 初始化共享的公共 JS 缓存
     shared.publicJS = '';
 
-    for (const route of shared.routes) {
-        const viewPath = path.join(CONFIG.DEV_DIR, 'views', route.file);
-        if (!utils.existsSync(viewPath)) {
-            throw new Error(`视图文件不存在: ${viewPath}`);
+    // 遍历 routes，兼容分组和普通路由
+    for (const routeGroupOrItem of shared.routes) {
+        let items = [];
+
+        // 判断是否是分组结构
+        if (routeGroupOrItem.items && Array.isArray(routeGroupOrItem.items)) {
+            items = routeGroupOrItem.items;
+        } else {
+            // 普通路由项，直接作为 items
+            items = [routeGroupOrItem];
         }
 
-        let content = await utils.readFile(viewPath, 'utf-8');
+        // 遍历 items
+        for (const route of items) {
+            const viewPath = path.join(CONFIG.DEV_DIR, 'views', route.file);
+            if (!utils.existsSync(viewPath)) {
+                throw new Error(`视图文件不存在: ${viewPath}`);
+            }
 
-        /*----------------------------------------markdown开始----------------------------------------*/
-        content = applyMarkdownPlugins(content);
-        /*----------------------------------------markdown结束----------------------------------------*/
+            let content = await utils.readFile(viewPath, 'utf-8');
 
-        /*----------------------------------------CSS作用域开始----------------------------------------*/
-        const viewScopeClass = `view-scope-${route.id}`;
-        const initCssAutoLoad = shared.config.initCssAutoLoad === true;
-        content = await applyScopedCSS(content, viewScopeClass, route.id, initCssAutoLoad);
-        /*----------------------------------------CSS作用域结束----------------------------------------*/
+            /*----------------------------------------markdown开始----------------------------------------*/
+            content = applyMarkdownPlugins(content);
+            /*----------------------------------------markdown结束----------------------------------------*/
 
-        /*----------------------------------------JS作用域开始----------------------------------------*/
-        const initJsAutoLoad = shared.config.initJsAutoLoad === true;
-        content = await applyScopedJS(content, route.id, initJsAutoLoad);
-        /*----------------------------------------JS作用域结束----------------------------------------*/
+            /*----------------------------------------CSS作用域开始----------------------------------------*/
+            const viewScopeClass = `view-scope-${route.id}`;
+            const initCssAutoLoad = shared.config.initCssAutoLoad === true;
+            content = await applyScopedCSS(content, viewScopeClass, route.id, initCssAutoLoad);
+            /*----------------------------------------CSS作用域结束----------------------------------------*/
 
-        // 包裹视图内容
-        const className = shared.routes[0].id === route.id
-            ? `page-content active ${viewScopeClass}`
-            : `page-content ${viewScopeClass}`;
+            /*----------------------------------------JS作用域开始----------------------------------------*/
+            const initJsAutoLoad = shared.config.initJsAutoLoad === true;
+            content = await applyScopedJS(content, route.id, initJsAutoLoad);
+            /*----------------------------------------JS作用域结束----------------------------------------*/
 
-        viewsHTML += `<div id="${route.id}" class="${className}">\n${content.trim()}\n</div>\n\n`;
+            // 包裹视图内容
+            const className = items[0].id === route.id
+                ? `page-content active view-scope-${route.id}`
+                : `page-content view-scope-${route.id}`;
 
-        shared.logger.subStep(`${route.file} → JS 隔离 & 处理完成`, 'success');
+            viewsHTML += `<div id="${route.id}" class="${className}">\n${content.trim()}\n</div>\n\n`;
+
+            shared.logger.subStep(`${route.file} → JS 隔离 & 处理完成`, 'success');
+        }
     }
 
     // 所有视图处理完成后再统一写入 public-script.js（无论是否为空）

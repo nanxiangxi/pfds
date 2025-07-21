@@ -1,9 +1,5 @@
 {
   "routes": [
-    {
-      "id": "home",
-      "title": "快速开始",
-      "file": "home.html"
-    }
+    { "id": "home", "title": "快速开始", "file": "home.html" }
   ]
 }
