@@ -54,6 +54,22 @@ export function initNavigation() {
         if (icon) icon.classList.add('active');
     }
 
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+
+        if (element) {
+            console.log(`[scrollToSection] 滚动到元素: #${id}`, element);
+
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest'
+            });
+        } else {
+            console.warn(`[scrollToSection] 找不到目标元素: #${id}`);
+        }
+    }
+
     function updateContentNav(pageId) {
         const contentNavList = document.getElementById('contentNavList');
         const currentPage = document.getElementById(pageId);
@@ -66,27 +82,20 @@ export function initNavigation() {
             const sectionId = section.id || section.innerText.replace(/\s+/g, '-').toLowerCase();
             section.id = sectionId;
 
+            console.log(`[updateContentNav] 生成标题 ID: ${sectionId}`, section);
+
             const listItem = document.createElement('li');
             const link = document.createElement('a');
             link.href = `#${sectionId}`;
             link.innerText = section.innerText;
             link.onclick = (e) => {
                 e.preventDefault();
+                console.log(`[侧边栏点击] 正在跳转到: ${sectionId}`);
                 scrollToSection(sectionId);
             };
             listItem.appendChild(link);
             contentNavList.appendChild(listItem);
         });
-    }
-
-    function scrollToSection(id) {
-        const element = document.getElementById(id);
-        if (element) {
-            window.scrollTo({
-                top: element.getBoundingClientRect().top + window.scrollY - 60,
-                behavior: 'smooth'
-            });
-        }
     }
 
     function expandNavGroupByPageId(pageId) {
