@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="本次更新的内容" />
+    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="1.0.29">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -122,6 +124,8 @@
       <workItem from="1753110342632" duration="1000" />
       <workItem from="1753110348424" duration="26171000" />
       <workItem from="1753137965847" duration="383000" />
+      <workItem from="1753304683507" duration="4298000" />
+      <workItem from="1753346196373" duration="11000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />
@@ -187,7 +191,23 @@
       <option name="project" value="LOCAL" />
       <updated>1748975845222</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="1.0.29">
+      <option name="closed" value="true" />
+      <created>1753308343539</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1753308343539</updated>
+    </task>
+    <task id="LOCAL-00010" summary="1.0.29">
+      <option name="closed" value="true" />
+      <created>1753308379504</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1753308379504</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,8 +225,9 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Merge branch 'main' of https://github.com/nanxiangxi/pfds" />
     <MESSAGE value="本次更新的内容" />
-    <option name="LAST_COMMIT_MESSAGE" value="本次更新的内容" />
+    <MESSAGE value="Merge branch 'main' of https://github.com/nanxiangxi/pfds" />
+    <MESSAGE value="1.0.29" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.0.29" />
   </component>
 </project>

@@ -18,13 +18,15 @@ module.exports = async () => {
         if (isGrouped) {
             // 分组项（已有逻辑不变）
             const groupId = `group-${index}`;
+            const groupActiveClass = item.open ? 'active' : ''; // 使用 active 类名
+
             navHTML += `
 <li>
   <a href="javascript:void(0)" class="nav-group-toggle">
     ${item.group}
-    <span class="toggle-icon">↠</span>
+    <span class="toggle-icon ${groupActiveClass}">↠</span>
   </a>
-  <ul class="nav-group-content" id="${groupId}-content">`;
+  <ul class="nav-group-content ${groupActiveClass}" id="${groupId}-content">`;
 
             item.items.forEach((route, itemIndex) => {
                 const activeClass = index === 0 && itemIndex === 0 ? 'active' : '';
