@@ -79,7 +79,8 @@ export function initNavigation() {
 
         contentNavList.innerHTML = '';
         sections.forEach(section => {
-            const sectionId = section.id || section.innerText.replace(/\s+/g, '-').toLowerCase();
+            // 为每个页面的标题ID添加页面前缀，确保全局唯一性
+            const sectionId = `${pageId}-${section.id || section.innerText.replace(/\s+/g, '-').toLowerCase()}`;
             section.id = sectionId;
 
             console.log(`[updateContentNav] 生成标题 ID: ${sectionId}`, section);
@@ -199,28 +200,8 @@ export function initNavigation() {
 
         if (currentPageId) {
             showPage(currentPageId);
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    expandNavGroupByPageId(currentPageId);
-                    highlightParentGroup(currentPageId);
-                }, 20);
-            });
         } else {
-            openDefaultPage(); // 否则显示默认页面
+            openDefaultPage();
         }
     });
-
-    // 手动高亮默认页面（可选）
-    document.getElementById('nav-home')?.classList.add('active');
-    updateContentNav('home');
-
-    const currentPageId = document.querySelector('.pfds-content-main > div')?.id;
-    if (currentPageId) {
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                expandNavGroupByPageId(currentPageId);
-                highlightParentGroup(currentPageId);
-            }, 20);
-        });
-    }
 }

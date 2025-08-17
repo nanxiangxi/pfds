@@ -1,3 +1,14 @@
+// HTML特殊字符转义函数
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/\u00a0/g, ' '); // 转义不间断空格
+}
+
 module.exports = function(content) {
    // console.log('【原始内容】');
    // console.log(content);
@@ -50,10 +61,13 @@ module.exports = function(content) {
 
         // 构建 language label
         let languageLabel = lang ? `<span class="language-label">${lang}</span>` : '';
+        
+        // 转义HTML特殊字符，确保代码中的HTML标签能正确显示
+        const escapedCode = escapeHtml(code);
 
         // 返回 HTML
         return `
-<pre class="${classes.join(' ')}" style="${styles}"><code>${code}</code>${languageLabel}${copyButton}</pre>`;
+<pre class="${classes.join(' ')}" style="${styles}"><code>${escapedCode}</code>${languageLabel}${copyButton}</pre>`;
     });
 
   //  console.log('【处理后的内容】');

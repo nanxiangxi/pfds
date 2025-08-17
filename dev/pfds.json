@@ -1,6 +1,7 @@
 {
-  "siteTitle": "Pfds --文档",
+  "siteTitle": "PFDS--文档",
   "theme": "dark-1",
   "template": "main.html",
-  "initCssAutoLoad": true
+  "initCssAutoLoad": false,
+  "themeToggle": true
 }

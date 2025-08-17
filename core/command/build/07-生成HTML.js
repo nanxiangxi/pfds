@@ -15,11 +15,28 @@ module.exports = async () => {
         hour12: false
     }).replace(/\//g, '-'); // 替换斜杠为短横线
 
-    let html = shared.templateContent
+    // 根据配置决定是否启用主题切换功能
+    let templateContent = shared.templateContent;
+    let themeToggleHTML = '';
+    if (shared.config.themeToggle !== false) {
+        // 如果启用主题切换，生成主题切换按钮HTML（使用div而不是li）
+        themeToggleHTML = `
+<div class="theme-toggle" id="themeToggle">
+  <span>🌞</span>
+  <label class="switch">
+    <input type="checkbox" id="themeSwitch">
+    <span class="slider"></span>
+  </label>
+  <span>🌙</span>
+</div>`;
+    }
+
+    let html = templateContent
         .replace(/{{siteTitle}}/g, shared.config.siteTitle)
         .replace(/{{buildTime}}/g, buildTime)
         .replace(/<!-- NAV_PLACEHOLDER -->/g, shared.navHTML)
-        .replace(/<!-- CONTENT_PLACEHOLDER -->/g, shared.viewsHTML);
+        .replace(/<!-- CONTENT_PLACEHOLDER -->/g, shared.viewsHTML)
+        .replace(/<!-- THEME_TOGGLE_PLACEHOLDER -->/g, themeToggleHTML);
 
     // 清理开发专用内容
     if (!shared.isDev) {
