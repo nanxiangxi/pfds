@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="1.0.29" />
+    <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="1.0.29">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,6 +63,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\pfds\dev\views" />
+      <recent name="F:\pfds" />
       <recent name="F:\pfds\core\themes" />
       <recent name="F:\pfds\core\command\build\markdown" />
     </key>
@@ -125,6 +128,8 @@
       <workItem from="1753304683507" duration="4298000" />
       <workItem from="1753346196373" duration="11000" />
       <workItem from="1753389248153" duration="1238000" />
+      <workItem from="1755426524621" duration="11049000" />
+      <workItem from="1755840553566" duration="595000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />
