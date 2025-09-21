@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="dbdbd3ad-e2ab-4b03-9ee7-7b344f6d77d7" name="更改" comment="1.0.29">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/js/modules.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/assets/js/public-script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/index.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -142,7 +146,7 @@
       <workItem from="1758261126470" duration="30826000" />
       <workItem from="1758299993975" duration="12595000" />
       <workItem from="1758351118697" duration="18212000" />
-      <workItem from="1758435943562" duration="12980000" />
+      <workItem from="1758435943562" duration="15400000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'main' of https://github.com/nanxiangxi/pfds">
       <option name="closed" value="true" />
