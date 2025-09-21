@@ -135,50 +135,30 @@ body.light-theme .header-right > *:not(:last-child)::after {
 }
 
 body.light-theme .pfds-nav {
-    background: #f8f9fa;
-    border-right: 1px solid #e9ecef;
+    background: transparent;
 }
+
 /* 新增样式：确保侧边栏导航链接在浅色模式下使用深色文字 */
 body.light-theme .pfds-nav a {
     color: #212529;
 }
 
-body.light-theme .pfds-nav a {
+body.light-theme .pfds-nav .pfds-nav-group-toggle {
     color: #212529;
 }
 
-body.light-theme .pfds-nav .nav-group-content li a {
-    color: #212529;
+body.light-theme .pfds-nav .pfds-nav-group-toggle:hover {
+    background-color: rgba(79, 192, 141, 0.05);
 }
 
-body.light-theme .pfds-nav .nav-group-content li a:hover,
-body.light-theme .pfds-nav .nav-group-content li a.active {
+body.light-theme .pfds-nav a:hover {
+    color: #212529;
+    background-color: rgba(79, 192, 141, 0.05);
+}
+
+body.light-theme .pfds-nav a.pfds-active {
+    color: var(--primary-color);
     background-color: rgba(79, 192, 141, 0.1);
-    color: var(--primary-color);
-}
-
-body.light-theme .pfds-nav .nav-group-toggle {
-    color: #212529;
-}
-
-body.light-theme .pfds-nav .nav-group-toggle:hover {
-    background-color: rgba(79, 192, 141, 0.05);
-}
-
-body.light-theme .pfds-nav .nav-item > a {
-    color: #212529;
-}
-
-body.light-theme .pfds-nav .nav-item > a:hover {
-    background-color: rgba(79, 192, 141, 0.05);
-}
-
-body.light-theme .pfds-nav .nav-item > a.active {
-    color: var(--primary-color);
-}
-
-body.light-theme .pfds-nav .toggle-icon {
-    color: #212529;
 }
 
 body.light-theme .pfds-content-nav ul {
@@ -945,7 +925,7 @@ body.light-theme .side-nav-divider-double {
 .pfds-content-nav a.active {
     transform: scale(1.05); /* 放大 */
     font-weight: bold; /* 加粗 */
-    color: var(--primary-color-active, #ffffff); /* 可自定义激活颜色 */
+    color: var(--primary-color); /* 使用主色，确保在暗色主题下清晰可见 */
 }
 
 /* 移除了激活状态的指示器和下划线 */

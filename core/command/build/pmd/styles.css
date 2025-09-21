@@ -1,0 +1,1022 @@
+/* pmd/styles.css */
+/* PMD 语法样式表 */
+
+/* 通知框基础样式 */
+.pmd-notification {
+    padding: 12px 16px;
+    margin: 8px 0;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+/* 深色主题下的通知框 */
+body.dark-theme .pmd-notification {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ddd;
+}
+
+/* 圆角通知框 */
+.pmd-notification-rounded {
+    border-radius: 8px;
+}
+
+/* 带边框的提示框 */
+.pmd-notification-bordered {
+    border-left: 4px solid #41b38a;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 深色主题下的带边框提示框 */
+body.dark-theme .pmd-notification-bordered {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 自定义样式提示框 */
+.pmd-notification-custom {
+    color: #fff;
+}
+
+/* 标题 */
+.pmd-heading {
+    font-weight: bold;
+    margin: 8px 0 4px 0;
+}
+
+.pmd-h1 {
+    font-size: 2em;
+}
+
+.pmd-h2 {
+    font-size: 1.5em;
+}
+
+.pmd-h3 {
+    font-size: 1.17em;
+}
+
+.pmd-h4 {
+    font-size: 1em;
+}
+
+.pmd-h5 {
+    font-size: 0.83em;
+}
+
+.pmd-h6 {
+    font-size: 0.67em;
+}
+
+/* 分割线 */
+.pmd-thematic-break {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 8px 0;
+}
+
+/* 双分割线样式 */
+.pmd-thematic-break.pmd-thematic-break-double {
+  height: 6px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background: transparent;
+  margin: 1.5em 0;
+}
+
+/* 虚线分割线样式 */
+.pmd-thematic-break.pmd-thematic-break-dotted {
+  border: none;
+  height: 1px;
+  background: radial-gradient(circle, #aaa 30%, transparent 30%) 0 0;
+  background-size: 10px 1px;
+  margin: 1.5em 0;
+}
+
+/* 带文字的分割线 */
+.pmd-thematic-break.pmd-thematic-break-with-text {
+  display: flex;
+  align-items: center;
+  border: none;
+  margin: 1.5em 0;
+}
+
+.pmd-thematic-break.pmd-thematic-break-with-text:before,
+.pmd-thematic-break.pmd-thematic-break-with-text:after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.pmd-thematic-break.pmd-thematic-break-with-text.pmd-thematic-break-double:before,
+.pmd-thematic-break.pmd-thematic-break-with-text.pmd-thematic-break-double:after {
+  height: 6px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background: transparent;
+}
+
+.pmd-thematic-break.pmd-thematic-break-with-text.pmd-thematic-break-dotted:before,
+.pmd-thematic-break.pmd-thematic-break-with-text.pmd-thematic-break-dotted:after {
+  height: 1px;
+  background: radial-gradient(circle, #aaa 30%, transparent 30%) 0 0;
+  background-size: 10px 1px;
+}
+
+.pmd-thematic-break-text {
+  padding: 0 15px;
+  background-color: #fff;
+  color: #666;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+/* 文本样式 */
+.pmd-em {
+  font-style: italic;
+}
+
+.pmd-strong {
+  font-weight: bold;
+}
+
+.pmd-del {
+  text-decoration: line-through;
+}
+
+/* 列表样式 */
+.pmd-ul,
+.pmd-ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.pmd-ul {
+  list-style-type: disc;
+}
+
+.pmd-ol {
+  list-style-type: decimal;
+}
+
+/* 修改无序列表第一级为圆形 */
+.pmd-ul {
+  list-style-type: circle;
+}
+
+/* 第二级无序列表使用空心圆 */
+.pmd-ul .pmd-ul {
+  list-style-type: circle;
+}
+
+/* 第三级无序列表使用方块 */
+.pmd-ul .pmd-ul .pmd-ul {
+  list-style-type: square;
+}
+
+.pmd-ol .pmd-ol {
+  list-style-type: lower-alpha;
+}
+
+.pmd-ol .pmd-ol .pmd-ol {
+  list-style-type: lower-roman;
+}
+
+.pmd-li {
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+/* 链接样式 */
+.pmd-link {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.pmd-link:hover {
+  text-decoration: underline;
+}
+
+/* 深色主题下的链接样式 */
+body.dark-theme .pmd-link {
+  color: #66b3ff;
+}
+
+/* 图片样式 */
+.pmd-image {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.pmd-image.with-title {
+  cursor: help;
+}
+
+/* 代码块样式 - 优化美观性 */
+.pmd-codeblock {
+  border-radius:5px; /* 简写圆角 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* 增加线框 */
+}
+
+
+.pmd-codeblock code {
+  display: block;
+  padding: 16px 20px;
+  overflow-x: auto;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* 深色主题下的代码块 */
+body.dark-theme .pmd-codeblock {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+body.dark-theme .pmd-codeblock code {
+  background-color: #2d2d2d;
+  color: #f8f8f2;
+}
+
+/* 浅色主题下的代码块 */
+body.light-theme .pmd-codeblock {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+body.light-theme .pmd-codeblock code {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* 代码块语言标签 */
+.pmd-code-lang-label {
+  position: absolute;
+  top: 8px;
+  right: 60px;
+  font-size: 0.8rem;
+  background: rgba(0, 0, 0, 0.05);
+  color: #666;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  z-index: 99;
+  pointer-events: none;
+}
+
+body.dark-theme .pmd-code-lang-label {
+  background: rgba(255, 255, 255, 0.1);
+  color: #aaa;
+}
+
+body.light-theme .pmd-code-lang-label {
+  background: rgba(0, 0, 0, 0.05);
+  color: #666;
+}
+
+/* 代码块复制按钮 */
+.pmd-code-copy-button {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 4px;
+  color: #666;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  z-index: 99;
+  transition: all 0.2s ease;
+}
+
+.pmd-code-copy-button:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+body.dark-theme .pmd-code-copy-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #aaa;
+}
+
+body.dark-theme .pmd-code-copy-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+body.light-theme .pmd-code-copy-button {
+  background: rgba(0, 0, 0, 0.05);
+  color: #666;
+}
+
+body.light-theme .pmd-code-copy-button:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+/* 内联代码样式 */
+.pmd-inline-code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.9em;
+  background-color: rgba(0, 0, 0, 0.07);
+  color: #212529;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme .pmd-inline-code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f8f8f2;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.light-theme .pmd-inline-code {
+  background-color: rgba(0, 0, 0, 0.07);
+  color: #212529;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 表格样式 */
+.pmd-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+  border: 1px solid #333;
+  display: table;
+  background-color: #1e1e1e; /* 深色背景 */
+  color: #e6e6e6; /* 浅色文字 */
+  border-radius: 5px; /* 圆角 */
+  overflow: hidden; /* 确保圆角显示 */
+}
+
+.pmd-table th,
+.pmd-table td {
+  padding: 12px 16px;
+  border: 1px solid #333;
+  text-align: left;
+  display: table-cell;
+}
+
+.pmd-table th {
+  background-color: #2d2d2d; /* 略亮一点的表头背景 */
+  color: #ffffff;
+  font-weight: bold;
+  border-bottom: 1px solid #444;
+}
+
+.pmd-table th[align="center"],
+.pmd-table td[align="center"] {
+  text-align: center;
+}
+
+.pmd-table th[align="right"],
+.pmd-table td[align="right"] {
+  text-align: right;
+}
+
+.pmd-table tr {
+  transition: background-color 0.2s ease;
+  display: table-row;
+}
+
+.pmd-table tr:hover {
+  background-color: #2a2a2a; /* 鼠标悬停时稍微变亮 */
+}
+
+.pmd-table tr:nth-child(even) {
+  background-color: #242424;
+}
+
+/* 浅色主题下的表格样式 */
+body.light-theme .pmd-table {
+  background-color: #ffffff;
+  color: #212529;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .pmd-table th,
+body.light-theme .pmd-table td {
+  border: 1px solid #e9ecef;
+}
+
+body.light-theme .pmd-table th {
+  background-color: #f8f9fa;
+  color: #212529;
+  border-bottom: 1px solid #dee2e6;
+}
+
+body.light-theme .pmd-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+body.light-theme .pmd-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* GitHub Dark Theme 代码高亮样式 */
+.pmd-codeblock .hljs {
+  color: #c9d1d9;
+  background: #2d2d2d;
+}
+
+.pmd-codeblock .hljs-doctag,
+.pmd-codeblock .hljs-keyword,
+.pmd-codeblock .hljs-meta .hljs-keyword,
+.pmd-codeblock .hljs-template-tag,
+.pmd-codeblock .hljs-template-variable,
+.pmd-codeblock .hljs-type,
+.pmd-codeblock .hljs-variable.language_ {
+  color: #ff7b72;
+}
+
+.pmd-codeblock .hljs-title,
+.pmd-codeblock .hljs-title.class_,
+.pmd-codeblock .hljs-title.class_.inherited__,
+.pmd-codeblock .hljs-title.function_ {
+  color: #d2a8ff;
+}
+
+.pmd-codeblock .hljs-attr,
+.pmd-codeblock .hljs-attribute,
+.pmd-codeblock .hljs-literal,
+.pmd-codeblock .hljs-meta,
+.pmd-codeblock .hljs-number,
+.pmd-codeblock .hljs-operator,
+.pmd-codeblock .hljs-selector-attr,
+.pmd-codeblock .hljs-selector-class,
+.pmd-codeblock .hljs-selector-id,
+.pmd-codeblock .hljs-variable {
+  color: #79c0ff;
+}
+
+.pmd-codeblock .hljs-meta .hljs-string,
+.pmd-codeblock .hljs-regexp,
+.pmd-codeblock .hljs-string {
+  color: #a5d6ff;
+}
+
+.pmd-codeblock .hljs-built_in,
+.pmd-codeblock .hljs-symbol {
+  color: #ffa657;
+}
+
+.pmd-codeblock .hljs-code,
+.pmd-codeblock .hljs-comment,
+.pmd-codeblock .hljs-formula {
+  color: #8b949e;
+}
+
+.pmd-codeblock .hljs-name,
+.pmd-codeblock .hljs-quote,
+.pmd-codeblock .hljs-selector-pseudo,
+.pmd-codeblock .hljs-selector-tag {
+  color: #7ee787;
+}
+
+.pmd-codeblock .hljs-subst {
+  color: #c9d1d9;
+}
+
+.pmd-codeblock .hljs-section {
+  color: #1f6feb;
+  font-weight: 700;
+}
+
+.pmd-codeblock .hljs-bullet {
+  color: #f2cc60;
+}
+
+.pmd-codeblock .hljs-emphasis {
+  color: #c9d1d9;
+  font-style: italic;
+}
+
+.pmd-codeblock .hljs-strong {
+  color: #c9d1d9;
+  font-weight: 700;
+}
+
+.pmd-codeblock .hljs-addition {
+  color: #aff5b4;
+  background-color: #033a16;
+}
+
+.pmd-codeblock .hljs-deletion {
+  color: #ffdcd7;
+  background-color: #67060c;
+}
+
+/* 浅色主题下的代码高亮样式 */
+body.light-theme .pmd-codeblock .hljs {
+  color: #212529;
+  background: #f8f9fa;
+}
+
+body.light-theme .pmd-codeblock .hljs-doctag,
+body.light-theme .pmd-codeblock .hljs-keyword,
+body.light-theme .pmd-codeblock .hljs-meta .hljs-keyword,
+body.light-theme .pmd-codeblock .hljs-template-tag,
+body.light-theme .pmd-codeblock .hljs-template-variable,
+body.light-theme .pmd-codeblock .hljs-type,
+body.light-theme .pmd-codeblock .hljs-variable.language_ {
+  color: #d73a49;
+}
+
+body.light-theme .pmd-codeblock .hljs-title,
+body.light-theme .pmd-codeblock .hljs-title.class_,
+body.light-theme .pmd-codeblock .hljs-title.class_.inherited__,
+body.light-theme .pmd-codeblock .hljs-title.function_ {
+  color: #6f42c1;
+}
+
+body.light-theme .pmd-codeblock .hljs-attr,
+body.light-theme .pmd-codeblock .hljs-attribute,
+body.light-theme .pmd-codeblock .hljs-literal,
+body.light-theme .pmd-codeblock .hljs-meta,
+body.light-theme .pmd-codeblock .hljs-number,
+body.light-theme .pmd-codeblock .hljs-operator,
+body.light-theme .pmd-codeblock .hljs-selector-attr,
+body.light-theme .pmd-codeblock .hljs-selector-class,
+body.light-theme .pmd-codeblock .hljs-selector-id,
+body.light-theme .pmd-codeblock .hljs-variable {
+  color: #005cc5;
+}
+
+body.light-theme .pmd-codeblock .hljs-meta .hljs-string,
+body.light-theme .pmd-codeblock .hljs-regexp,
+body.light-theme .pmd-codeblock .hljs-string {
+  color: #032f62;
+}
+
+body.light-theme .pmd-codeblock .hljs-built_in,
+body.light-theme .pmd-codeblock .hljs-symbol {
+  color: #e36209;
+}
+
+body.light-theme .pmd-codeblock .hljs-code,
+body.light-theme .pmd-codeblock .hljs-comment,
+body.light-theme .pmd-codeblock .hljs-formula {
+  color: #6a737d;
+}
+
+body.light-theme .pmd-codeblock .hljs-name,
+body.light-theme .pmd-codeblock .hljs-quote,
+body.light-theme .pmd-codeblock .hljs-selector-pseudo,
+body.light-theme .pmd-codeblock .hljs-selector-tag {
+  color: #22863a;
+}
+
+body.light-theme .pmd-codeblock .hljs-subst {
+  color: #212529;
+}
+
+body.light-theme .pmd-codeblock .hljs-section {
+  color: #005cc5;
+  font-weight: 700;
+}
+
+body.light-theme .pmd-codeblock .hljs-bullet {
+  color: #735c0f;
+}
+
+body.light-theme .pmd-codeblock .hljs-emphasis {
+  color: #212529;
+  font-style: italic;
+}
+
+body.light-theme .pmd-codeblock .hljs-strong {
+  color: #212529;
+  font-weight: 700;
+}
+
+body.light-theme .pmd-codeblock .hljs-addition {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+body.light-theme .pmd-codeblock .hljs-deletion {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+/* 任务列表样式 */
+.pmd-task-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 16px 0;
+}
+
+.pmd-task-list-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+.pmd-task-list-item.completed {
+  opacity: 0.7;
+}
+
+.pmd-task-list-item-checkbox {
+  margin-right: 12px;
+  margin-top: 4px;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #666;
+  border-radius: 3px;
+  position: relative;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.pmd-task-list-item-checkbox:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.pmd-task-list-item-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.pmd-task-list-item-content {
+  flex: 1;
+  padding-top: 2px;
+}
+
+/* 浅色主题下的任务列表样式 */
+body.light-theme .pmd-task-list-item-checkbox {
+  border-color: #999;
+}
+
+body.light-theme .pmd-task-list-item-checkbox:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+body.light-theme .pmd-task-list-item.completed {
+  opacity: 0.6;
+}
+
+/* 深色主题下的任务列表样式 */
+body.dark-theme .pmd-task-list-item-checkbox {
+  border-color: #888;
+}
+
+body.dark-theme .pmd-task-list-item-checkbox:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+/* 折叠块样式 - 现代化设计 */
+.pmd-collapse-block {
+    margin: 16px 0;
+}
+
+.pmd-collapse-header {
+    padding: 16px 20px;
+    background: #f8f8f8; /* 浅灰色背景确保可见性 */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.pmd-collapse-header:hover {
+    background: #eaeaea; /* 悬停时更深的背景色 */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pmd-collapse-title {
+    font-weight: 500;
+    color: #333;
+    flex-grow: 1;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.pmd-collapse-toggle {
+    transition: transform 0.3s ease;
+    color: #666;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.pmd-collapse-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.pmd-collapse-content {
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.pmd-collapse-inner {
+    padding: 20px;
+    background: #ffffff; /* 使用纯白色背景 */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin-top: -1px;
+    color: #333; /* 深灰色文字确保可读性 */
+    line-height: 1.6;
+}
+
+/* 深色主题适配 */
+@media (prefers-color-scheme: dark) {
+    .pmd-collapse-header {
+        background: #2d2d2d; /* 深色背景 */
+        color: #eee;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .pmd-collapse-header:hover {
+        background: #3d3d3d; /* 悬停时更亮的背景色 */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .pmd-collapse-title {
+        color: #eee;
+    }
+
+    .pmd-collapse-toggle {
+        color: #ccc;
+    }
+
+    .pmd-collapse-inner {
+        background: #1e1e1e; /* 深色背景 */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: none;
+        color: #eee; /* 浅色文字确保可读性 */
+    }
+}
+
+/* 明确指定浅色主题下的样式 */
+body.light-theme .pmd-collapse-header {
+    background: #f8f8f8;
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .pmd-collapse-title {
+    color: #333;
+}
+
+body.light-theme .pmd-collapse-toggle {
+    color: #666;
+}
+
+body.light-theme .pmd-collapse-inner {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: none;
+    color: #333;
+}
+
+/* 明确指定深色主题下的样式 */
+body.dark-theme .pmd-collapse-header {
+    background: #2d2d2d;
+    color: #eee;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .pmd-collapse-header:hover {
+    background: #3d3d3d;
+}
+
+body.dark-theme .pmd-collapse-title {
+    color: #eee;
+}
+
+body.dark-theme .pmd-collapse-toggle {
+    color: #ccc;
+}
+
+body.dark-theme .pmd-collapse-inner {
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: none;
+    color: #eee;
+}
+
+body.dark-theme .pmd-heading {
+    color: #ddd;
+}
+
+body.dark-theme .pmd-thematic-break {
+    border-top-color: #555;
+}
+
+/* 深色主题下的双分割线 */
+body.dark-theme .pmd-thematic-break.pmd-thematic-break-double {
+  border-top-color: #555;
+  border-bottom-color: #555;
+}
+
+body.dark-theme .pmd-thematic-break.pmd-thematic-break-with-text:before,
+body.dark-theme .pmd-thematic-break.pmd-thematic-break-with-text:after {
+  background-color: #555;
+}
+
+body.dark-theme .pmd-thematic-break.pmd-thematic-break-with-text.pmd-thematic-break-double:before,
+body.dark-theme .pmd-thematic-break.pmd-thematic-break-with-text.pmd-thematic-break-double:after {
+  border-top-color: #555;
+  border-bottom-color: #555;
+  background: transparent;
+}
+
+body.dark-theme .pmd-thematic-break.pmd-thematic-break-dotted {
+  background: radial-gradient(circle, #555 30%, transparent 30%) 0 0;
+  background-size: 10px 1px;
+}
+
+body.dark-theme .pmd-thematic-break.pmd-thematic-break-with-text.pmd-thematic-break-dotted:before,
+body.dark-theme .pmd-thematic-break.pmd-thematic-break-with-text.pmd-thematic-break-dotted:after {
+  background: radial-gradient(circle, #555 30%, transparent 30%) 0 0;
+  background-size: 10px 1px;
+}
+
+body.dark-theme .pmd-thematic-break-text {
+  background-color: #111;
+  color: #aaa;
+}
+
+body.dark-theme .pmd-notification code {
+    background-color: #444;
+}
+
+body.dark-theme .pmd-notification a {
+    color: #66b3ff;
+}
+
+body.dark-theme .pmd-notification blockquote {
+    border-left-color: #666;
+    background-color: #333;
+    color: #aaa;
+}
+
+body.dark-theme .pmd-notification-custom {
+    border-color: rgba(100, 100, 100, 0.8);
+}
+
+/* 内部链接样式 */
+.pmd-internal-link {
+  color: #2196F3;
+  text-decoration: none;
+  border-bottom: 1px dashed #2196F3;
+  transition: all 0.3s ease;
+}
+
+.pmd-internal-link:hover {
+  color: #1976D2;
+  border-bottom: 1px solid #1976D2;
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+.pmd-internal-link:active {
+  color: #0D47A1;
+}
+
+/* 浅色主题下的内部链接样式 */
+body.light-theme .pmd-internal-link {
+  color: #1E88E5;
+  border-bottom: 1px dashed #1E88E5;
+}
+
+body.light-theme .pmd-internal-link:hover {
+  color: #1565C0;
+  border-bottom: 1px solid #1565C0;
+  background-color: rgba(30, 136, 229, 0.1);
+}
+
+body.light-theme .pmd-internal-link:active {
+  color: #0D47A1;
+}
+
+/* 深色主题下的内部链接样式 */
+body.dark-theme .pmd-internal-link {
+  color: #64B5F6;
+  border-bottom: 1px dashed #64B5F6;
+}
+
+body.dark-theme .pmd-internal-link:hover {
+  color: #42A5F5;
+  border-bottom: 1px solid #42A5F5;
+  background-color: rgba(100, 181, 246, 0.15);
+}
+
+body.dark-theme .pmd-internal-link:active {
+  color: #1E88E5;
+}
+
+/* 通知框中的内部链接样式 */
+.pmd-notification .pmd-internal-link,
+.pmd-notification-notice .pmd-internal-link,
+.pmd-notification-tip .pmd-internal-link,
+.pmd-notification-warning .pmd-internal-link,
+.pmd-notification-danger .pmd-internal-link,
+.pmd-notification-custom .pmd-internal-link {
+  color: #2196F3;
+  border-bottom: 1px dashed #2196F3;
+}
+
+.pmd-notification .pmd-internal-link:hover,
+.pmd-notification-notice .pmd-internal-link:hover,
+.pmd-notification-tip .pmd-internal-link:hover,
+.pmd-notification-warning .pmd-internal-link:hover,
+.pmd-notification-danger .pmd-internal-link:hover,
+.pmd-notification-custom .pmd-internal-link:hover {
+  color: #1976D2;
+  border-bottom: 1px solid #1976D2;
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+/* 深色主题下通知框中的内部链接样式 */
+body.dark-theme .pmd-notification .pmd-internal-link,
+body.dark-theme .pmd-notification-notice .pmd-internal-link,
+body.dark-theme .pmd-notification-tip .pmd-internal-link,
+body.dark-theme .pmd-notification-warning .pmd-internal-link,
+body.dark-theme .pmd-notification-danger .pmd-internal-link,
+body.dark-theme .pmd-notification-custom .pmd-internal-link {
+  color: #64B5F6;
+  border-bottom: 1px dashed #64B5F6;
+}
+
+body.dark-theme .pmd-notification .pmd-internal-link:hover,
+body.dark-theme .pmd-notification-notice .pmd-internal-link:hover,
+body.dark-theme .pmd-notification-tip .pmd-internal-link:hover,
+body.dark-theme .pmd-notification-warning .pmd-internal-link:hover,
+body.dark-theme .pmd-notification-danger .pmd-internal-link:hover,
+body.dark-theme .pmd-notification-custom .pmd-internal-link:hover {
+  color: #42A5F5;
+  border-bottom: 1px solid #42A5F5;
+  background-color: rgba(100, 181, 246, 0.15);
+}
+
+/* 任务列表中的内部链接样式 */
+.pmd-task-list-item-content .pmd-internal-link {
+  color: #2196F3;
+  border-bottom: 1px dashed #2196F3;
+}
+
+.pmd-task-list-item-content .pmd-internal-link:hover {
+  color: #1976D2;
+  border-bottom: 1px solid #1976D2;
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+body.dark-theme .pmd-task-list-item-content .pmd-internal-link {
+  color: #64B5F6;
+  border-bottom: 1px dashed #64B5F6;
+}
+
+body.dark-theme .pmd-task-list-item-content .pmd-internal-link:hover {
+  color: #42A5F5;
+  border-bottom: 1px solid #42A5F5;
+  background-color: rgba(100, 181, 246, 0.15);
+}
+
+/* 列表中的内部链接样式 */
+.pmd-ul li .pmd-internal-link,
+.pmd-ol li .pmd-internal-link {
+  color: #2196F3;
+  border-bottom: 1px dashed #2196F3;
+}
+
+.pmd-ul li .pmd-internal-link:hover,
+.pmd-ol li .pmd-internal-link:hover {
+  color: #1976D2;
+  border-bottom: 1px solid #1976D2;
+  background-color: rgba(33, 150, 243, 0.1);
+}

@@ -16,23 +16,23 @@ module.exports = async () => {
         const isGrouped = item.items && Array.isArray(item.items);
 
         if (isGrouped) {
-            // 分组项（已有逻辑不变）
+            // 分组项
             const groupId = `group-${index}`;
-            const groupActiveClass = item.open ? 'active' : ''; // 使用 active 类名
+            const groupActiveClass = item.open ? 'pfds-active' : '';
 
             navHTML += `
-<li>
-  <a href="javascript:void(0)" class="nav-group-toggle">
+<li class="pfds-nav-group">
+  <a href="javascript:void(0)" class="pfds-nav-group-toggle">
     ${item.group}
-    <span class="toggle-icon ${groupActiveClass}">↠</span>
+    <span class="pfds-toggle-icon ${groupActiveClass}"><i class="icon-left"></i></span>
   </a>
-  <ul class="nav-group-content ${groupActiveClass}" id="${groupId}-content">`;
+  <ul class="pfds-nav-group-content ${groupActiveClass}" id="${groupId}-content">`;
 
             item.items.forEach((route, itemIndex) => {
-                const activeClass = index === 0 && itemIndex === 0 ? 'active' : '';
+                const activeClass = index === 0 && itemIndex === 0 ? 'pfds-active' : '';
                 navHTML += `
-    <li>
-      <a href="#" onclick="showPage('${route.id}')" id="nav-${route.id}" class="${activeClass}" data-page-id="${route.id}">
+    <li class="pfds-nav-item">
+      <a href="#" onclick="pfdsShowPage('${route.id}')" id="pfds-nav-${route.id}" class="${activeClass}" data-page-id="${route.id}">
         ${route.title}
       </a>
     </li>`;
@@ -42,11 +42,11 @@ module.exports = async () => {
   </ul>
 </li>`;
         } else {
-            // 非分组项 → 新增 class="nav-item"
-            const activeClass = index === 0 ? 'active' : '';
+            // 非分组项
+            const activeClass = index === 0 ? 'pfds-active' : '';
             navHTML += `
-<li class="nav-item">
-  <a href="#" onclick="showPage('${item.id}')" id="nav-${item.id}" class="${activeClass}" data-page-id="${item.id}">
+<li class="pfds-nav-item">
+  <a href="#" onclick="pfdsShowPage('${item.id}')" id="pfds-nav-${item.id}" class="${activeClass}" data-page-id="${item.id}">
     ${item.title}
   </a>
 </li>`;
@@ -56,7 +56,7 @@ module.exports = async () => {
     shared.navHTML = navHTML;
     shared.logger.subStep('主导航结构构建完成', 'success');
 
-    // 生成头部链接（保持不变）
+    // 生成头部链接
     if (!shared.config?.head || !Array.isArray(shared.config.head)) {
         shared.logger.subStep('shared.config.head 不存在或不是数组', 'error');
         shared.headLinksHTML = '';
@@ -75,7 +75,7 @@ module.exports = async () => {
 
                 if (hasChildren) {
                     const childrenHTML = `
-<ul class="submenu">
+<ul class="pfds-submenu">
 ${link.children.map((child) => {
                         const childUrl = child.url || 'javascript:void(0)';
                         return `<li><a href="${childUrl}" target="_blank">${child.title || '未知子菜单'}</a></li>`;
@@ -83,8 +83,8 @@ ${link.children.map((child) => {
 </ul>`;
 
                     return `
-<li class="nav-item has-submenu">
-  <a href="javascript:void(0)" class="submenu-toggle">
+<li class="pfds-nav-item pfds-has-submenu">
+  <a href="javascript:void(0)" class="pfds-submenu-toggle">
     ${iconHTML}
     <span>${link.title || '无标题'}</span>
   </a>
@@ -93,7 +93,7 @@ ${link.children.map((child) => {
                 } else {
                     const linkUrl = link.url || 'javascript:void(0)';
                     return `
-<li class="nav-item">
+<li class="pfds-nav-item">
   <a href="${linkUrl}" target="_blank">
     ${iconHTML}
     <span>${link.title || '无标题'}</span>

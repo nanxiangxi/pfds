@@ -1,28 +1,30 @@
-export function copyCode(button) {
-    const pre = button.closest('pre');
-    const code = pre.querySelector('code').innerText;
+// 代码复制模块
+const codeCopyModule = {
+    init: function() {
+        window.copyCode = function(button) {
+            const pre = button.closest('pre');
+            const code = pre.querySelector('code').innerText;
 
-    navigator.clipboard.writeText(code).then(() => {
-        const icon = button.querySelector('i');
-        const original = icon.className;
-        icon.className = 'icon-check'; // 你可以定义 icon-check 显示为 ✔ 图标
-        
-        // 显示成功消息
-        showMessage('代码复制成功！', 'success');
-        
-        setTimeout(() => {
-            icon.className = original;
-        }, 1500);
-    }).catch(err => {
-        showMessage('复制失败: ' + err.message, 'error');
-    });
-}
+            navigator.clipboard.writeText(code).then(() => {
+                const icon = button.querySelector('i');
+                const original = icon.className;
+                icon.className = 'icon-check'; // 你可以定义 icon-check 显示为 ✔ 图标
+                
+                // 显示成功消息
+                showMessage('代码复制成功！', 'success');
+                
+                setTimeout(() => {
+                    icon.className = original;
+                }, 1500);
+            }).catch(err => {
+                showMessage('复制失败: ' + err.message, 'error');
+            });
+        };
 
-export function initCopyCode() {
-    // 创建消息提示框元素
-    createMessageContainer();
-    window.copyCode = copyCode;
-}
+        // 创建消息提示框元素
+        createMessageContainer();
+    }
+};
 
 // 创建消息提示框容器
 function createMessageContainer() {
@@ -107,3 +109,5 @@ function showMessage(text, type) {
         messageDiv.style.opacity = '0';
     }, 2000);
 }
+
+return codeCopyModule;

@@ -1,7 +1,31 @@
 {
-  "siteTitle": "PFDS--文档",
-  "theme": "dark-1",
-  "template": "main.html",
-  "initCssAutoLoad": false,
-  "themeToggle": true
+  "pre-declaration": {
+    "enable": true,
+    "content": "👋 感谢您使用PFDS驱动您的文档！"
+  },
+  "header": {
+    "title": "PFDS--文档",
+    "favicon": "icon:copy",
+    "logo": "icon:copy",
+    "logoLink": "https://www.npmjs.com/package/my-pfds",
+    "logoTitle": "PFDS--文档",
+    "themeToggle": true,
+    "search": true
+  },
+  "multilingual": {
+    "enable": true,
+    "languages": [
+      {
+        "name": "简体中文",
+        "code": "汉"
+      },
+      {
+        "name": "English",
+        "code": "En"
+      }
+    ]
+  },
+  "theme": "default",
+  "initCssAutoLoad": true,
+  "initJsAutoLoad": true
 }

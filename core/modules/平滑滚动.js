@@ -1,13 +1,16 @@
-export function scrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+// 平滑滚动模块
+const smoothScrollModule = {
+    init: function() {
+        window.scrollToSection = function(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        };
     }
-}
+};
 
-export function initScroll() {
-    window.scrollToSection = scrollToSection;
-}
+return smoothScrollModule;

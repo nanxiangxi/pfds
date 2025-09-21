@@ -17,6 +17,8 @@ module.exports = async function applyScopedCSS(content, scopeClass, pageId, init
     let extractedCSS = '';
 
     const styleRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
+    
+    console.log(`[CSS处理诊断] 开始处理页面 ${pageId} 的CSS`);
 
     // 替换 <style> 标签内容并提取 CSS
     const htmlContent = content.replace(styleRegex, (match, styleContent) => {
@@ -34,6 +36,7 @@ module.exports = async function applyScopedCSS(content, scopeClass, pageId, init
             .join('\n');
 
         extractedCSS += scopedCSS + '\n';
+        console.log(`[CSS处理诊断] 提取CSS内容，长度: ${scopedCSS.length}`);
 
         // 如果启用提取，则从 HTML 中移除 <style>
         if (initCssAutoLoad) {
@@ -43,16 +46,24 @@ module.exports = async function applyScopedCSS(content, scopeClass, pageId, init
         }
     });
 
-    const assetsCSSDir = path.join(CONFIG.OUTPUT_DIR, 'assets', 'css');
-    const cssFilename = `css-${pageId}.css`;
-    const cssFilePath = path.join(assetsCSSDir, cssFilename);
+    console.log(`[CSS处理诊断] 页面 ${pageId} 提取的CSS总长度: ${extractedCSS.length}`);
+    
+    // 只有在确实有CSS内容时才生成文件
+    if (initCssAutoLoad && extractedCSS.trim()) {
+        const assetsCSSDir = path.join(CONFIG.OUTPUT_DIR, 'assets', 'css');
+        const cssFilename = `css-${pageId}.css`;
+        const cssFilePath = path.join(assetsCSSDir, cssFilename);
+        
+        console.log(`[CSS处理诊断] 写入CSS文件: ${cssFilePath}`);
 
-    // ✅ 无论 extractedCSS 是否为空，都写入文件
-    if (!(await utils.existsSync(assetsCSSDir))) {
-        await utils.mkdir(assetsCSSDir, { recursive: true });
+        if (!(await utils.existsSync(assetsCSSDir))) {
+            await utils.mkdir(assetsCSSDir, { recursive: true });
+        }
+
+        await utils.writeFile(cssFilePath, extractedCSS);
+    } else {
+        console.log(`[CSS处理诊断] 不需要生成CSS文件，initCssAutoLoad: ${initCssAutoLoad}, CSS内容: ${extractedCSS.trim() ? '有' : '无'}`);
     }
-
-    await utils.writeFile(cssFilePath, extractedCSS);
 
     // 如果 initCssAutoLoad === false，则不需要插入额外标签，因为已保留在 HTML 中
     return htmlContent;

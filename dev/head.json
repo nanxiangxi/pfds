@@ -1,8 +1,26 @@
 {
   "head": [
     {
-      "title": "本文档由PFDS驱动",
-      "url": "https://docs.shlm.top/pfds/"
+      "title": "快捷操作",
+      "children": [
+        {
+          "title": "返回上级",
+          "url": "../"
+        },
+        {
+          "title": "演示选项",
+          "url": "../"
+        }
+      ]
+    },
+    {
+      "title": "GitHub",
+      "url": "https://github.com/nanxiangxi/pfds"
+    },
+    {
+      "title": "GitHub",
+      "icon": "icon:github",
+      "url": "https://github.com/nanxiangxi/pfds"
     }
   ]
 }

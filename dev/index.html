@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="{{favicon}}" />
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 语言资源配置 -->
+    <script>
+        // 从模板注入语言资源
+        {{{languageResources}}}
+        
+        // PFDS配置
+        window.pfdsConfig = {
+            multilingual: {
+                enable: {{hasMultilingual}},
+                languages: {{{multilingualConfig}}}
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- PFDS_PRE_DECLARATION_START -->
+    <div class="pfds-pre-declaration" id="pfds-preDeclaration">
+        {{preDeclarationContent}}
+        <button class="pfds-pre-declaration-close" id="pfds-preDeclarationClose" aria-label="关闭预声明">&times;</button>
+    </div>
+    <!-- PFDS_PRE_DECLARATION_END -->
+    
+
+    <!-- 手机端遮罩层 -->
+    <div class="pfds-overlay" id="pfds-mobileOverlay"></div>
+    
+    <!-- 头部 -->
+    <div class="pfds-header">
+        <!-- Logo和标题 -->
+        <div class="pfds-header-logo">
+            <div class="pfds-logo">
+                <a href="{{logoLink}}" target="_blank">
+                    <!-- 如果有logoClass则使用图标类，否则使用图片 -->
+                    {{#if logoClass}}
+                    <i class="{{logoClass}}"></i>
+                    {{else}}
+                    <img src="{{logo}}" alt="{{logoTitle}}" />
+                    {{/if}}
+                    <span>{{logoTitle}}</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 右侧功能区域 -->
+        <div class="pfds-header-right">
+            <!-- 搜索区域 -->
+            {{{searchSection}}}
+            
+            <!-- 头部分割线 -->
+            {{#if hasSearch}}
+            {{#if hasHeadLinks}}
+            <div class="pfds-header-divider"></div>
+            {{/if}}
+            {{/if}}
+            
+            <!-- 头部链接区域 -->
+            {{{headLinksHTML}}}
+            
+            <!-- 头部分割线 -->
+            {{#if hasHeadLinks}}
+            {{#if themeToggle}}
+            <div class="pfds-header-divider"></div>
+            {{/if}}
+            {{/if}}
+            
+            <!-- 主题切换 -->
+            {{{themeToggleSection}}}
+            
+            <!-- 多语言选项 -->
+            {{#if hasMultilingual}}
+            <div class="pfds-header-divider"></div>
+            {{{multilingualSection}}}
+            {{/if}}
+            <!-- 手机端汉堡菜单 -->
+            <button class="pfds-hamburger" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主容器 -->
+    <div class="pfds-main-container">
+        <!-- 内容包装器 -->
+        <div class="pfds-content-wrapper">
+            <!-- 布局容器 -->
+            <div class="pfds-layout">
+                <!-- 侧边栏 -->
+                <aside class="pfds-sidebar">
+                    <div class="pfds-sidebar-content">
+                        <!-- 移动端搜索区域 -->
+                        <div class="pfds-mobile-search">
+                            {{{mobileSearchSection}}}
+                        </div>
+                        
+                        <!-- 导航菜单 -->
+                        <div class="pfds-nav" data-no-search>
+                            {{{navHTML}}}
+                        </div>
+
+                    </div>
+                    <div class="pfds-sidebar-footer">
+                    </div>
+                </aside>
+
+
+                <!-- 主内容区 -->
+                <main class="pfds-main">
+                    <div class="pfds-content">
+                        <!-- 视图内容 -->
+                        <div class="pfds-content-main">
+                            {{{viewsHTML}}}
+                        </div>
+                        
+                        <!-- 页面导航 -->
+                        <div class="pfds-content-nav">
+                            <ul id="pfds-contentNavList"></ul>
+                            <div class="pfds-compile-time">编译时间：{{buildTime}}</div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <div class="pfds-modal-overlay" id="pfds-searchModal">
+        <div class="pfds-modal">
+            <div class="pfds-modal-content">
+                <div class="pfds-search-container">
+                    <input type="text" id="pfds-searchInput" placeholder="输入关键词进行搜索..." />
+                    <button id="pfds-searchButton">搜索</button>
+                </div>
+                <div class="pfds-search-results" id="pfds-searchResults">
+                    <!-- 搜索结果将在这里显示 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入 Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    
+    <script type="module" src="assets/js/modules.js"></script>
+    
+    <script src="assets/js/public-script.js"></script>
+    
+    <!-- 开发模式专用 -->
+    <!-- DEV_ONLY_START -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/hot-reload.js"></script>
+    <!-- DEV_ONLY_END -->
+</body>
+</html>

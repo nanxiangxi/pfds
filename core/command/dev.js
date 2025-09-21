@@ -20,6 +20,7 @@ const CONFIG = {
         path.resolve(__dirname, '../../core/modules'),
         path.resolve(__dirname, '../../core/themes'),
     ],
+    DEV_DIR: path.resolve(__dirname, '../../dev')
 };
 
 /**
@@ -63,6 +64,19 @@ async function startDevServer() {
 
     // 静态资源服务
     app.use(express.static(CONFIG.OUTPUT_DIR));
+    
+    // 特殊处理 hot-reload.js 文件
+    app.get('/hot-reload.js', (req, res) => {
+        const hotReloadPath = path.join(CONFIG.DEV_DIR, 'hot-reload.js');
+        fs.readFile(hotReloadPath, 'utf8', (err, data) => {
+            if (err) {
+                res.status(404).send('File not found');
+                return;
+            }
+            res.setHeader('Content-Type', 'application/javascript');
+            res.send(data);
+        });
+    });
 
     // 动态获取可用端口
     const START_PORT = 309;
@@ -113,3 +127,4 @@ async function startDevServer() {
 }
 
 module.exports = { startDevServer };
+

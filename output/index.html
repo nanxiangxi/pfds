@@ -2,208 +2,223 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="[object Object]" />
     <title>PFDS--文档</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 语言资源配置 -->
+    <script>
+        // 从模板注入语言资源
+        
+        
+        // PFDS配置
+        window.pfdsConfig = {
+            multilingual: {
+                enable: true,
+                languages: [{"name":"简体中文","code":"汉"},{"name":"English","code":"En"}]
+            }
+        };
+    </script>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-<!-- 阅读进度条 -->
-<div class="progress-bar-container">
-    <div class="progress-bar" id="progressBar"></div>
-</div>
-
-<div class="header">
-    <div class="header-left">
-        <div class="logo">PFDS--文档</div>
-        <div class="search-container" id="mobileSearchContainer">
-            <input type="text" id="searchInput" placeholder="输入关键词进行搜索..." />
-            <button onclick="openSearchModal()">搜索</button>
-        </div>
+    <!-- PFDS_PRE_DECLARATION_START -->
+    <div class="pfds-pre-declaration" id="pfds-preDeclaration">
+        👋 感谢您使用PFDS驱动您的文档！
+        <button class="pfds-pre-declaration-close" id="pfds-preDeclarationClose" aria-label="关闭预声明">&times;</button>
     </div>
-
-    <!-- 手机端汉堡菜单 -->
-    <button class="hamburger" aria-label="Toggle Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    <!-- 手机端遮罩层 -->
-    <div class="overlay" id="mobileOverlay"></div>
-
-    <div class="header-right">
-        
-<div class="theme-toggle" id="themeToggle">
-  <span>🌞</span>
-  <label class="switch">
-    <input type="checkbox" id="themeSwitch">
-    <span class="slider"></span>
-  </label>
-  <span>🌙</span>
-</div>
-        <div class="nav-links" id="mobileNavLinks">
-            <ul>
-                
-<li class="nav-item">
-  <a href="https://docs.shlm.top/pfds/" target="_blank">
+    <!-- PFDS_PRE_DECLARATION_END -->
     
-    <span>本文档由PFDS驱动</span>
-  </a>
-</li>
-            </ul>
+
+    <!-- 手机端遮罩层 -->
+    <div class="pfds-overlay" id="pfds-mobileOverlay"></div>
+    
+    <!-- 头部 -->
+    <div class="pfds-header">
+        <!-- Logo和标题 -->
+        <div class="pfds-header-logo">
+            <div class="pfds-logo">
+                <a href="https://www.npmjs.com/package/my-pfds" target="_blank">
+                    <!-- 如果有logoClass则使用图标类，否则使用图片 -->
+                    <img src="data:image/svg+xml;charset&#x3D;utf-8;base64,PHN2ZyB0PSIxNzUzMTMyODMzNDc2IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9Ijc3NTMiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cGF0aCBkPSJNODg5LjE3MzMzMyAzNC4xMzMzMzNoLTU4MC4yNjY2NjZjLTU0LjYxMzMzMyAwLTEwMC42OTMzMzMgNDQuMzczMzMzLTEwMC42OTMzMzQgMTAwLjY5MzMzNHYxMDkuMjI2NjY2YzAgMTguNzczMzMzIDE1LjM2IDM0LjEzMzMzMyAzNC4xMzMzMzQgMzQuMTMzMzM0czM0LjEzMzMzMy0xNS4zNiAzNC4xMzMzMzMtMzQuMTMzMzM0VjEzNC44MjY2NjdjMC0xOC43NzMzMzMgMTUuMzYtMzQuMTMzMzMzIDM0LjEzMzMzMy0zNC4xMzMzMzRoNTgwLjI2NjY2N2MxOC43NzMzMzMgMCAzNC4xMzMzMzMgMTUuMzYgMzQuMTMzMzMzIDM0LjEzMzMzNHY1ODAuMjY2NjY2YzAgMTguNzczMzMzLTE1LjM2IDM0LjEzMzMzMy0zNC4xMzMzMzMgMzQuMTMzMzM0aC0xMTAuOTMzMzMzYy0xOC43NzMzMzMgMC0zNC4xMzMzMzMgMTUuMzYtMzQuMTMzMzM0IDM0LjEzMzMzM3MxNS4zNiAzNC4xMzMzMzMgMzQuMTMzMzM0IDM0LjEzMzMzM2gxMTAuOTMzMzMzYzU0LjYxMzMzMyAwIDEwMC42OTMzMzMtNDQuMzczMzMzIDEwMC42OTMzMzMtMTAwLjY5MzMzM1YxMzYuNTMzMzMzYy0xLjcwNjY2Ny01OC4wMjY2NjctNDYuMDgtMTAyLjQtMTAyLjQtMTAyLjR6IiBmaWxsPSIjNTE1MTUxIiBwLWlkPSI3NzU0Ij48L3BhdGg+PHBhdGggZD0iTTcxNS4wOTMzMzMgMjQyLjM0NjY2N2gtNjE0LjRDNjMuMTQ2NjY3IDI0Mi4zNDY2NjcgMzQuMTMzMzMzIDI3My4wNjY2NjcgMzQuMTMzMzMzIDMwOC45MDY2Njd2NjE0LjRDMzQuMTMzMzMzIDk1OS4xNDY2NjcgNjQuODUzMzMzIDk4OS44NjY2NjcgMTAwLjY5MzMzMyA5ODkuODY2NjY3aDYxNC40YzM3LjU0NjY2NyAwIDY2LjU2LTMwLjcyIDY2LjU2LTY2LjU2di02MTQuNGMwLTM3LjU0NjY2Ny0yOS4wMTMzMzMtNjYuNTYtNjYuNTYtNjYuNTZ6IiBmaWxsPSIjNTE1MTUxIiBwLWlkPSI3NzU1Ij48L3BhdGg+PC9zdmc+" alt="PFDS--文档" />
+                    <span>PFDS--文档</span>
+                </a>
+            </div>
         </div>
+        
+        <!-- 右侧功能区域 -->
+        <div class="pfds-header-right">
+            <!-- 搜索区域 -->
+            
+<div class="pfds-header-search" id="pfds-headerSearch">
+    <i class="icon-search"></i>
+    <span class="pfds-header-search-text">搜索 / SEARCCH</span>
+</div>
+            
+            <!-- 头部分割线 -->
+            <div class="pfds-header-divider"></div>
+            
+            <!-- 头部链接区域 -->
+            
+<div class="pfds-header-dropdown">
+    <span class="pfds-header-dropdown-title">快捷操作</span>
+    <div class="pfds-header-dropdown-content">
+        <a href="../" target="_blank">返回上级</a><a href="../" target="_blank">演示选项</a>
     </div>
 </div>
 
-<div class="pfds-container">
-    <div class="pfds-nav" data-no-search>
-        <ul>
+<a class="pfds-header-link pfds-header-link-text" href="https://github.com/nanxiangxi/pfds" target="_blank">GitHub</a>
 
-<li class="nav-item">
-  <a href="#" onclick="showPage('home')" id="nav-home" class="active" data-page-id="home">
-    快速开始
+<a class="pfds-header-link pfds-header-link-with-icon" href="https://github.com/nanxiangxi/pfds" target="_blank" title="GitHub">
+    <i class="icon-github"></i>
+    <span>GitHub</span>
+</a>
+            
+            <!-- 头部分割线 -->
+            
+            <!-- 主题切换 -->
+            
+<div class="pfds-theme-toggle">
+    <label class="pfds-theme-toggle__label" for="pfds-themeSwitch">主题</label>
+    <button class="pfds-theme-toggle__button" type="button" id="pfds-themeSwitch" title="主题切换" aria-label="浅色主题">
+        <span class="pfds-theme-toggle__button-wrap">
+            <span class="pfds-theme-toggle__shadow"></span>
+            <span class="pfds-theme-toggle__shadow"></span>
+            <span class="pfds-theme-toggle__inner">
+                <span class="pfds-theme-toggle__options">
+                    <span class="pfds-theme-toggle__option-label" aria-hidden="true">D</span>
+                    <span class="pfds-theme-toggle__option-sep"></span>
+                    <span class="pfds-theme-toggle__option-label" aria-hidden="true">L</span>
+                </span>
+            </span>
+        </span>
+    </button>
+</div>
+            
+            <!-- 多语言选项 -->
+            <div class="pfds-header-divider"></div>
+            
+<div class="pfds-multilingual">
+    <div class="pfds-multilingual-toggle">
+        <span class="pfds-multilingual-current">汉</span>
+        <i class="pfds-multilingual-icon icon-chevron-down"></i>
+    </div>
+    <div class="pfds-multilingual-dropdown">
+        <a href="#" class="pfds-multilingual-option" data-lang="汉" data-name="简体中文">简体中文</a><a href="#" class="pfds-multilingual-option" data-lang="En" data-name="English">English</a>
+    </div>
+</div>
+<script>
+  // 页面加载时从localStorage恢复用户选择的语言
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedLanguage = localStorage.getItem('preferredLanguage') || '汉';
+    const currentLangElement = document.querySelector('.pfds-multilingual-current');
+    if (currentLangElement) {
+      currentLangElement.textContent = savedLanguage;
+    }
+  });
+</script>
+            <!-- 手机端汉堡菜单 -->
+            <button class="pfds-hamburger" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 主容器 -->
+    <div class="pfds-main-container">
+        <!-- 内容包装器 -->
+        <div class="pfds-content-wrapper">
+            <!-- 布局容器 -->
+            <div class="pfds-layout">
+                <!-- 侧边栏 -->
+                <aside class="pfds-sidebar">
+                    <div class="pfds-sidebar-content">
+                        <!-- 移动端搜索区域 -->
+                        <div class="pfds-mobile-search">
+                            
+<div class="pfds-header-search" id="pfds-mobileSearch">
+    <i class="icon-search"></i>
+    <span class="pfds-header-search-text">搜索 / SEARCCH</span>
+</div>
+                        </div>
+                        
+                        <!-- 导航菜单 -->
+                        <div class="pfds-nav" data-no-search>
+                            <ul>
+
+<li class="pfds-nav-item">
+  <a href="#" onclick="pfdsShowPage('home')" id="pfds-nav-home" class="pfds-active" data-page-id="home">
+    部署成功
   </a>
 </li></ul>
-    </div>
+                        </div>
 
-    <div class="pfds-content-area">
-        <div class="pfds-content-main">
-            <div id="home" class="page-content active view-scope-home">
-<h1>部署成功</h1>
+                    </div>
+                    <div class="pfds-sidebar-footer">
+                    </div>
+                </aside>
 
-<div class="Attention-box orange align-center" style="width: 90%;">
-    <div class="strip"></div>
-    <span class="markdown-word">感谢您的选择！
-PFDS 部署成功！</span>
+
+                <!-- 主内容区 -->
+                <main class="pfds-main">
+                    <div class="pfds-content">
+                        <!-- 视图内容 -->
+                        <div class="pfds-content-main">
+                            <div id="home" class="page-content active view-scope-home" data-css="false" data-js="false">
+<div style="white-space: pre-wrap; line-height: normal; margin: 0; padding: 0;"><h1 class="pmd-h1"><span data-lang-汉="初始化成功" data-lang-En="Initialization successful"></span></h1><div class="pmd-notification pmd-notification-rounded pmd-notification-custom" style="background-color: #916400; color: #fff;"><span data-lang-汉="这是中文" data-lang-En="This is English"></span></div></div>
+<div class="update-time">最后更新时间: 2025-09-21 18:24:59</div>
+<hr class="page-divider"><div class="page-navigation">
+            <div class="nav-link prev-link disabled">
+                <i class="icon-right"></i>
+                <span class="nav-text">已经是第一页</span>
+            </div>
+            <div class="nav-link next-link disabled">
+                <span class="nav-text">已经是最后一页</span>
+                <i class="icon-left"></i>
+            </div></div>
 </div>
 
 
-<pre class="pmd align-center" style="width: 90%;"><code>231213123123
-2131231231</code><span class="language-label">pmd</span><button class="copy-code-button" onclick="copyCode(this)" title="复制代码"><i class="icon-copy"></i></button></pre>
-</div>
-
-
+                        </div>
+                        
+                        <!-- 页面导航 -->
+                        <div class="pfds-content-nav">
+                            <ul id="pfds-contentNavList"></ul>
+                            <div class="pfds-compile-time">编译时间：2025-09-21 18:28:08</div>
+                        </div>
+                    </div>
+                </main>
+            </div>
         </div>
-        <div class="pfds-content-nav">
-            <ul id="contentNavList"></ul>
-            <div class="pfds-compile-time">编译时间：2025-08-22 15:23:36</div>
+    </div>
+
+    <div class="pfds-modal-overlay" id="pfds-searchModal">
+        <div class="pfds-modal">
+            <div class="pfds-modal-content">
+                <div class="pfds-search-container">
+                    <input type="text" id="pfds-searchInput" placeholder="输入关键词进行搜索..." />
+                    <button id="pfds-searchButton">搜索</button>
+                </div>
+                <div class="pfds-search-results" id="pfds-searchResults">
+                    <!-- 搜索结果将在这里显示 -->
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="pfds-modal-overlay" id="searchModal">
-    <div class="pfds-modal">
-        <div id="modalContent"></div>
-    </div>
-</div>
-
-<!-- 引入 Highlight.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-
-<script type="module" src="assets/js/modules.js"></script>
-
-<script src="assets/js/public-script.js"></script>
-<!-- DEV_ONLY_START -->
-<!-- 热重载客户端 -->
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    const socket = io();
-    socket.on('reload', function () {
-        console.log('🔁 检测到文件更新，页面即将刷新...');
-        location.reload();
-    });
-</script>
-<!-- DEV_ONLY_END -->
-<script>
-    function copyCode(button) {
-        const pre = button.closest('pre');
-        const code = pre.querySelector('code').innerText;
-
-        navigator.clipboard.writeText(code).then(() => {
-            const icon = button.querySelector('i');
-            const original = icon.className;
-            icon.className = 'icon-check'; // 你可以定义 icon-check 显示为 ✔ 图标
-            setTimeout(() => {
-                icon.className = original;
-            }, 1500);
-        }).catch(err => {
-            alert('复制失败: ' + err.message);
-        });
-    }
-
-    // 主题切换功能
-    document.addEventListener('DOMContentLoaded', function() {
-        const themeSwitch = document.getElementById('themeSwitch');
-        const themeToggle = document.getElementById('themeToggle');
-
-        // 如果主题切换功能未启用，直接返回
-        if (!themeSwitch || !themeToggle) return;
-
-        // 检查本地存储中的主题设置
-        const savedTheme = localStorage.getItem('pfds-theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        // 根据保存的主题或系统偏好设置初始化主题
-        if (savedTheme) {
-            document.body.classList.toggle('light-theme', savedTheme === 'light');
-            themeSwitch.checked = savedTheme === 'dark';
-        } else {
-            document.body.classList.toggle('light-theme', !prefersDark);
-            themeSwitch.checked = prefersDark;
-        }
-
-        // 主题切换事件监听
-        themeSwitch.addEventListener('change', function() {
-            const isDark = this.checked;
-            document.body.classList.toggle('light-theme', !isDark);
-            localStorage.setItem('pfds-theme', isDark ? 'dark' : 'light');
-        });
-    });
-
-    // 阅读进度条功能
-    document.addEventListener('DOMContentLoaded', function() {
-        const progressBar = document.getElementById('progressBar');
-        const contentMain = document.querySelector('.pfds-content-main');
-
-        function updateProgress() {
-            // 获取当前活动页面
-            const activePage = document.querySelector('.page-content.active');
-            if (!activePage) return;
-
-            // 获取活动页面的滚动容器
-            const scrollContainer = activePage.closest('.pfds-content-main');
-            if (!scrollContainer) return;
-
-            // 计算滚动进度
-            const scrollTop = scrollContainer.scrollTop;
-            const scrollHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
-            const progress = (scrollTop / scrollHeight) * 100;
-
-            // 更新进度条宽度
-            progressBar.style.width = isNaN(progress) ? '0%' : Math.min(Math.max(progress, 0), 100) + '%';
-        }
-
-        // 监听所有页面内容的滚动事件
-        contentMain.addEventListener('scroll', updateProgress);
-
-        // 监听页面切换事件
-        window.addEventListener('showPage', function(event) {
-            // 重置进度条到0%
-            progressBar.style.width = '0%';
-
-            // 获取目标页面并滚动到顶部
-            const targetPageId = event.detail.pageId;
-            const targetPage = document.getElementById(targetPageId);
-            if (targetPage) {
-                // 确保在下一帧滚动到顶部
-                requestAnimationFrame(() => {
-                    targetPage.closest('.pfds-content-main').scrollTop = 0;
-                });
-            }
-        });
-
-        // 初始更新进度条
-        updateProgress();
-    });
-</script>
+    <!-- 引入 Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    
+    <script type="module" src="assets/js/modules.js"></script>
+    
+    <script src="assets/js/public-script.js"></script>
+    
+    <!-- 开发模式专用 -->
+    <!-- DEV_ONLY_START -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/hot-reload.js"></script>
+    <!-- DEV_ONLY_END -->
 </body>
 </html>

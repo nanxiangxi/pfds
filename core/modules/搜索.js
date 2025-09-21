@@ -1,285 +1,144 @@
-let originalContent = [];
+/**
+ * 搜索模块
+ * 实现搜索功能，包括模态框和搜索逻辑
+ */
 
-export function initSearch() {
-    collectContentData();
-
-    window.openSearchModal = () => {
-        const query = document.getElementById('searchInput').value.trim().toLowerCase();
-        const modalContent = document.getElementById('modalContent');
-
-        if (!query) {
-            alert('请输入关键词进行搜索');
-            return;
-        }
-
-        const results = [];
-        const seenElements = new Set(); // 用 element 作为 key 来去重
-
-        originalContent.forEach(item => {
-            if (item.text.toLowerCase().includes(query)) {
-                if (!seenElements.has(item.element)) {
-                    seenElements.add(item.element);
-
-                    const closestHeading = findClosestHeading(item.element);
-                    const summary = highlightText(truncateText(item.text, 60), query);
-
-                    // 如果标题是"未知标题"，但元素没有 id，则跳过此结果
-                    if (!closestHeading && !item.element.id) {
-                        return;
-                    }
-
-                    results.push({
-                        title: closestHeading?.innerText || '未知标题',
-                        summary,
-                        element: item.element,
-                        pageId: item.pageId,
-                        pageTitle: findPageTitle(item.pageId) // 添加页面标题
-                    });
+// 模块导出
+const searchModule = {
+    init: function() {
+        // console.log('[搜索模块] 开始初始化');
+        
+        // 保持向后兼容性
+        window.pfdsOpenSearchModal = function() {
+            // console.log('[搜索模块] 打开搜索模态框');
+            const modal = document.getElementById('pfds-searchModal');
+            
+            // 关闭移动端侧边栏
+            const sidebar = document.querySelector('.pfds-sidebar');
+            const hamburger = document.querySelector('.pfds-hamburger');
+            const overlay = document.getElementById('pfds-mobileOverlay');
+            
+            if (sidebar && sidebar.classList.contains('show')) {
+                // console.log('[搜索模块] 关闭移动端侧边栏');
+                sidebar.classList.remove('show');
+                if (hamburger) {
+                    hamburger.classList.remove('active');
                 }
+                if (overlay) {
+                    overlay.style.display = 'none';
+                }
+            }
+            
+            if (modal) {
+                modal.style.display = 'flex';
+                // console.log('[搜索模块] 搜索模态框显示');
+                
+                // 聚焦到搜索输入框
+                setTimeout(() => {
+                    const searchInput = document.getElementById('pfdsGlobalSearch');
+                    if (searchInput) {
+                        searchInput.focus();
+                        searchInput.select();
+                        // console.log('[搜索模块] 已聚焦到现有搜索输入框');
+                    } else {
+                        // console.warn('[搜索模块] 搜索输入框未找到，尝试创建');
+                        // 如果模态框中的搜索输入框不存在，则创建它
+                        const globalSearch = window.PFDSModules?.get('智能搜索')?.PFDSGlobalSearch?.getInstance();
+                        if (globalSearch && typeof globalSearch.createSearchContainer === 'function') {
+                            // console.log('[搜索模块] 创建搜索容器');
+                            globalSearch.createSearchContainer();
+                            
+                            // 再次尝试聚焦
+                            setTimeout(() => {
+                                const newSearchInput = document.getElementById('pfdsGlobalSearch');
+                                if (newSearchInput) {
+                                    newSearchInput.focus();
+                                    newSearchInput.select();
+                                    // console.log('[搜索模块] 已聚焦到新创建的搜索输入框');
+                                } else {
+                                    // console.error('[搜索模块] 无法聚焦到搜索输入框，元素仍不存在');
+                                }
+                            }, 100);
+                        } else {
+                            // console.error('[搜索模块] 无法创建搜索容器：全局搜索实例或方法不存在');
+                        }
+                    }
+                }, 100);
+            } else {
+                // console.error('[搜索模块] 未找到搜索模态框元素');
+            }
+        };
+        
+        // 点击头部搜索区域打开模态框
+        function bindSearchEvents() {
+            // console.log('[搜索模块] 开始绑定搜索事件');
+            
+            const headerSearch = document.getElementById('pfds-headerSearch');
+            if (headerSearch) {
+                // console.log('[搜索模块] 找到头部搜索按钮');
+                // 先移除可能已存在的事件监听器，防止重复绑定
+                headerSearch.removeEventListener('click', window.pfdsOpenSearchModal);
+                headerSearch.addEventListener('click', window.pfdsOpenSearchModal);
+                // console.log('[搜索模块] 头部搜索按钮事件绑定完成');
+            } else {
+                // console.warn('[搜索模块] 未找到头部搜索按钮');
+            }
+            
+            // 点击移动端侧边栏搜索区域打开模态框
+            const mobileSearch = document.getElementById('pfds-mobileSearch');
+            if (mobileSearch) {
+                // console.log('[搜索模块] 找到移动端搜索按钮');
+                // 先移除可能已存在的事件监听器，防止重复绑定
+                mobileSearch.removeEventListener('click', window.pfdsOpenSearchModal);
+                mobileSearch.addEventListener('click', window.pfdsOpenSearchModal);
+                // console.log('[搜索模块] 移动端搜索按钮事件绑定完成');
+            } else {
+                // console.warn('[搜索模块] 未找到移动端搜索按钮');
+            }
+        }
+        
+        // 页面加载完成后绑定搜索事件
+        if (document.readyState === 'loading') {
+            // console.log('[搜索模块] 页面仍在加载，等待DOM内容加载完成');
+            document.addEventListener('DOMContentLoaded', () => {
+                // console.log('[搜索模块] DOM内容已加载，开始绑定搜索事件');
+                bindSearchEvents();
+            });
+        } else {
+            // DOM已经加载完成
+            // console.log('[搜索模块] DOM已加载完成，立即绑定搜索事件');
+            bindSearchEvents();
+        }
+        
+        // 监听键盘事件，Ctrl+K 打开搜索
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                // console.log('[搜索模块] 检测到Ctrl+K快捷键');
+                e.preventDefault();
+                window.pfdsOpenSearchModal();
             }
         });
-
-        window.resultsCache = results; // 缓存供点击跳转使用
-        modalContent.innerHTML = '';
-
-        if (results.length > 0) {
-            // 按页面分组结果
-            const groupedResults = groupResultsByPage(results);
-            
-            let groupedHTML = `<h3>找到 ${results.length} 个结果</h3>`;
-            
-            // 为每个页面生成结果卡片
-            for (const [pageId, pageResults] of Object.entries(groupedResults)) {
-                const pageTitle = pageResults[0].pageTitle || '未知页面';
-                groupedHTML += `
-                <div class="search-page-group">
-                    <div class="search-page-title">${pageTitle}</div>
-                `;
-                
-                pageResults.forEach((result, index) => {
-                    groupedHTML += `
-                    <div class="search-card" onclick="handleSearchResult('${result.pageId}', ${results.indexOf(result)})">
-                        <div class="search-result-title">${result.title}</div>
-                        <div class="search-result-summary">${result.summary}</div>
-                    </div>
-                `;
-                });
-                
-                groupedHTML += `</div>`;
-            }
-            
-            modalContent.innerHTML = groupedHTML;
-        } else {
-            modalContent.innerHTML = '<p>没有找到相关结果。</p>';
-        }
-
-        document.getElementById('searchModal').style.display = 'flex';
-    };
-
-    window.handleSearchResult = (pageId, resultIndex) => {
-        closeSearchModal();
-        showPage(pageId);
-
-        setTimeout(() => {
-            const result = resultsCache[resultIndex];
-            scrollToElement(result.element);
-            highlightElement(result.element);
-        }, 300);
-    };
-}
-
-// 按页面ID对搜索结果进行分组
-function groupResultsByPage(results) {
-    const grouped = {};
-    
-    results.forEach(result => {
-        if (!grouped[result.pageId]) {
-            grouped[result.pageId] = [];
-        }
-        grouped[result.pageId].push(result);
-    });
-    
-    // 对每个分组内的结果按标题排序
-    for (const pageId in grouped) {
-        grouped[pageId].sort((a, b) => a.title.localeCompare(b.title));
-    }
-    
-    return grouped;
-}
-
-// 根据页面ID查找页面标题
-function findPageTitle(pageId) {
-    const pageElement = document.getElementById(pageId);
-    if (!pageElement) return '未知页面';
-    
-    // 尝试从页面的第一个标题元素获取标题
-    const firstHeading = pageElement.querySelector('h1, h2, h3, h4, h5, h6');
-    if (firstHeading) {
-        return firstHeading.textContent.trim();
-    }
-    
-    // 如果找不到标题元素，则尝试从导航链接获取
-    const navLink = document.querySelector(`#nav-${pageId}`);
-    if (navLink) {
-        return navLink.textContent.trim();
-    }
-    
-    return '未知页面';
-}
-
-function collectContentData() {
-    originalContent = [];
-    const processedElements = new Set(); // 已采集的元素
-    const processedTextKeys = new Set();  // 已采集的文本 key（用于去重）
-
-    function generateUniqueKey(text, parentPath) {
-        return `${parentPath}:${text.slice(0, 20)}...`;
-    }
-
-    function getParentPath(node) {
-        let path = '';
-        while (node && node !== document.body) {
-            path += node.tagName || 'unknown';
-            node = node.parentNode;
-        }
-        return path;
-    }
-
-    function walk(node) {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-            // 检查当前节点或祖先是否是 .no-search（不可搜索区域）
-            let current = node;
-            while (current && current !== document.body) {
-                if (current.classList?.contains('no-search') || current.hasAttribute('data-no-search')) {
-                    return; // 跳过整个子树
+        // console.log('[搜索模块] 已绑定Ctrl+K快捷键');
+        
+        // 监听页面切换事件，更新搜索范围选项
+        document.addEventListener('pfdsPageChanged', () => {
+            // console.log('[搜索模块] 检测到页面切换事件');
+            // 延迟执行以确保页面切换完成
+            setTimeout(() => {
+                // console.log('[搜索模块] 页面切换完成，尝试更新搜索范围选项');
+                const globalSearch = window.PFDSModules?.get('智能搜索')?.PFDSGlobalSearch?.getInstance();
+                if (globalSearch && typeof globalSearch.updateScopeOptions === 'function') {
+                    globalSearch.updateScopeOptions();
+                    // console.log('[搜索模块] 搜索范围选项已更新');
+                } else {
+                    // console.warn('[搜索模块] 无法更新搜索范围选项：全局搜索实例或方法不存在');
                 }
-                current = current.parentElement;
-            }
-
-            // 忽略脚本、样式、注释等内容
-            if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(node.tagName)) return;
-
-            // 如果是 inline 元素但包含文本内容，则直接采集
-            if (node.childNodes.length === 1 && node.firstChild.nodeType === Node.TEXT_NODE) {
-                const text = node.innerText.trim();
-                if (text && !processedElements.has(node)) {
-                    processedElements.add(node);
-                    const pageId = findPageId(node);
-                    originalContent.push({
-                        text,
-                        element: node,
-                        pageId
-                    });
-                }
-            }
-
-            // 继续遍历子节点
-            for (let child of node.childNodes) {
-                walk(child);
-            }
-        } else if (node.nodeType === Node.TEXT_NODE) {
-            const text = node.textContent.trim();
-            if (!text) return;
-
-            const parentEl = node.parentElement;
-            const parentPath = getParentPath(node.parentNode);
-            const uniqueKey = generateUniqueKey(text, parentPath);
-
-            if (processedTextKeys.has(uniqueKey)) return;
-            processedTextKeys.add(uniqueKey);
-
-            let targetElement = parentEl || {
-                tagName: 'VIRTUAL',
-                toString: () => '[Virtual Text]',
-                scrollIntoView: () => {},
-                style: {}
-            };
-
-            const pageId = findPageId(parentEl || document.body);
-
-            originalContent.push({
-                text,
-                element: targetElement,
-                pageId
-            });
-        }
+            }, 100);
+        });
+        // console.log('[搜索模块] 已绑定页面切换事件监听器');
+        
+        // console.log('[搜索模块] 初始化完成');
     }
+};
 
-    walk(document.body); // 从 body 开始深度遍历
-}
-
-function findPageId(element) {
-    let el = element;
-    while (el && !el.classList?.contains('page-content')) {
-        el = el.parentElement;
-    }
-    return el?.id || 'unknown';
-}
-
-function findClosestHeading(el) {
-    let current = el;
-    const maxSteps = 50; // 防止死循环
-    let steps = 0;
-
-    // 先向上找 heading
-    while (current && steps < maxSteps) {
-        if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(current.tagName)) {
-            return current;
-        }
-        current = current.previousElementSibling || current.parentElement;
-        steps++;
-    }
-
-    // 再次从当前元素向上查找
-    current = el.parentElement;
-    steps = 0;
-    while (current && steps < maxSteps) {
-        if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(current.tagName)) {
-            return current;
-        }
-        current = current.parentElement;
-        steps++;
-    }
-
-    return null;
-}
-
-function highlightText(text, query) {
-    return text.replace(new RegExp(`(${query})`, 'gi'), '<span class="highlight">$1</span>');
-}
-
-function truncateText(text, maxLength) {
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-}
-
-function scrollToElement(el) {
-    const blockEl = getBlockElement(el);
-    if (blockEl) {
-        blockEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-}
-
-function getBlockElement(el) {
-    while (el && !window.getComputedStyle(el).display.startsWith('block')) {
-        el = el.parentElement;
-    }
-    return el;
-}
-
-function highlightElement(el) {
-    // 如果是虚拟元素，不执行高亮
-    if (el.tagName === 'VIRTUAL') return;
-
-    const blockEl = getBlockElement(el);
-    if (blockEl) {
-        blockEl.style.transition = 'background-color 0.5s';
-        blockEl.style.backgroundColor = 'rgb(181,244,244)';
-        setTimeout(() => {
-            blockEl.style.backgroundColor = '';
-        }, 2000);
-    }
-}
-
-function closeSearchModal() {
-    document.getElementById('searchModal').style.display = 'none';
-}
+return searchModule;
